@@ -1,0 +1,10 @@
+framework module Segmentio {
+  umbrella header "Segmentio.h"
+
+  export *
+  module * { export * }
+}
+
+module Segmentio.Swift {
+    header "Segmentio-Swift.h"
+}

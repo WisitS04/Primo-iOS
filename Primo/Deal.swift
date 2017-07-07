@@ -1,0 +1,47 @@
+
+class Deal {
+    
+    var isOwnedDeal: Bool? //is all own or not
+    var totalStep: Int?
+    
+    var Childs: Deal?
+    var card: PrimoCard?
+    
+    var id: Int?
+    
+    var rank: Int?
+    var title: String? //static not from service
+    
+    var nameTh: String?
+    var nameEn: String?
+    var description: String?
+    var termsAndConditions: String?
+    
+    var proName: String?
+    
+    var promotionTypeNameTh: String?
+    var promotionTypeNameEn: String?
+    var promotionCategoryName: String?
+    
+    var smsMsg: String?
+    var smsDesc: String?
+    var smsNumber: String?
+    
+    var cardImageUrl: String?
+    
+    var isDefaultCard: Bool?
+    var isOwnedCard: Bool?
+    var isPrimaryCard: Bool?
+    
+    var paymentMethodId: Int? //Null = all, 1 = full pay, 2 = installment
+    
+    var pointRequired: Int?
+    
+    var comboDiscountAbs: Float? // ส่วนลด
+    var comboCreditAbs: Float? // เงินคืน
+    var comboVoucher: Float? // บัตรกำนัล
+    var comboCoupon: Float?
+    
+    var totalReward: Float?
+    
+}
