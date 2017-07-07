@@ -1,0 +1,7 @@
+github "Alamofire/Alamofire" "4.4.0"
+github "squimer/DatePickerDialog-iOS-Swift" "1.1.7"
+github "AssistoLab/DropDown" "v2.0"
+github "rs/SDWebImage" "4.0.0"
+github "stephencelis/SQLite.swift" "0.11.3"
+github "Yalantis/Segmentio" "2.1.2"
+github "SwiftyJSON/SwiftyJSON" "3.1.4"

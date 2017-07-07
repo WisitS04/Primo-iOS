@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A320" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Nij-3L-Idv">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--DatePickerDialog Example-->
+        <scene sceneID="ufC-wZ-h7g">
+            <objects>
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="DatePickerDialogExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
+                        <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hp5-Qv-xJn" userLabel="DatePickerBtn">
+                                <state key="normal" title="Show Date Picker">
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="datePickerTappedWithSender:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="6hW-gl-Kis"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Selected Date" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mdv-T3-c0a" userLabel="TextField">
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Hp5-Qv-xJn" firstAttribute="top" secondItem="Mdv-T3-c0a" secondAttribute="bottom" constant="8" id="7Pg-vD-8DI"/>
+                            <constraint firstItem="Mdv-T3-c0a" firstAttribute="trailing" secondItem="Hp5-Qv-xJn" secondAttribute="trailing" id="RKJ-rq-8YJ"/>
+                            <constraint firstItem="Mdv-T3-c0a" firstAttribute="leading" secondItem="Hp5-Qv-xJn" secondAttribute="leading" id="Zoq-HK-OTf"/>
+                            <constraint firstItem="Hp5-Qv-xJn" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" id="ceb-rD-HfR"/>
+                            <constraint firstItem="Hp5-Qv-xJn" firstAttribute="trailing" secondItem="kh9-bI-dsS" secondAttribute="trailingMargin" id="i2T-Af-NS1"/>
+                            <constraint firstAttribute="centerY" secondItem="Hp5-Qv-xJn" secondAttribute="centerY" id="vBm-dR-CiA"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="DatePickerDialog Example" id="DQ1-xC-CYc"/>
+                    <connections>
+                        <outlet property="textField" destination="Mdv-T3-c0a" id="eLK-6I-e3M"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="952" y="136.00000000000003"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Yl1-rU-FSb">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Nij-3L-Idv" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="5kF-Tn-mJQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.15686274510000001" green="0.56470588239999997" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="U5F-fH-2ej"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gge-ZX-aoK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="213" y="136.00000000000003"/>
+        </scene>
+    </scenes>
+</document>
