@@ -3,7 +3,7 @@ import Alamofire
 import SwiftyJSON
 import CoreLocation
 
-class PlaceViewController: UITableViewController {
+class PlaceViewController: UITableViewController{
     
     // MARK: - Properties
     @IBOutlet weak var menuButton: UIBarButtonItem!
@@ -20,9 +20,18 @@ class PlaceViewController: UITableViewController {
     
     var LastLatLocation = UserDefaults.standard
     var LastLongLocation = UserDefaults.standard
+    var FirstRunStep  = UserDefaults.standard
     var nLocationlat : Double = 0
     var nLocationLong : Double = 0
+    var isClickSh: Bool = false
+    var statusOpenDialogIN: Bool = false
+    var stautsDisablePermission: Bool = false
     
+    var mLocation: CLLocation? = nil
+    var statusRun:Bool = false
+    var KeySH:String = ""
+    
+    var isDisableInternet: Bool = false
     // MARK: - View Setup
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,17 +48,16 @@ class PlaceViewController: UITableViewController {
         // MARK: Check Internet
         CheckReachabilityStatus()
         
-        // MARK: Call WebService
-        CallWS()
-        
         SetupSearchBar()
-        
+        // MARK: Pull and Refresh
+
         // MARK: Get Location
+        locManager.delegate = self
         locManager.desiredAccuracy = kCLLocationAccuracyBest
         locManager.requestWhenInUseAuthorization()
         
-        // MARK: Pull and Refresh
-        self.refreshControl?.addTarget(self, action: #selector(HandleRefresh(_:)), for: UIControlEvents.valueChanged)
+         self.refreshControl?.addTarget(self, action: #selector(HandleRefresh(_:)), for: UIControlEvents.valueChanged)
+        
     }
 
     // MARK: - Segues
@@ -140,7 +148,9 @@ class PlaceViewController: UITableViewController {
     
     func HandleRefresh(_ refreshControl: UIRefreshControl) {
         isRefreshing = true
-        CallWS(searchkey: searchText)
+        isClickSh = true
+//        CallWS(searchkey: searchText)
+        GetLocation(searchkey: searchText)
     }
 }
 
@@ -172,107 +182,150 @@ extension PlaceViewController: UISearchResultsUpdating, UISearchBarDelegate
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if !(searchBar.text?.isEmpty)! {
             searchText = searchBar.text!
-            CallWS(searchkey: searchText)
+            isClickSh = true
+//            CallWS(searchkey: searchText)
+            GetLocation(searchkey: searchText);
         }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchText = ""
-        CallWS()
+        isClickSh = true
+        GetLocation();
+//        CallWS()
+    }
+}
+
+
+extension PlaceViewController: CLLocationManagerDelegate
+{
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if (status == CLAuthorizationStatus.authorizedWhenInUse
+            || status == CLAuthorizationStatus.authorizedAlways) {
+             stautsDisablePermission = false
+              GetLocation()
+//            CallWS()
+        } else if (status == CLAuthorizationStatus.denied) {
+              stautsDisablePermission = true
+              GetLocation()
+//            CallWS()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        mLocation = manager.location!
+        print("inside Update")
+        if(mLocation != nil && statusRun == false){
+            print("Update Location and call service")
+            statusRun = true
+            LoadingOverlay.shared.hideOverlayViewGPS()
+            CallWS(searchkey: KeySH)
+        }
     }
 }
 
 extension PlaceViewController
 {
+
     func CallWS(searchkey: String = "")
     {
-        LoadingOverlay.shared.showOverlay(view: self.view)
+            
+            let mSearchkey:String = searchkey
+            var distance : Float = 0
+            
+            
+            LoadingOverlay.shared.showOverlay(view: self.view)
+            
+            
+            distance = getDistance()
+            
+            if (distance < 200 && isClickSh != true){
+                
+                let getResult = StoreDB.instance.getStores()
+                
+                if(getResult.isEmpty){
+                    callNearbyService(searchkey: mSearchkey)
+                }else{
+                        self.nearByPlace.removeAll()
+                        self.filteredPlace.removeAll()
+                        
+                        for item in getResult {
+                            
+                            let storeId = item.storeId
+                            let branchId = item.branchId
+                            let storeName = item.storeName
+                            let storeNameEng = item.storeNameEng
+                            let branchName = item.branchName
+                            let branchNameEng = item.branchNameEng
+                            let distance = item.distance
+                            let imageUrl = item.imageUrl
+                            
+                            let nameTH = (storeName != "") ? storeName + " " + branchName : branchName
+                            let nameEN = (storeNameEng != "") ? storeNameEng + " " + branchNameEng : branchNameEng
+                            
+                            let place = Place(storeId: Int(storeId),
+                                              branchId: Int(branchId),
+                                              nameTH: nameTH,
+                                              nameEN: nameEN,
+                                              distance: Int(distance),
+                                              imageUrl: imageUrl)
+                            self.nearByPlace.append(place)
+                            
+                        }
+                        
+                        self.filteredPlace = self.nearByPlace
+                        self.tableView.reloadData()
+                        if ( self.isRefreshing) {
+                            self.refreshControl?.endRefreshing()
+                            self.isRefreshing = false
+                        }
+                        
+                        LoadingOverlay.shared.hideOverlayView()
+                }
+                
+            }else{
+                
+                callNearbyService(searchkey: mSearchkey)
+            }
+            isClickSh = false
+            locManager.stopUpdatingLocation()
+    }
     
+    
+    func callNearbyService(searchkey: String = ""){
+        
         let url = Service.FindStoreDetailNearBy.url
         let user = "anonymous" // "abc@abc.com"
         let password = "spoton-primo" // "Cust-2014"
-        var distance : Float = 0
-        let statusEnableLocationService:Bool = CheckStatusOpenGPS();
         
-        if(statusEnableLocationService){
-            distance = LoopGPS()
-        }
+        let parameters: Parameters = ["lat": nLocationlat,
+                                      "long": nLocationLong,
+                                      "page": 1,
+                                      "pageSize": 15,
+                                      "search": searchkey]
 
-//        if let curLocation = CheckLocation() {
-//            location = Location(lat: Float(curLocation.coordinate.latitude),
-//                                long: Float(curLocation.coordinate.longitude))
-//        }
-        
-    
-
-        if (distance < 200){
-            
-            let getResult = StoreDB.instance.getStores()
-            for item in getResult {
-                
-                let storeId = item.storeId
-                let branchId = item.branchId
-                let storeName = item.storeName
-                let storeNameEng = item.storeNameEng
-                let branchName = item.branchName
-                let branchNameEng = item.branchNameEng
-                let distance = item.distance
-                let imageUrl = item.imageUrl
-                
-                let nameTH = (storeName != "") ? storeName + " " + branchName : branchName
-                let nameEN = (storeNameEng != "") ? storeNameEng + " " + branchNameEng : branchNameEng
-                
-                let place = Place(storeId: Int(storeId),
-                                  branchId: Int(branchId),
-                                  nameTH: nameTH,
-                                  nameEN: nameEN,
-                                  distance: Int(distance),
-                                  imageUrl: imageUrl)
-                nearByPlace.append(place)
-                
-            }
-            
-            filteredPlace = nearByPlace
-            tableView.reloadData()
-            if (isRefreshing) {
-                refreshControl?.endRefreshing()
-                isRefreshing = false
-            }
-            
-            LoadingOverlay.shared.hideOverlayView()
-            
-        }else{
-            
-            let parameters: Parameters = ["lat": nLocationlat,
-                                          "long": nLocationLong,
-                                          "page": 1,
-                                          "pageSize": 15,
-                                          "search": searchkey]
-
-            Alamofire.request(url, parameters: parameters)
-                .authenticate(user: user, password: password)
-                .responseJSON { response in
-                    switch response.result {
-                    case .success(let value):
-                        let json = JSON(value)
-                        print("call service success")
-                        self.CreatePlace(json)
-                        LoadingOverlay.shared.hideOverlayView()
-                    case .failure(let error):
-                        print(error)
-                        LoadingOverlay.shared.hideOverlayView()
-                        PrimoAlert().Error()
+        Alamofire.request(url, parameters: parameters)
+            .authenticate(user: user, password: password)
+            .responseJSON { response in
+                switch response.result {
+                case .success(let value):
+                    let json = JSON(value)
+                    print("call service success")
+                    self.CreatePlace(json)
+                    LoadingOverlay.shared.hideOverlayView()
+                case .failure(let error):
+                    print(error)
+                    LoadingOverlay.shared.hideOverlayView()
+                    if (self.isRefreshing) {
+                        self.refreshControl?.endRefreshing()
+                        self.isRefreshing = false
                     }
-        }
-        
-    
-        
+                    PrimoAlert().Error()
+                }
         }
     }
     
-  
-    
-    func LoopGPS() -> Float{
+    func getDistance() -> Float{
         
         
         var location = btsSiam
@@ -282,28 +335,24 @@ extension PlaceViewController
         nLocationlat = 0
         nLocationLong = 0
         
-         if let curLocation = CheckLocation() {
+         if let curLocation = mLocation {
                     location = Location(lat: Float(curLocation.coordinate.latitude),
                                         long: Float(curLocation.coordinate.longitude))
             
             nLocationlat = Double(location.lat)
             nLocationLong = Double(location.long)
-            
-            LastLatLocation.set(location.lat, forKey: KEYLAT)
-            LastLongLocation.set(location.long, forKey: KEYLONG)
-            
+
          }
         
         mLastLatLocation  = LastLatLocation.double(forKey: KEYLAT)
         mLongLocation = LastLongLocation.double(forKey: KEYLONG)
         
+    
         if(mLastLatLocation == 0 && mLongLocation == 0){
             let coordinate₀ = CLLocation(latitude: CLLocationDegrees(btsSiam.lat), longitude: CLLocationDegrees(btsSiam.long))
             let coordinate₁ = CLLocation(latitude: CLLocationDegrees(location.lat), longitude: CLLocationDegrees(location.long))
             distance = Float(coordinate₀.distance(from: coordinate₁))
-
         }else{
-            
             let coordinate₀ = CLLocation(latitude: mLastLatLocation, longitude: mLongLocation)
             let coordinate₁ = CLLocation(latitude: CLLocationDegrees(location.lat), longitude: CLLocationDegrees(location.long))
             distance = Float(coordinate₀.distance(from: coordinate₁))
@@ -317,28 +366,17 @@ extension PlaceViewController
                 nLocationlat = Double(btsSiam.lat)
                 nLocationLong = Double(btsSiam.long)
             }
-            
+
+        }else{
+            LastLatLocation.set(location.lat, forKey: KEYLAT)
+            LastLongLocation.set(location.long, forKey: KEYLONG)
         }
-        
         
         
         return distance
     }
-    
-    
-    //Benz : add function check Enable Location Service : 06-07-2017 : Start
-    func CheckStatusOpenGPS() -> Bool {
-        var status:Bool = false
-        if(CLLocationManager.locationServicesEnabled()){
-            status = true
-        }else{
-            status = false
-        }
 
-        return status
-    }
-    //Benz : 06-07-2017 : End
-    
+
     func CheckLocation() -> CLLocation?
     {
         var location: CLLocation? = nil
@@ -350,32 +388,80 @@ extension PlaceViewController
         else if (CLLocationManager.authorizationStatus() == .denied
             || CLLocationManager.authorizationStatus() == .notDetermined
             || CLLocationManager.authorizationStatus() == .restricted) {
-            print("CLLocationManager.authorizationStatus() = \(CLLocationManager.authorizationStatus())")
+            print("CLLocationManager.authorizationStatus() = \(CLLocationManager.authorizationStatus().rawValue)")
             location = nil
-            PrimoAlert().GetLocationError()
+//            PrimoAlert().GetLocationError()
         }
+//        return location
+        
         return location
+        
+        
     }
+    
     
     func CheckReachabilityStatus() {
         guard let status = Network.reachability?.status else { return }
+        
         if (status == .unreachable) {
-//            NoConnectionView.shared.Show(view: self.view)
-            PrimoAlert().NoInternet()
+            if (self.isRefreshing) {
+                self.refreshControl?.endRefreshing()
+                self.isRefreshing = false
+            }
+            self.tableView.separatorStyle = .none
+            
+            if(!statusOpenDialogIN){
+                NoConnectionView.shared.Show(view: self.view,  action: self.reTryInternet)
+                statusOpenDialogIN = true
+            }
+            isDisableInternet = true
+        }else{
+            isDisableInternet = false
+        }
+    }
+
+    
+    func GetLocation(searchkey: String = ""){
+        if(!isDisableInternet){
+            NoConnectionView.shared.Hide()
+            self.tableView.separatorStyle = .singleLine
+            KeySH  = searchkey
+            mLocation = nil
+            statusRun = false
+            locManager.startUpdatingLocation()
+            
+            if(mLocation != nil || stautsDisablePermission){
+                CallWS(searchkey: searchkey)
+            }else{
+                LoadingOverlay.shared.showDialogLoopGPS(view: self.view, action: self.isCancelLoopGPS)
+            }
         }
     }
     
+ 
+    //retry Internet
+    func reTryInternet(ClickBtn: Bool){
+        if(ClickBtn){
+            CheckReachabilityStatus()
+            GetLocation()
+        }
+    }
     
+    //LoopGPS
+    func isCancelLoopGPS(isClick: Bool ) {
+        CallWS()
+    }
     
-    
-
     func CreatePlace(_ nearByJson: JSON) {
-        nearByPlace.removeAll()
-        filteredPlace.removeAll()
-
-            for (_, subJson):(String, JSON) in nearByJson["data"] {
-      
+        
+            self.nearByPlace.removeAll()
+            self.filteredPlace.removeAll()
             
+            _ = StoreDB.instance.deleteStore()
+            
+            for (_, subJson):(String, JSON) in nearByJson["data"] {
+                
+                
                 let storeId = subJson["storeId"].intValue
                 let branchId = subJson["branchId"].intValue
                 
@@ -388,8 +474,6 @@ extension PlaceViewController
                 let distance = subJson["distance"].intValue
                 let imageUrl = subJson["logoUrl"].stringValue
                 
-    
-                _ = StoreDB.instance.deleteStore()
                 let result = StoreDB.instance.addStore(cStoreId: Int64(storeId), cBranchId: Int64(branchId), cStoreName: storeName,
                                                        cStoreNameEng: storeNameEng, cBranchName: branchName, cBranchNameEng: branchNameEng,
                                                        cImageUrl: imageUrl, cDistance: Int64(distance))
@@ -406,17 +490,18 @@ extension PlaceViewController
                                       nameEN: nameEN,
                                       distance: distance,
                                       imageUrl: imageUrl)
-                    nearByPlace.append(place)
+                    self.nearByPlace.append(place)
                 }
-   
+                
             }
             
-            filteredPlace = nearByPlace
-            tableView.reloadData()
-            if (isRefreshing) {
-                refreshControl?.endRefreshing()
-                isRefreshing = false
+            self.filteredPlace = self.nearByPlace
+            self.tableView.reloadData()
+            if (self.isRefreshing) {
+                self.refreshControl?.endRefreshing()
+                self.isRefreshing = false
             }
 
-    }
+            
+        }
 }

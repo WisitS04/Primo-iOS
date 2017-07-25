@@ -18,7 +18,7 @@ class DealViewController: UIViewController
     var price: Int = 0
     var store: Int = 0
     var branch: Int = 0
-    
+    var departmentId: Int = 0
     let dropDown = DropDown()
     
     var myCardList: [PrimoCard] = []
@@ -49,6 +49,7 @@ class DealViewController: UIViewController
                 dealTable.price = self.price
                 dealTable.store = self.store
                 dealTable.branch = self.branch
+                dealTable.departmentId = self.departmentId
                 dealTable.UpdateData(usePoint: self.usePointButton.isUsing,
                                      installment: self.useInstallmentButton.isUsing)
                 self.dealTableView = dealTable

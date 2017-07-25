@@ -14,6 +14,7 @@ class BankCollectionView: UICollectionView
         self.viewController = viewController
         self.delegate = self
         self.dataSource = self
+        BankSelectIndex =  IndexPath(item: -1, section: -1)
     }
 }
 
@@ -68,12 +69,29 @@ extension BankCollectionView: UICollectionViewDelegate, UICollectionViewDataSour
         
         cell.cardImage.sd_setImage(with: URL(string: bankList[indexPath.row].logoUrl))
         
+        
+        
+        if(BankSelectIndex.item != -1 && BankSelectIndex.section != -1){
+            if(BankSelectIndex != indexPath){
+                cell.statusImage.image = UIImage(named: "buttongrey")
+            }else{
+                cell.statusImage.image = UIImage(named: "button_check")
+            }
+        }else{
+            cell.statusImage.image = nil
+        }
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if (viewController != nil) {
             self.viewController!.OnBankSelected(id: bankList[indexPath.row].id)
+            
+            BankSelectIndex = indexPath
+            collectionView.reloadData()
+
         }
     }
+   
 }

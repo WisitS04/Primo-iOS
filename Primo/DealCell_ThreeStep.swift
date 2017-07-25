@@ -77,18 +77,21 @@ class DealCell_ThreeStep: UITableViewCell {
                 }
         })
         
-        // is owned deal text
-        if let subview = self.viewWithTag(104) as? UILabel {
-            if (deal.isOwnedDeal!) {
-                // owned deal
-                subview.text = DealPage.UnderCardText_OwnedDeal.rawValue
-                subview.textColor = PrimoColor.Green.UIColor
-            } else {
-                // not owned
-                subview.text = DealPage.UnderCardText_NotOwn.rawValue
-                subview.textColor = PrimoColor.Red.UIColor
-            }
-        }
+//        // is owned deal text
+//        if let subview = self.viewWithTag(104) as? UILabel {
+//            if (deal.isOwnedDeal!) {
+//                // owned deal
+//                subview.text = DealPage.UnderCardText_OwnedDeal.rawValue
+//                subview.textColor = PrimoColor.Green.UIColor
+//            } else {
+//                // not owned
+//                subview.text = DealPage.UnderCardText_NotOwn.rawValue
+//                subview.textColor = PrimoColor.Red.UIColor
+//            }
+//        }
+        
+        
+        
         
         // deal title
         if let subview = self.viewWithTag(105) as? UILabel {
@@ -110,6 +113,27 @@ class DealCell_ThreeStep: UITableViewCell {
             subview.clipsToBounds = true
             subview.layer.cornerRadius = 5
         }
+        
+        
+        //add point credite , debit and member card
+        
+        if let subview = self.viewWithTag(120) as? UILabel {
+            let value = deal.pointCredite
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            subview.text = (formatter.string(from: NSNumber(value: value)) ?? "0")
+        }
+        
+        
+        if let subview = self.viewWithTag(121) as? UILabel {
+            let value = deal.pointMemberCard
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            subview.text = (formatter.string(from: NSNumber(value: value)) ?? "0")
+        }
+        //End
+        
+        
         
         // medal image
         if let subview = self.viewWithTag(108) as? UIImageView

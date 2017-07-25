@@ -30,15 +30,23 @@ class PrimoAlert {
         _ = SweetAlert().showAlert(title, subTitle: desc, style: .success)
     }
     // Deal Detail page
-    func SmsDetail(desc: String, action: ((Bool) -> Void)?) {
+    func SmsDetail(desc: String, number: String, action: ((Bool) -> Void)?) {
         let title = "วิธีการรับสิทธิ์"
+        let btn: String!
 //        _ = SweetAlert().showAlert(
 //            title, subTitle: desc, style: AlertStyle.none,
 //            buttonTitle:"ยกเลิก", buttonColor: UIColor.darkGray,
 //            otherButtonTitle:  "ส่ง", otherButtonColor: PrimoColor.Red.UIColor,
 //            action: action)
+        
+        if(number[0] == "*"){
+            btn = "OK"
+        }else{
+            btn = "SEND"
+        }
         _ = SweetAlert().showAlert(
             title, subTitle: desc, style: AlertStyle.none,
-            buttonTitle:"SEND", action: action)
+            buttonTitle:btn, action: action)
     }
+    
 }

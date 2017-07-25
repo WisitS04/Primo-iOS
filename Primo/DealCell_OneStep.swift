@@ -64,7 +64,8 @@ class DealCell_OneStep: UITableViewCell {
             let value = deal.totalReward
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
-            subview.text = (formatter.string(from: NSNumber(value: value!)) ?? "0") + " ฿"
+              subview.text = (formatter.string(from: NSNumber(value: value!)) ?? "0")
+//            subview.text = (formatter.string(from: NSNumber(value: value!)) ?? "0") + " ฿"
         }
         
         // deal value bg
@@ -72,6 +73,26 @@ class DealCell_OneStep: UITableViewCell {
             subview.clipsToBounds = true
             subview.layer.cornerRadius = 5
         }
+        
+        
+        //add point credite , debit and member card
+        
+        if let subview = self.viewWithTag(120) as? UILabel {
+            let value = deal.pointCredite
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            subview.text = (formatter.string(from: NSNumber(value: value)) ?? "0")
+        }
+        
+        
+        if let subview = self.viewWithTag(121) as? UILabel {
+            let value = deal.pointMemberCard
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            subview.text = (formatter.string(from: NSNumber(value: value)) ?? "0")
+        }
+        //End
+        
         
         // medal image
         if let subview = self.viewWithTag(108) as? UIImageView

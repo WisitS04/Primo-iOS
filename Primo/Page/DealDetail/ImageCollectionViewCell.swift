@@ -10,5 +10,6 @@ import UIKit
 
 class ImageCollectionViewCell: UICollectionViewCell
 {
+    @IBOutlet weak var statusImage: UIImageView!
     @IBOutlet weak var cardImage: UIImageView!
 }

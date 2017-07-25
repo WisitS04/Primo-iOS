@@ -10,12 +10,12 @@ import UIKit
 
 class DealDetailTableViewCell: UITableViewCell
 {
+    @IBOutlet weak var TitleDeal: UILabel!
+    @IBOutlet weak var DealName: UILabel!
     @IBOutlet var howToLabel: UILabel!
     @IBOutlet var detailLabel: UILabel!
     @IBOutlet var termLabel: UILabel!
-    
     @IBOutlet weak var collectionView: UICollectionView!
-    
     @IBOutlet weak var SendSmsOrCommandButton: SendSMSButton!
 }
 

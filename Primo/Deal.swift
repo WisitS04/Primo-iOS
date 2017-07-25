@@ -1,5 +1,7 @@
 
 class Deal {
+    var pointMemberCard:Int = 0
+    var pointCredite:Int = 0
     
     var isOwnedDeal: Bool? //is all own or not
     var totalStep: Int?

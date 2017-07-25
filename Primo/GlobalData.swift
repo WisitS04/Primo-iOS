@@ -41,6 +41,12 @@ enum CardType: Int {
     }
 }
 
+///////////////////
+//IndexSelectBank//
+///////////////////
+var BankSelectIndex: IndexPath =  IndexPath(item: -1, section: -1)
+
+
 /////////////
 // Locaion //
 /////////////
@@ -62,6 +68,15 @@ let btsSiam = Location(lat: 13.7457426, long: 100.5341965)
 //////////////////
 let KEYLAT:String = "KEYLAT"
 let KEYLONG:String = "KEYLONG"
+
+
+//Fisrt Run
+let KEYFIRSTRUN:String = "KEYFIRSTRUN"
+
+
+//Click Cancel Loop GPS
+let KEYCABCELLOOPGPS: String = "KEYCABCELLOOPGPS"
+var isClieckCancelLoopGPS = UserDefaults.standard
 
 
 ////////////////////////////
@@ -87,6 +102,7 @@ enum PrimoColor: String {
     case Green = "#3FBCA4"
     case Red = "#BE293B"
     case Orange = "#F4744D"
+    case Smoke = "#CCCCCC"
     
     var UIColor: UIColor {
         return HexStringToUIColor(hex: self.rawValue)

@@ -22,21 +22,27 @@ struct Section {
     var smsNumber: String!
     
     var collapsed: Bool!
-    
+
     init(index: Int, deal: Deal, isCollapsed: Bool = false) {
         self.index = index
         self.collapsed = isCollapsed
         
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        let pointRequired = formatter.string(from: NSNumber(value: deal.pointRequired!))!
+        let pointRequired = formatter.string(from: NSNumber(value: (deal.card?.point)!))!
         
         self.id = deal.id
         self.title = deal.nameTh
         self.cardImage = deal.card?.image
-        self.howto = "\(deal.proName!) ใช้ทั้งหมด \(pointRequired) แต้ม"
         self.description = deal.description
         self.term = deal.termsAndConditions
+//        self.howto = "\(deal.proName!) ใช้ทั้งหมด \(pointRequired) แต้ม"
+       
+        if(deal.pointRequired != 0){
+            self.howto = "\(deal.proName!) \nใช้ทั้งหมด \(pointRequired) แต้ม"
+        }else{
+            self.howto = "\(deal.proName!)"
+        }
         
         self.smsMsg = deal.smsMsg
         self.smsDesc = deal.smsDesc
@@ -76,7 +82,7 @@ class DealDetailViewController: UIViewController
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 240.0
+        tableView.estimatedRowHeight = 240
     }
     
 }
@@ -365,6 +371,7 @@ extension DealDetailViewController
 // MARK: - Table Controller DataSource and Delegate
 //
 extension DealDetailViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
@@ -378,6 +385,8 @@ extension DealDetailViewController: UITableViewDelegate, UITableViewDataSource {
     //
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "StepDetail") as? DealDetailTableViewCell {
+            cell.DealName.text = sections[indexPath.section].title
+            
             cell.howToLabel.text = sections[indexPath.section].howto
             cell.detailLabel.text = sections[indexPath.section].description
             cell.termLabel.text = sections[indexPath.section].term
@@ -400,6 +409,12 @@ extension DealDetailViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 cell.SendSmsOrCommandButton.isHidden = true
             }
+            
+            //Benz - 19/7/2017 - Hide Button
+             cell.SendSmsOrCommandButton.isHidden = true
+            // heigth original is 50
+            //Benz End
+            
             return cell
         }
         return UITableViewCell()
@@ -425,9 +440,13 @@ extension DealDetailViewController: UITableViewDelegate, UITableViewDataSource {
         
         header.indexLabel.text = "\(sections[section].index!)"
         header.cardImageView.image = sections[section].cardImage
-        header.titleLabel.text = sections[section].title
+//        header.titleLabel.text = sections[section].title
+          header.titleLabel.text = sections[section].howto
         header.arrowLabel.text = ">"
         header.setCollapsed(sections[section].collapsed)
+        
+    
+        
         //Benz - 04-07-2017 Edited case sms and code
         if (sections[section].smsMsg.characters.count > 0) {
             if (sections[section].smsMsg[0] == "*") {
@@ -441,11 +460,47 @@ extension DealDetailViewController: UITableViewDelegate, UITableViewDataSource {
         }
         //Benz -End 04-07-2017
         
+     
+         let tap = UITapGestureRecognizer(target: self, action: #selector(TagDialog(sender:)))
+         header.warningLabel.tag = section
+         header.warningLabel.isUserInteractionEnabled = true
+         header.warningLabel.addGestureRecognizer(tap)
+      
+
         header.section = section
         header.delegate = self
         
         return header
     }
+    
+    func TagDialog(sender:UITapGestureRecognizer) {
+        let index = sender.view?.tag
+        PrimoAlert().SmsDetail(desc: sections[index!].smsDesc!, number:sections[index!].smsNumber!) { (isOtherButton) -> Void in
+            if (isOtherButton) {
+                if (self.sections[index!].smsMsg?[0] != "*") {
+                    let messageVC = MFMessageComposeViewController()
+                    
+                    messageVC.body = "\(self.sections[index!].smsMsg!)";
+                    messageVC.recipients = ["\(self.sections[index!].smsNumber!)"]
+                    messageVC.messageComposeDelegate = self;
+                    
+                    self.present(messageVC, animated: false, completion: nil)
+                } else {
+                    
+                    let encodedHost = self.sections[index!].smsNumber!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+                    if let url = URL(string: "tel://"+encodedHost!),
+                        UIApplication.shared.canOpenURL(url) {
+                        UIApplication.shared.openURL(url)
+                    }
+                    
+                    
+                }
+                
+            }
+        }
+    }
+  
+    
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         var height: CGFloat = 40.0
@@ -519,7 +574,8 @@ extension DealDetailViewController: MFMessageComposeViewControllerDelegate
 {
     func SendCodeOrSMS(_ sender: Any) {
         let btn: SendSMSButton = sender as! SendSMSButton
-        PrimoAlert().SmsDetail(desc: btn.smsDesc!) { (isOtherButton) -> Void in
+        
+        PrimoAlert().SmsDetail(desc: btn.smsDesc!, number:btn.smsNumber!) { (isOtherButton) -> Void in
             if (isOtherButton) {
                 if (btn.smsMsg?[0] != "*") {
                     let messageVC = MFMessageComposeViewController()
@@ -531,12 +587,6 @@ extension DealDetailViewController: MFMessageComposeViewControllerDelegate
                     self.present(messageVC, animated: false, completion: nil)
                 } else {
 
-               
-//                    let numberPhone:String  = "telprompt://" + "%23"
-//                    UIApplication.shared.openURL(NSURL(string : numberPhone)! as URL)
-                    
-                    
-                    
                     let encodedHost = btn.smsNumber!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
                    
                 
@@ -545,23 +595,15 @@ extension DealDetailViewController: MFMessageComposeViewControllerDelegate
                         UIApplication.shared.openURL(url)
                     }
                     
-       
-              
-//                    if let url = URL(string: "tel://\("")"), UIApplication.shared.canOpenURL(url) {
-//                        if #available(iOS 10, *) {
-//                            UIApplication.shared.open(url)
-//                        } else {
-//                            UIApplication.shared.openURL(url)
-//                        }
-//                    }
-                    
 
                 }
 
             }
         }
+
     }
     
+
 
     
     

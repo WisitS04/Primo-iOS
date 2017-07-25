@@ -27,6 +27,9 @@ class DealTableVC: UITableViewController
     var isUsePoint: Bool = false
     var isInstallment: Bool = false
     
+    var pointToCrediteCard : Int = 0
+    var pointToMemberCard : Int = 0
+    
     let sectionTitle = ["คุ้มที่สุด",
                         "คุ้มที่สุดสำหรับคุณ",
                         "ทางเลือกอื่น"]
@@ -291,6 +294,7 @@ extension DealTableVC
 //        dealItems = [[],[],[]]
 //        filteredDeals.removeAll()
         dealBuffer.removeAll()
+        var TitleDeal: String!
         
         // คุ้มที่สุด
         let topDeal = deals.prefix(3)
@@ -310,8 +314,25 @@ extension DealTableVC
 //                dealItems[2].append(deal)
 //            }
             dealBuffer.append(deal)
+            
+            pointToMemberCard = 0
+            pointToCrediteCard = 0
+            
+            AddPoin(deal: deal)
+            deal.pointCredite = pointToCrediteCard
+            deal.pointMemberCard = pointToMemberCard
+            
+
             deal.totalStep = GetTotalStep(deal: deal)
-            deal.title = String(format: DealPage.DealTitle.rawValue, deal.totalStep ?? 0)
+            TitleDeal = String(format: DealPage.DealTitle.rawValue, deal.totalStep ?? 0)
+            
+            if(deal.isOwnedCard)!{
+                TitleDeal = ("บัตรของคุณ\n" + TitleDeal)
+            }else{
+                TitleDeal = ("คุณยังไม่มีบัตรนี้\n" + TitleDeal)
+            }
+//            deal.title = String(format: DealPage.DealTitle.rawValue, deal.totalStep ?? 0)
+            deal.title = TitleDeal
         }
     }
     
@@ -322,8 +343,24 @@ extension DealTableVC
         return deal.isOwnedCard!
     }
     
+
+    func AddPoin(deal: Deal){
+
+        
+        if(deal.card?.type == .memberCard){
+            pointToMemberCard += (deal.card?.point ?? 0)
+        }else{
+            pointToCrediteCard = pointToCrediteCard + (deal.card?.point ?? 0)
+            
+        }
+        if(deal.Childs != nil){
+            return AddPoin(deal: deal.Childs!)
+        }
+    }
+    
     func GetTotalStep(deal: Deal, count: Int = 1) -> Int {
         if (deal.Childs != nil) {
+            
             return GetTotalStep(deal: deal.Childs!, count: count + 1)
         }
         return count

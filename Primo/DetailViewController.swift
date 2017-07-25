@@ -23,9 +23,10 @@ class DetailViewController: UIViewController
     let dropDown = DropDown()
     var selectedPlace: Place!
     var departmentList: [String] = ["ทุกแผนก"]
-    
+    var departmentListId = [Int]()
     var currentPercentDiscount: Float = 0.0
     var dateSelected: String = ""
+    var depSelect: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +60,7 @@ class DetailViewController: UIViewController
             dealView.price = Int(price)
             dealView.store = selectedPlace.storeId
             dealView.branch = selectedPlace.branchId
+            dealView.departmentId = depSelect
         }
     }
     
@@ -234,6 +236,11 @@ extension DetailViewController
         // Action triggered on selection
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             self.departmentButton.setTitle(item, for: .normal)
+            if(index > 0){
+              self.depSelect = self.departmentListId[index-1]
+            }else{
+              self.depSelect = 0
+            }
         }
         
         // Will set a custom width instead of the anchor view width
@@ -273,9 +280,11 @@ extension DetailViewController
     
     func ShowPlaceDepartment(json: JSON) {
         departmentList.removeAll()
+        departmentListId.removeAll()
         departmentList.append("ทุกแผนก")
         for (_, subJson):(String, JSON) in json["data"] {
             departmentList.append(subJson["name"].stringValue)
+            departmentListId.append(subJson["id"].intValue)
         }
         SetupDropdown()
         

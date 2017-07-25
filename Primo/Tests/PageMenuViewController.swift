@@ -138,8 +138,10 @@ extension PageMenuViewController
     func OnSegmentValueDidChange(segmentio: Segmentio, segmentIndex: Int) {
         //print("Selected item: ", segmentIndex)
         if (segmentIndex == 0) {
+            BankSelectIndex =  IndexPath(item: -1, section: -1)
             cardType = PrimoCardType.creditCard.rawValue // Select Credit
         } else {
+             BankSelectIndex =  IndexPath(item: -1, section: -1)
             cardType = PrimoCardType.debitCard.rawValue // Select Debit
         }
         bankID = -1
