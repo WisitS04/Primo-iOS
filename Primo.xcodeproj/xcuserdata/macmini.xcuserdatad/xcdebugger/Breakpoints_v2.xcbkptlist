@@ -362,7 +362,7 @@
                   moduleName = "Primo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/macmini/Desktop/ChocoLee/Primo/Primo/PlaceViewController.swift"
-                  timestampString = "522558984.627653"
+                  timestampString = "522653532.85805"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "338"
@@ -377,7 +377,7 @@
                   moduleName = "Primo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/macmini/Desktop/ChocoLee/Primo/Primo/PlaceViewController.swift"
-                  timestampString = "522558984.629549"
+                  timestampString = "522653532.860247"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "338"
@@ -409,86 +409,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Primo/DealDetailViewController.swift"
-            timestampString = "522563809.33743"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "477"
-            endingLineNumber = "477"
-            landmarkName = "TagDialog(sender:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Primo/DealDetailViewController.swift"
-            timestampString = "522563809.33743"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "478"
-            endingLineNumber = "478"
-            landmarkName = "TagDialog(sender:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Primo.DealDetailViewController.TagDialog (sender : __ObjC.UITapGestureRecognizer) -&gt; ()"
-                  moduleName = "Primo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macmini/Desktop/ChocoLee/Primo/Primo/DealDetailViewController.swift"
-                  timestampString = "522558984.641894"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "474"
-                  endingLineNumber = "474"
-                  offsetFromSymbolStart = "188">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Primo.DealDetailViewController.(TagDialog (sender : __ObjC.UITapGestureRecognizer) -&gt; ()).(closure #1)"
-                  moduleName = "Primo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/macmini/Desktop/ChocoLee/Primo/Primo/DealDetailViewController.swift"
-                  timestampString = "522558984.643863"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "475"
-                  endingLineNumber = "475"
-                  offsetFromSymbolStart = "40">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Primo/DealDetailViewController.swift"
-            timestampString = "522149349.229078"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
-            landmarkName = "init(index:deal:isCollapsed:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Primo/Page/Nearby/NoConnectionView.swift"
             timestampString = "522220189.277294"
             startingColumnNumber = "9223372036854775807"
@@ -506,7 +426,7 @@
                   moduleName = "Primo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/macmini/Desktop/ChocoLee/Primo/Primo/Page/Nearby/NoConnectionView.swift"
-                  timestampString = "522558984.652533"
+                  timestampString = "522653532.868764"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "73"
@@ -521,7 +441,7 @@
                   moduleName = "Primo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/macmini/Desktop/ChocoLee/Primo/Primo/Page/Nearby/NoConnectionView.swift"
-                  timestampString = "522558984.654581"
+                  timestampString = "522653532.870729"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "74"
@@ -544,6 +464,38 @@
             startingLineNumber = "111"
             endingLineNumber = "111"
             landmarkName = "CallWebservice()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Primo/DealDetailViewController.swift"
+            timestampString = "522652761.156495"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "483"
+            endingLineNumber = "483"
+            landmarkName = "TagDialog(sender:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Primo/DealDetailViewController.swift"
+            timestampString = "522652982.54208"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "579"
+            endingLineNumber = "579"
+            landmarkName = "SendCodeOrSMS(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

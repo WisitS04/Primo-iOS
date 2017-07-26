@@ -476,7 +476,7 @@ extension DealDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func TagDialog(sender:UITapGestureRecognizer) {
         let index = sender.view?.tag
         PrimoAlert().SmsDetail(desc: sections[index!].smsDesc!, number:sections[index!].smsNumber!) { (isOtherButton) -> Void in
-            if (isOtherButton) {
+            if (!isOtherButton) {
                 if (self.sections[index!].smsMsg?[0] != "*") {
                     let messageVC = MFMessageComposeViewController()
                     
@@ -492,8 +492,7 @@ extension DealDetailViewController: UITableViewDelegate, UITableViewDataSource {
                         UIApplication.shared.canOpenURL(url) {
                         UIApplication.shared.openURL(url)
                     }
-                    
-                    
+ 
                 }
                 
             }

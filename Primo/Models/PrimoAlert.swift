@@ -44,9 +44,23 @@ class PrimoAlert {
         }else{
             btn = "SEND"
         }
-        _ = SweetAlert().showAlert(
-            title, subTitle: desc, style: AlertStyle.none,
-            buttonTitle:btn, action: action)
+    
+//        _ = SweetAlert().showAlert(
+//            title,
+//            subTitle: desc,
+//            style: AlertStyle.none,
+//            buttonTitle:btn,
+//            action: action)
+        
+        _ = SweetAlert().showAlert(title,
+                                   subTitle: desc,
+                                   style: AlertStyle.none,
+                                   buttonTitle:"Cancel",
+                                   buttonColor:UIColor.darkGray,
+                                   otherButtonTitle:  btn,
+                                   action: action)
+
     }
     
+
 }
