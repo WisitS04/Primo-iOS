@@ -58,6 +58,7 @@ class PrimoAlert {
                                    buttonTitle:"Cancel",
                                    buttonColor:UIColor.darkGray,
                                    otherButtonTitle:  btn,
+                                   otherButtonColor: PrimoColor.Green.UIColor,
                                    action: action)
 
     }
