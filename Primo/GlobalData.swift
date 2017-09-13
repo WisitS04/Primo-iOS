@@ -13,13 +13,14 @@ enum Service: String {
     case Card = "Card"
     case CardNetwork = "CardNetwork"
     case Company = "Company"
+
     
     var url: String {
         return Service_Url + self.rawValue
     }
 }
-//let Service_Url = "http://spoton-primo.cloudapp.net/PrimoCustomerService/"
-let Service_Url = "https://primoservice.co/PrimoCustomerService/"
+let Service_Url = "http://primovmset.southeastasia.cloudapp.azure.com/PrimoCustomerService/"
+//let Service_Url = "https://primoservice.co/PrimoCustomerService/"
 let Service_User = "anonymous" // "abc@abc.com"
 let Service_Password = "spoton-primo" // "Cust-2014"
 
@@ -46,6 +47,21 @@ enum CardType: Int {
 ///////////////////
 var BankSelectIndex: IndexPath =  IndexPath(item: -1, section: -1)
 
+
+/////////////////////
+///KEY APP Version///
+/////////////////////
+var KEYAppVersion: String = "KEYAPPVERSION"
+var VersionNumber = UserDefaults.standard
+var cerrentVersin: Double = 10.3
+
+
+
+
+///////////////////
+//Key Versuin DB///
+///////////////////
+var MyCardDB: String =  "KEYMYCARDDATABASE"
 
 /////////////
 // Locaion //

@@ -12,6 +12,17 @@ struct Bank {
     var logoUrl: String!
     var seq: Int!
     
+    var typeId: Int!
+    var typeName: String!
+    var typeNameEng: String!
+    
+   
+    
+    
+//    var typeId: Int!
+//    var typeName: String!
+//    var typeNameEng: String!
+    
      init(json: JSON) {
         id = json["id"].intValue
         nameEN = json["nameEng"].stringValue
@@ -22,5 +33,10 @@ struct Bank {
         debitCount = json["debitCount"].intValue
         logoUrl = json["logoUrl"].stringValue
         seq = json["seq"].intValue
+        
+        typeId = json["typeId"].intValue
+        typeName = json["typeName"].stringValue
+        typeNameEng = json["typeNameEng"].stringValue
+        
     }
 }

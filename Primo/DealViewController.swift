@@ -8,11 +8,16 @@ class DealViewController: UIViewController
     @IBOutlet weak var usePointButton: DealFilterButton!
     @IBOutlet weak var useInstallmentButton: DealFilterButton!
     
-    @IBOutlet weak var myCardButton: UIButton!
+    @IBOutlet weak var usePayFullButton: DealFilterButton!
+    
+    @IBOutlet weak var useNotUsePoint: DealFilterButton!
+    
+    
+//    @IBOutlet weak var myCardButton: UIButton!
     
     @IBOutlet weak var controllPanelHeight: NSLayoutConstraint!
-    @IBOutlet weak var pointPanel: UIView!
-    @IBOutlet weak var pointField: UITextField!
+//    @IBOutlet weak var pointPanel: UIView!
+//    @IBOutlet weak var pointField: UITextField!
     
     var date: String = ""
     var price: Int = 0
@@ -22,20 +27,33 @@ class DealViewController: UIViewController
     let dropDown = DropDown()
     
     var myCardList: [PrimoCard] = []
+    var myCardListBuffer: [PrimoCard] = []
     var selectedCard: PrimoCard?
     var selectedDeal: Deal?
+    
+    var btn_point: Bool = false
+    var btn_not_point: Bool = false
+    var btn_full_peyment:Bool = false
+    var btn_installment:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         myCardList = CardDB.instance.getCards()
+        myCardListBuffer = myCardList
+   //Benz Comment
         
-        SetupDropDown()
+        
+//        SetupDropDown()
         SetupKeyboard()
-        HidePointPanel()
+//        HidePointPanel()
         
-        pointField.delegate = self
-        pointField.keyboardType = .numberPad
+        
+      
+//        pointField.delegate = self
+//        pointField.keyboardType = .numberPad
+        
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -44,14 +62,20 @@ class DealViewController: UIViewController
         navigationItem.backBarButtonItem = backItem // This will show in the next view controller being pushed
         if (segue.identifier == "DealTableEmbed") {
             if let dealTable = segue.destination as? DealTableVC {
-                self.SetupUsePointButton()
+                  //Benz Comment
+//                self.SetupUsePointButton()
+                
+                dealTable.controllrtDeals = self
                 dealTable.date = self.date
                 dealTable.price = self.price
                 dealTable.store = self.store
                 dealTable.branch = self.branch
                 dealTable.departmentId = self.departmentId
                 dealTable.UpdateData(usePoint: self.usePointButton.isUsing,
-                                     installment: self.useInstallmentButton.isUsing)
+                                     installment: self.useInstallmentButton.isUsing,
+                                     Peyment: self.usePayFullButton.isUsing,
+                                     UnPoint: self.useNotUsePoint.isUsing,
+                                     mCard: myCardListBuffer)
                 self.dealTableView = dealTable
             }
         } else if (segue.identifier == "ShowDealDetail") {
@@ -65,117 +89,218 @@ class DealViewController: UIViewController
     
     @IBAction func OnUsePointButtonClicked(_ sender: Any) {
         let btn = sender as! DealFilterButton
-        btn.isUsing = !btn.isUsing
-        if (btn.isUsing) {
-            btn.OnUsing()
-        } else {
-            btn.OnUnuse()
+        
+        btn_point = true
+        btn_not_point = false
+        
+        btn.isUsing = true
+        btn.OnUsing()
+        if(btn.isUsing){
+            useNotUsePoint.OnUnuse()
         }
-        dealTableView.UpdateData(usePoint: usePointButton.isUsing,
-                                 installment: useInstallmentButton.isUsing,
-                                 callWS: false)
+        
+//        btn.isUsing = !btn.isUsing
+//        if (btn.isUsing) {
+//            btn.OnUsing()
+//        } else {
+//            btn.OnUnuse()
+//        }
+        dealTableView.UpdateData(usePoint: btn_point,
+                                 installment: btn_installment,
+                                 Peyment: btn_full_peyment,
+                                 UnPoint: btn_not_point,
+                                 callWS: false,
+                                 mCard: myCardListBuffer)
     }
     
     @IBAction func OnUseInstallmentButtonClicked(_ sender: Any) {
         let btn = sender as! DealFilterButton
-        btn.isUsing = !btn.isUsing
-        if (btn.isUsing) {
-            btn.OnUsing()
-        } else {
-            btn.OnUnuse()
+        
+        btn_installment = true
+        btn_full_peyment = false
+        
+        btn.isUsing = true
+        btn.OnUsing()
+        if(btn.isUsing){
+           usePayFullButton.OnUnuse()
         }
-        dealTableView.UpdateData(usePoint: usePointButton.isUsing,
-                                 installment: useInstallmentButton.isUsing,
-                                 callWS: false)
+//        btn.isUsing = !btn.isUsing
+//        if (btn.isUsing) {
+//            btn.OnUsing()
+//        } else {
+//            btn.OnUnuse()
+//        }
+        dealTableView.UpdateData(usePoint: btn_point,
+                                 installment: btn_installment,
+                                 Peyment: btn_full_peyment,
+                                 UnPoint: btn_not_point,
+                                 callWS: false,
+                                 mCard: myCardListBuffer)
     }
     
-    @IBAction func OnIncreasePointClicked(_ sender: Any) {
-        var curPoint = Int(pointField.text!) ?? 0
-        curPoint += 100
-        pointField.text = String(curPoint)
+    
+    @IBAction func OnUsePatFullButtonClicked(_ sender: Any) {
+        let btn = sender as! DealFilterButton
+        
+        btn_full_peyment = true
+        btn_installment = false
+        
+         btn.isUsing = true
+         btn.OnUsing()
+        if(btn.isUsing){
+            useInstallmentButton.OnUnuse()
+        }
+//        btn.isUsing = !btn.isUsing
+//        if (btn.isUsing) {
+//            btn.OnUsing()
+//        } else {
+//            btn.OnUnuse()
+//        }
+        dealTableView.UpdateData(usePoint: btn_point,
+                                 installment: btn_installment,
+                                 Peyment: btn_full_peyment,
+                                 UnPoint: btn_not_point,
+                                 callWS: false,
+                                 mCard: myCardListBuffer)
+
     }
     
-    @IBAction func OnDecreasePointClicked(_ sender: Any) {
-        var curPoint = Int(pointField.text!) ?? 0
-        curPoint -= 100
-        if (curPoint >= 0) {
-            pointField.text = String(curPoint)
-        } else {
-            pointField.text = "0"
+    @IBAction func OnUseNotPointRedemButtonClicked(_ sender: Any) {
+        let btn = sender as! DealFilterButton
+        
+        btn_not_point = true
+        btn_point = false
+        
+        btn.isUsing = true
+        btn.OnUsing()
+        if(btn.isUsing){
+            usePointButton.OnUnuse()
         }
+        
+//        btn.isUsing = !btn.isUsing
+//        if (btn.isUsing) {
+//            btn.OnUsing()
+//        } else {
+//            btn.OnUnuse()
+//        }
+        dealTableView.UpdateData(usePoint: btn_point,
+                                 installment: btn_installment,
+                                 Peyment: btn_full_peyment,
+                                 UnPoint: btn_not_point,
+                                 callWS: false,
+                                 mCard: myCardListBuffer)
+
     }
+
     
-    @IBAction func OnRefreshButtonClicked(_ sender: Any) {
-        selectedCard?.point = Int(pointField.text!) ?? 0
-        if (CardDB.instance.updateCard(cId: (selectedCard?.cardId)!, newCard: selectedCard!)) {
-            dealTableView.UpdateData(usePoint: self.usePointButton.isUsing,
-                                     installment: self.useInstallmentButton.isUsing)
-        }
-    }
+//    @IBAction func OnIncreasePointClicked(_ sender: Any) {
+//        var curPoint = Int(pointField.text!) ?? 0
+//        curPoint += 100
+//        pointField.text = String(curPoint)
+//    }
+//    
+//    @IBAction func OnDecreasePointClicked(_ sender: Any) {
+//        var curPoint = Int(pointField.text!) ?? 0
+//        curPoint -= 100
+//        if (curPoint >= 0) {
+//            pointField.text = String(curPoint)
+//        } else {
+//            pointField.text = "0"
+//        }
+//    }
+
+//Benz comment
+//    @IBAction func OnRefreshButtonClicked(_ sender: Any) {
+//        selectedCard?.point = Int(pointField.text!) ?? 0
+//        if (CardDB.instance.updateCard(cId: (selectedCard?.cardId)!, newCard: selectedCard!)) {
+//            dealTableView.UpdateData(usePoint: self.usePointButton.isUsing,
+//                                     installment: self.useInstallmentButton.isUsing)
+//        }
+//    }
 }
 
 extension DealViewController
 {
-    func SetupDropDown(isUpdate: Bool = false) {
-        // The view to which the drop down will appear on
-        dropDown.anchorView = myCardButton // UIView or UIBarButtonItem
-        
-        // The list of items to display. Can be changed dynamically
-        var cardList: [String] = ["  กรุณาเลือกบัตรที่จะใช้คะแนนสะสม"]
-        for card in myCardList {
-            cardList.append("  \(card.nameTH)")
-        }
-        dropDown.dataSource = cardList
-        
-        // Will set a custom width instead of the anchor view width
-        //dropDownLeft.width = 200
-        
-        if !isUpdate {
-            // Action triggered on selection
-            dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-                self.myCardButton.setTitle(item, for: .normal)
-                if (index == 0) {
-                    self.HidePointPanel()
-                } else {
-                    self.selectedCard = self.myCardList[index - 1]
-                    self.ShowPointPanel()
-                }
+    
+    func OnReFreshCallService(card :PrimoCard){
+        for buffer in myCardListBuffer{
+            if(buffer.cardId == card.cardId){
+                buffer.pointToUse = card.pointToUse
             }
-            
-            myCardButton.addTarget(self, action: #selector(OnMyCardButtonClicked),
-                                   for: .touchUpInside)
         }
+        dealTableView.UpdateData(usePoint: btn_point,
+                                 installment: btn_installment,
+                                 Peyment: btn_full_peyment,
+                                 UnPoint: btn_not_point,
+                                 callWS: true,
+                                 editePoint: true,
+                                 mCard: myCardListBuffer)
     }
     
-    func OnMyCardButtonClicked(_ sender: Any) {
-        dropDown.show()
-    }
+    //Benz Comment
     
-    func ShowPointPanel() {
-        pointPanel.isHidden = false
-        let curPoint = selectedCard?.point ?? 0
-        if (curPoint > 0) {
-            pointField.text = String(curPoint)
-        } else {
-            pointField.text = ""
-        }
-        controllPanelHeight.constant = 160
-    }
+//    func SetupDropDown(isUpdate: Bool = false) {
+//        // The view to which the drop down will appear on
+//        dropDown.anchorView = myCardButton // UIView or UIBarButtonItem
+//        
+//        // The list of items to display. Can be changed dynamically
+//        var cardList: [String] = ["  กรุณาเลือกบัตรที่จะใช้คะแนนสะสม"]
+//        for card in myCardList {
+//            cardList.append("  \(card.nameTH)")
+//        }
+//        dropDown.dataSource = cardList
+//        
+//        // Will set a custom width instead of the anchor view width
+//        //dropDownLeft.width = 200
+//        
+//        if !isUpdate {
+//            // Action triggered on selection
+//            dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+//                self.myCardButton.setTitle(item, for: .normal)
+//                if (index == 0) {
+//                    self.HidePointPanel()
+//                } else {
+//                    self.selectedCard = self.myCardList[index - 1]
+//                    self.ShowPointPanel()
+//                }
+//            }
+//            
+//            myCardButton.addTarget(self, action: #selector(OnMyCardButtonClicked),
+//                                   for: .touchUpInside)
+//        }
+//    }
     
-    func HidePointPanel() {
-        pointPanel.isHidden = true
-        controllPanelHeight.constant = 110
-    }
+//    func OnMyCardButtonClicked(_ sender: Any) {
+//        dropDown.show()
+//    }
     
-    func SetupUsePointButton() {
-        usePointButton.isUsing = true
-        usePointButton.OnUsing()
-        
-    }
+//    func ShowPointPanel() {
+//        pointPanel.isHidden = false
+//        let curPoint = selectedCard?.point ?? 0
+//        if (curPoint > 0) {
+//            pointField.text = String(curPoint)
+//        } else {
+//            pointField.text = ""
+//        }
+//        controllPanelHeight.constant = 160
+//    }
+    
+//    func HidePointPanel() {
+//        pointPanel.isHidden = true
+//        controllPanelHeight.constant = 110
+//    }
+    
+//    func SetupUsePointButton() {
+//        usePointButton.isUsing = true
+//        usePointButton.OnUsing()
+//        
+//    }
     
     func UpdateCardData(cardList: [PrimoCard]) {
         myCardList = cardList
-        SetupDropDown()
+        
+        //Benz comment
+//        SetupDropDown()
     }
     
     func OnDealSelected(_ deal: Deal) {
@@ -196,7 +321,9 @@ extension DealViewController: UITextFieldDelegate
         
         toolbar.setItems([flexibleSpace, doneButton], animated: false)
         
-        pointField.inputAccessoryView = toolbar
+       // Benz comment
+        
+//        pointField.inputAccessoryView = toolbar
     }
     
     func OnDoneButtonClicked() {

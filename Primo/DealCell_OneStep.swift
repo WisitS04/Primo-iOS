@@ -3,6 +3,8 @@ import SDWebImage
 
 class DealCell_OneStep: UITableViewCell {
 
+    var controllerForDeals: DealViewController? = nil
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -11,14 +13,18 @@ class DealCell_OneStep: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func SetData(deal: Deal)
+    func SetData(deal: Deal ,mControllerForDeals: DealViewController)
     {
+        controllerForDeals = mControllerForDeals
+        
         // color bar
         if let subview = self.viewWithTag(101) {
             if (deal.isOwnedDeal!) {
-                subview.backgroundColor = PrimoColor.Green.UIColor
+//                subview.backgroundColor = PrimoColor.Green.UIColor
+                 subview.backgroundColor = UIColor.clear
             } else {
-                subview.backgroundColor = PrimoColor.Red.UIColor
+                subview.backgroundColor = UIColor.clear
+//                subview.backgroundColor = PrimoColor.Red.UIColor
             }
         }
         
@@ -60,24 +66,38 @@ class DealCell_OneStep: UITableViewCell {
         }
         
         // deal value
-        if let subview = self.viewWithTag(106) as? UILabel {
+        if let subview = self.viewWithTag(17) as? UILabel {
             let value = deal.totalReward
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
-              subview.text = (formatter.string(from: NSNumber(value: value!)) ?? "0")
+              subview.text = "฿ "+(formatter.string(from: NSNumber(value: value!)) ?? "0")
 //            subview.text = (formatter.string(from: NSNumber(value: value!)) ?? "0") + " ฿"
         }
         
         // deal value bg
-        if let subview = self.viewWithTag(107) {
-            subview.clipsToBounds = true
+        if let subview = self.viewWithTag(13) {
+//            subview.clipsToBounds = true
+            subview.layer.borderWidth = 1
+            subview.layer.borderColor = UIColor.init(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
             subview.layer.cornerRadius = 5
+
+            
+        }
+        
+        
+        if let subview = self.viewWithTag(16) {
+            //            subview.clipsToBounds = true
+            subview.layer.borderWidth = 1
+            subview.layer.borderColor = UIColor.init(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
+            subview.layer.cornerRadius = 5
+            
+            
         }
         
         
         //add point credite , debit and member card
         
-        if let subview = self.viewWithTag(120) as? UILabel {
+        if let subview = self.viewWithTag(15) as? UILabel {
             let value = deal.pointCredite
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -85,13 +105,47 @@ class DealCell_OneStep: UITableViewCell {
         }
         
         
-        if let subview = self.viewWithTag(121) as? UILabel {
+        if let subview = self.viewWithTag(14) as? UILabel {
             let value = deal.pointMemberCard
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             subview.text = (formatter.string(from: NSNumber(value: value)) ?? "0")
         }
         //End
+        
+        
+        if let subview = self.viewWithTag(18) {
+            subview.clipsToBounds = true
+            subview.layer.cornerRadius = 5
+            
+            
+        }
+        
+        
+        
+        if let subview = self.viewWithTag(11) as? Button_custom {
+            subview.backgroundColor = UIColor.clear
+            if(deal.card?.type == .memberCard){
+                subview.tag = 1
+                subview.mDealBuffer.removeAll()
+                subview.mDealBuffer.append(deal)
+                subview.addTarget(self, action: #selector(sendActionMember), for: .touchUpInside)
+            }
+           
+        }
+        
+        
+        if let subview = self.viewWithTag(12) as? Button_custom {
+            subview.backgroundColor = UIColor.clear
+            
+            if(deal.card?.type != .memberCard){
+                subview.tag = 2
+                subview.mDealBuffer.removeAll()
+                subview.mDealBuffer.append(deal)
+                subview.addTarget(self, action: #selector(sendActionCredite), for: .touchUpInside)
+            }
+        }
+        
         
         
         // medal image
@@ -118,4 +172,18 @@ class DealCell_OneStep: UITableViewCell {
             }
         }
     }
+    
+    @objc func sendActionCredite(_ sender: Any)  {
+        let value = sender as! Button_custom
+        DialogEditePoint.shared.Show(deal :value.mDealBuffer,controller: controllerForDeals!)
+        
+        print("sendActionCredite")
+    }
+    
+    @objc func sendActionMember(_ sender: Any)  {
+        let value = sender as! Button_custom
+         DialogEditePoint.shared.Show(deal :value.mDealBuffer,controller: controllerForDeals!)
+        print("sendActionMember")
+    }
+    
 }

@@ -11,6 +11,10 @@ import SDWebImage
 
 class DealCell_ThreeStep: UITableViewCell {
     
+    var statusMemberCard: Bool = false
+    var statusCrediteCard: Bool = false
+    var controllerForDeals: DealViewController? = nil
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -19,15 +23,18 @@ class DealCell_ThreeStep: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func SetData(deal: Deal)
+    func SetData(deal: Deal ,mControllerForDeals: DealViewController)
     {
+        controllerForDeals = mControllerForDeals
+        
         // color bar
         if let subview = self.viewWithTag(101) {
-            if (deal.isOwnedDeal!) {
-                subview.backgroundColor = PrimoColor.Green.UIColor
-            } else {
-                subview.backgroundColor = PrimoColor.Red.UIColor
-            }
+//            if (deal.isOwnedDeal!) {
+//                subview.backgroundColor = PrimoColor.Green.UIColor
+//            } else {
+//                subview.backgroundColor = PrimoColor.Red.UIColor
+//            }
+            subview.backgroundColor = UIColor.clear
         }
         
         // card image
@@ -101,11 +108,11 @@ class DealCell_ThreeStep: UITableViewCell {
         }
         
         // deal value
-        if let subview = self.viewWithTag(106) as? UILabel {
+        if let subview = self.viewWithTag(32) as? UILabel {
             let value = deal.totalReward
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
-            subview.text = (formatter.string(from: NSNumber(value: value!)) ?? "0") + " ฿"
+            subview.text = "฿ "+(formatter.string(from: NSNumber(value: value!)) ?? "0")
         }
         
         // deal value bg
@@ -117,7 +124,7 @@ class DealCell_ThreeStep: UITableViewCell {
         
         //add point credite , debit and member card
         
-        if let subview = self.viewWithTag(120) as? UILabel {
+        if let subview = self.viewWithTag(31) as? UILabel {
             let value = deal.pointCredite
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -125,7 +132,7 @@ class DealCell_ThreeStep: UITableViewCell {
         }
         
         
-        if let subview = self.viewWithTag(121) as? UILabel {
+        if let subview = self.viewWithTag(30) as? UILabel {
             let value = deal.pointMemberCard
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -133,6 +140,57 @@ class DealCell_ThreeStep: UITableViewCell {
         }
         //End
         
+        
+        if let subview = self.viewWithTag(13) {
+            //            subview.clipsToBounds = true
+            subview.layer.borderWidth = 1
+            subview.layer.borderColor = UIColor.init(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
+            subview.layer.cornerRadius = 5
+            
+            
+        }
+        
+        
+        if let subview = self.viewWithTag(16) {
+            //            subview.clipsToBounds = true
+            subview.layer.borderWidth = 1
+            subview.layer.borderColor = UIColor.init(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor
+            subview.layer.cornerRadius = 5
+            
+            
+        }
+        
+        if let subview = self.viewWithTag(33) as? Button_custom{
+            subview.backgroundColor = UIColor.clear
+            
+            
+            statusMemberCard = false
+            statusCrediteCard = false
+            
+            loopCheckTypeCard(mDeal: deal)
+            if(statusMemberCard){
+                subview.tag = 1
+                subview.mDealBuffer.removeAll()
+                subview.mDealBuffer.append(deal)
+                subview.addTarget(self, action: #selector(sendActionMember), for: .touchUpInside)
+            }
+        }
+        
+        
+        if let subview = self.viewWithTag(34) as? Button_custom {
+            subview.backgroundColor = UIColor.clear
+            
+            statusMemberCard = false
+            statusCrediteCard = false
+            
+            loopCheckTypeCard(mDeal: deal)
+            if(statusCrediteCard){
+                subview.tag = 2
+                subview.mDealBuffer.removeAll()
+                subview.mDealBuffer.append(deal)
+                subview.addTarget(self, action: #selector(sendActionCredite), for: .touchUpInside)
+            }
+        }
         
         
         // medal image
@@ -159,4 +217,37 @@ class DealCell_ThreeStep: UITableViewCell {
             }
         }
     }
+    
+    
+    
+    func loopCheckTypeCard(mDeal: Deal) {
+        if(mDeal.Childs != nil){
+            if(mDeal.card?.type == .memberCard){
+                statusMemberCard = true
+            }else{
+                statusCrediteCard = true
+            }
+            return loopCheckTypeCard(mDeal: mDeal.Childs!)
+        }else{
+            if(mDeal.card?.type == .memberCard){
+                statusMemberCard = true
+            }else{
+                statusCrediteCard = true
+            }
+        }
+    }
+    
+    @objc func sendActionCredite(_ sender: Any)  {
+        let value = sender as! Button_custom
+            DialogEditePoint.shared.Show(deal :value.mDealBuffer, controller: controllerForDeals!)
+        
+        print("sendActionCredite")
+    }
+    
+    @objc func sendActionMember(_ sender: Any)  {
+        let value = sender as! Button_custom
+            DialogEditePoint.shared.Show(deal :value.mDealBuffer, controller: controllerForDeals!)
+        print("sendActionMember")
+    }
+    
 }

@@ -41,27 +41,37 @@ class PrimoAlert {
         
         if(number[0] == "*"){
             btn = "OK"
+            _ = SweetAlert().showAlert(
+                title,
+                subTitle: desc,
+                style: AlertStyle.none,
+                buttonTitle:btn,
+                action: action)
         }else{
             btn = "SEND"
+            _ = SweetAlert().showAlert(title,
+                                       subTitle: desc,
+                                       style: AlertStyle.none,
+                                       buttonTitle:"Cancel",
+                                       buttonColor:UIColor.darkGray,
+                                       otherButtonTitle:  btn,
+                                       otherButtonColor: PrimoColor.Green.UIColor,
+                                       action: action)
+
         }
+       
+    }
     
-//        _ = SweetAlert().showAlert(
-//            title,
-//            subTitle: desc,
-//            style: AlertStyle.none,
-//            buttonTitle:btn,
-//            action: action)
-        
-        _ = SweetAlert().showAlert(title,
-                                   subTitle: desc,
+    func confrimDeleteCard(action: ((Bool) -> Void)?){
+        _ = SweetAlert().showAlert("เอาออกจากบัตรของฉัน",
+                                   subTitle: "คุณแน่ใจว่าต้องการลบบัตรนี้ออกจากบัตรของฉัน",
                                    style: AlertStyle.none,
                                    buttonTitle:"Cancel",
                                    buttonColor:UIColor.darkGray,
-                                   otherButtonTitle:  btn,
+                                   otherButtonTitle:  "   OK   ",
                                    otherButtonColor: PrimoColor.Green.UIColor,
                                    action: action)
 
     }
-    
 
 }

@@ -31,6 +31,8 @@ class DetailViewController: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
 
+//         GuideForDetail.shared.Show(view: self.view, navigationController: self.navigationController!)
+        
         // Set up SideBar
         if revealViewController() != nil {
             revealViewController().rightViewRevealWidth = 150
@@ -205,7 +207,8 @@ extension DetailViewController
         let url = Service.Department.url
         let user = Service_User
         let pass = Service_Password
-        let params: Parameters = ["store": selectedPlace.storeId]
+        let params: Parameters = ["store": selectedPlace.storeId,
+                                  "branch": selectedPlace.branchId]
         Alamofire.request(url, parameters: params)
             .authenticate(user: user, password: pass)
             .responseJSON { response in
@@ -216,6 +219,9 @@ extension DetailViewController
                     if(departmentCount > 0) {
                         self.ShowPlaceDepartment(json: json)
                     }
+                    
+                    GuideForDetail.shared.Show(view: self.view, navigationController: self.navigationController! , MydepartmentCount :departmentCount)
+                    
                     LoadingOverlay.shared.hideOverlayView()
                 case .failure(let error):
                     print(error)

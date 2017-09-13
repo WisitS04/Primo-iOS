@@ -103,7 +103,7 @@ class CollapsibleTableViewHeader: UITableViewHeaderFooterView {
             withVisualFormat: "H:|[warningView]|",
             options: [], metrics: nil, views: views))
         contentView.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|[headerView(40)]-[warningView(40)]|",
+            withVisualFormat: "V:|[headerView(50)]-[warningView(40)]|",
             options: [], metrics: nil, views: views))
         
         headerView.addConstraints(NSLayoutConstraint.constraints(

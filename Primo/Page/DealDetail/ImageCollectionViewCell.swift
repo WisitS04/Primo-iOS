@@ -12,4 +12,6 @@ class ImageCollectionViewCell: UICollectionViewCell
 {
     @IBOutlet weak var statusImage: UIImageView!
     @IBOutlet weak var cardImage: UIImageView!
+    @IBOutlet weak var NameBank: UILabel!
+    
 }

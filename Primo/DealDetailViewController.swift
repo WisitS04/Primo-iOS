@@ -441,12 +441,10 @@ extension DealDetailViewController: UITableViewDelegate, UITableViewDataSource {
         header.indexLabel.text = "\(sections[section].index!)"
         header.cardImageView.image = sections[section].cardImage
 //        header.titleLabel.text = sections[section].title
-          header.titleLabel.text = sections[section].howto
+        header.titleLabel.text = sections[section].howto
         header.arrowLabel.text = ">"
         header.setCollapsed(sections[section].collapsed)
-        
-    
-        
+                
         //Benz - 04-07-2017 Edited case sms and code
         if (sections[section].smsMsg.characters.count > 0) {
             if (sections[section].smsMsg[0] == "*") {
@@ -502,9 +500,9 @@ extension DealDetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        var height: CGFloat = 40.0
+        var height: CGFloat = 50.0
         if (sections[section].smsNumber.characters.count > 0) {
-            height = 80.0
+            height = 90.0
         }
         return height
     }

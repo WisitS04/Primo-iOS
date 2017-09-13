@@ -11,6 +11,9 @@ class DealTableVC: UITableViewController
     var dealsWithInstallment: [Deal] = []
     var dealsWithoutInstallment: [Deal] = []
     
+    
+    
+    
     var isGotDealsWithInstallment: Bool = false
     var isGotDealsWithoutInstallment: Bool = false
     
@@ -18,6 +21,7 @@ class DealTableVC: UITableViewController
 //    var filteredDeals: [Deal] = []
     var dealBuffer: [Deal] = []
     
+    var controllrtDeals: DealViewController? = nil
     var date: String = ""
     var price: Int = 0
     var store: Int = 0
@@ -26,6 +30,8 @@ class DealTableVC: UITableViewController
     
     var isUsePoint: Bool = false
     var isInstallment: Bool = false
+    var isPeyment: Bool = false
+    var isUnPoint: Bool = false
     
     var pointToCrediteCard : Int = 0
     var pointToMemberCard : Int = 0
@@ -36,6 +42,7 @@ class DealTableVC: UITableViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
     }
 
 //    override func numberOfSections(in tableView: UITableView) -> Int {
@@ -58,17 +65,17 @@ class DealTableVC: UITableViewController
         if (deal.totalStep! == 1) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DealCell_OneStep",
                                                      for: indexPath) as! DealCell_OneStep
-            cell.SetData(deal: deal)
+            cell.SetData(deal: deal,mControllerForDeals :controllrtDeals!)
             return cell
         } else if (deal.totalStep! == 2) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DealCell_TwoStep",
                                                      for: indexPath) as! DealCell_TwoStep
-            cell.SetData(deal: deal)
+            cell.SetData(deal: deal,mControllerForDeals :controllrtDeals!)
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DealCell_ThreeStep",
                                                      for: indexPath) as! DealCell_ThreeStep
-            cell.SetData(deal: deal)
+            cell.SetData(deal: deal,mControllerForDeals :controllrtDeals!)
             return cell
         }
     }
@@ -84,18 +91,28 @@ class DealTableVC: UITableViewController
 
 extension DealTableVC
 {
-    func UpdateData(usePoint: Bool = false, installment: Bool = false, callWS: Bool = true) {
+    
+    func UpdateData(usePoint: Bool = false,
+                    installment: Bool = false,
+                    Peyment: Bool = false,
+                    UnPoint: Bool  ,
+                    callWS: Bool = true ,
+                    editePoint: Bool = false,
+                    mCard:  [PrimoCard]) {
+        
         isUsePoint = usePoint
         isInstallment = installment
+        isPeyment = Peyment
+        isUnPoint = UnPoint
         
         if (callWS) {
-            CallWebservice()
+            CallWebservice(statusEditePoint: editePoint, Card: mCard)
         } else {
             FilterDeal()
         }
     }
     
-    func CallWebservice() {
+    func CallWebservice(statusEditePoint :Bool = false , Card: [PrimoCard]) {
         LoadingOverlay.shared.showOverlay(view: self.view)
         //
         // Parameters
@@ -113,7 +130,7 @@ extension DealTableVC
         }
         let cards = CardDB.instance.getCards()
         if (cards.count > 0) {
-            param["ownedCardList"] = GenServiceParam(ownedCardList: cards)
+            param["ownedCardList"] = GenServiceParam(ownedCardList: cards, EditePoint: statusEditePoint, card: Card)
         }
         //
         // Get dealsWithoutInstallment
@@ -256,11 +273,12 @@ extension DealTableVC
         print("tableView.reloadData()")
     }
     
-    func CheckDealCase(deal: Deal, usePointCase: Bool = false, installmentCase: Bool = false) -> Bool {
+    func CheckDealCase(deal: Deal, usePointCase: Bool = false, installmentCase: Bool = false ) -> Bool {
+        
         var result = false
         var point = usePointCase
         var installment = installmentCase
-        
+
         if (deal.promotionCategoryName! == "Point Redemption") {
             point = true
         }
@@ -271,19 +289,35 @@ extension DealTableVC
         if (deal.Childs != nil) {
             return CheckDealCase(deal: deal.Childs!, usePointCase: point, installmentCase: installment)
         } else {
-            if (isUsePoint && isInstallment && point && installment) {
-                // Use point and Installment
+            
+            if(isPeyment && !isInstallment && isUsePoint && !isUnPoint && point && !installment){
                 result = true
-            } else if (isUsePoint && !isInstallment && point && !installment) {
-                // Use point only
+
+            }else if(isPeyment && !isInstallment && !isUsePoint && isUnPoint && !installment && !point){
                 result = true
-            } else if (!isUsePoint && isInstallment && !point && installment) {
-                // Installment only
+
+            }else if(!isPeyment && isInstallment && isUsePoint && !isUnPoint && point && installment){
                 result = true
-            } else if (!isUsePoint && !isInstallment && !point && !installment) {
-                // Not use point and Not installment
+
+            }else if(!isPeyment && isInstallment && !isUsePoint && isUnPoint && !point && installment){
                 result = true
+
             }
+            
+            
+//            if (isUsePoint && isInstallment && point && installment) {
+//                // Use point and Installment
+//                result = true
+//            } else if (isUsePoint && !isInstallment && point && !installment) {
+//                // Use point only
+//                result = true
+//            } else if (!isUsePoint && isInstallment && !point && installment) {
+//                // Installment only
+//                result = true
+//            } else if (!isUsePoint && !isInstallment && !point && !installment) {
+//                // Not use point and Not installment
+//                result = true
+//            }
         }
         
         return result
@@ -327,9 +361,10 @@ extension DealTableVC
             TitleDeal = String(format: DealPage.DealTitle.rawValue, deal.totalStep ?? 0)
             
             if(deal.isOwnedCard)!{
-                TitleDeal = ("บัตรของคุณ\n" + TitleDeal)
+//                TitleDeal = ("บัตรของคุณ\n" + TitleDeal)
+                 TitleDeal = (TitleDeal+"")
             }else{
-                TitleDeal = ("คุณยังไม่มีบัตรนี้\n" + TitleDeal)
+                TitleDeal = (TitleDeal+"")
             }
 //            deal.title = String(format: DealPage.DealTitle.rawValue, deal.totalStep ?? 0)
             deal.title = TitleDeal

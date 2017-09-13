@@ -12,6 +12,7 @@ class NoConnectionView
     var imageView = UIImageView()
     var button = UIButton(frame: CGRect(x: 0, y: 0, width: 120, height: 30))
     var dialogView = UIView()
+
     
     var Action: ((_ Button: Bool) -> Void)? = nil
     
@@ -54,9 +55,9 @@ class NoConnectionView
         button.setTitle("Tap to retry", for: .normal)
         button.center = CGPoint(x: dialogView.bounds.width / 2,
                                 y: dialogView.bounds.height / 1.6)
-        button.backgroundColor = HexStringToUIColor(hex: "#ffffff")
-        button.layer.cornerRadius = 0
-        button.setTitleColor(UIColor.black, for: UIControlState.normal)
+        button.backgroundColor = HexStringToUIColor(hex: PrimoColor.Green.rawValue)
+        button.layer.cornerRadius = 10
+        button.setTitleColor(UIColor.white, for: UIControlState.normal)
         if(action != nil) {
             Action = action
             button.addTarget(self, action: #selector(sendActionData), for: .touchUpInside)
@@ -71,8 +72,8 @@ class NoConnectionView
     @objc func sendActionData(_ sender: UIButton!)  {
         if(Action != nil) {
             UIView.animate(withDuration: 0.6,animations: {
-                self.button.transform = CGAffineTransform(scaleX: 0.6, y: 0.6)
-            },completion: { _ in UIView.animate(withDuration: 0.6) {
+                self.button.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            },completion: { _ in UIView.animate(withDuration: 0.15) {
                 self.button.transform = CGAffineTransform.identity
                 }
             })

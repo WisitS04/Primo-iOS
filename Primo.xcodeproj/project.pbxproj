@@ -10,6 +10,7 @@
 		9A0FCF351ED6E135001FA250 /* Segmentio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0FCF331ED6E119001FA250 /* Segmentio.framework */; };
 		9A0FCF361ED6E135001FA250 /* Segmentio.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0FCF331ED6E119001FA250 /* Segmentio.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9A0FCF381ED6E3BF001FA250 /* SegmentedControllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0FCF371ED6E3BF001FA250 /* SegmentedControllViewController.swift */; };
+		9A12958C1F5E85B4009C7115 /* GuideForDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A12958B1F5E85B4009C7115 /* GuideForDetail.swift */; };
 		9A17418E1EB358C700272EB8 /* DealDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A17418D1EB358C700272EB8 /* DealDetailTableViewCell.swift */; };
 		9A177DB31EDD62A500F9DDC4 /* AddMemberCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A177DB21EDD62A500F9DDC4 /* AddMemberCardViewController.swift */; };
 		9A1DF5B11E1D0BDE00A87327 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1DF5B01E1D0BDE00A87327 /* DetailViewController.swift */; };
@@ -24,17 +25,30 @@
 		9A234EFD1E7A71AE0086FE1F /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A234EFC1E7A71AE0086FE1F /* Card.swift */; };
 		9A23C7FB1EAE3EA2001B0193 /* CollapsibleTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A23C7FA1EAE3EA2001B0193 /* CollapsibleTableViewHeader.swift */; };
 		9A264DD11E641F710014362E /* Bank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A264DD01E641F710014362E /* Bank.swift */; };
+		9A2C9F5A1F5FD16200BEF0DD /* MyCard_TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2C9F591F5FD16200BEF0DD /* MyCard_TableView.swift */; };
+		9A2C9F5C1F5FE10700BEF0DD /* MyCard_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2C9F5B1F5FE10700BEF0DD /* MyCard_ViewController.swift */; };
+		9A2C9F5E1F5FE21100BEF0DD /* MyCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2C9F5D1F5FE21100BEF0DD /* MyCardCell.swift */; };
+		9A2C9F601F60218C00BEF0DD /* DialogForMyCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2C9F5F1F60218C00BEF0DD /* DialogForMyCard.swift */; };
 		9A2E38121E32537600E7F5AA /* AddCardTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2E38111E32537600E7F5AA /* AddCardTabBar.swift */; };
 		9A2ED4D21E9E25700060D816 /* DealDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2ED4D11E9E25700060D816 /* DealDetailViewController.swift */; };
+		9A2EF9751F5D25DA0096AAE2 /* Mixpanel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A2EF9731F5D25C40096AAE2 /* Mixpanel.framework */; };
+		9A2EF9761F5D25DA0096AAE2 /* Mixpanel.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A2EF9731F5D25C40096AAE2 /* Mixpanel.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9A2EF9781F5D445C0096AAE2 /* GuideForNearby.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2EF9771F5D445C0096AAE2 /* GuideForNearby.swift */; };
 		9A30F3751EE6AA090002B275 /* MyCardTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A30F3741EE6AA090002B275 /* MyCardTableCell.swift */; };
 		9A30F3771EE7035C0002B275 /* SweetAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A30F3761EE7035C0002B275 /* SweetAlert.swift */; };
 		9A30F37A1EE7067C0002B275 /* SweetAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A30F3791EE7067C0002B275 /* SweetAlertViewController.swift */; };
+		9A355DDB1F592C7B00502C72 /* Walkthrough.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A355DDA1F592C7A00502C72 /* Walkthrough.swift */; };
 		9A35A4EC1EC9AA20002BA45D /* PageMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A35A4EB1EC9AA1F002BA45D /* PageMenuViewController.swift */; };
+		9A366E5D1F624C61008E7DFC /* ConfrimDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A366E5C1F624C61008E7DFC /* ConfrimDialog.swift */; };
 		9A370C401EB84A74000613A7 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A370C3F1EB84A73000613A7 /* ImageCollectionViewCell.swift */; };
+		9A39B4241F303FE4005DF046 /* Condition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A39B4231F303FE4005DF046 /* Condition.swift */; };
+		9A39B4261F308290005DF046 /* GuideForAddCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A39B4251F30828F005DF046 /* GuideForAddCard.swift */; };
 		9A4677811E3F2C5100B23CB6 /* GlobalHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4677801E3F2C5100B23CB6 /* GlobalHelper.swift */; };
 		9A4677831E3F4ED100B23CB6 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4677821E3F4ED100B23CB6 /* CustomButton.swift */; };
 		9A4677851E3F601A00B23CB6 /* DropDown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A4677841E3F601A00B23CB6 /* DropDown.framework */; };
 		9A4677861E3F601A00B23CB6 /* DropDown.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A4677841E3F601A00B23CB6 /* DropDown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9A46FBB51F67AA36008CDD80 /* DialogEditePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A46FBB41F67AA36008CDD80 /* DialogEditePoint.swift */; };
+		9A46FBB71F67D2AF008CDD80 /* Button_custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A46FBB61F67D2AF008CDD80 /* Button_custom.swift */; };
 		9A4CB9221ECDB2EE00FFB9D1 /* BankCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4CB9211ECDB2EE00FFB9D1 /* BankCollectionView.swift */; };
 		9A5127841E79535600A6B70C /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A5127821E79534700A6B70C /* SQLite.framework */; };
 		9A5127851E79535600A6B70C /* SQLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A5127821E79534700A6B70C /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -58,15 +72,22 @@
 		9A86477A1E5C2CD600E3BEE9 /* Deal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8647791E5C2CD600E3BEE9 /* Deal.swift */; };
 		9A86477C1E5DD33B00E3BEE9 /* DealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A86477B1E5DD33B00E3BEE9 /* DealViewController.swift */; };
 		9A88E3481E1527C4006B772B /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A88E3471E1527C4006B772B /* TableViewController.swift */; };
+		9A96CCBA1F53D6E40040BA52 /* AddCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A96CCB91F53D6E40040BA52 /* AddCardController.swift */; };
+		9A96CCBC1F53DC180040BA52 /* BankListClloctionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A96CCBB1F53DC180040BA52 /* BankListClloctionView.swift */; };
 		9AA6AC641E3B8DDA00B3B635 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AA6AC621E3B8DDA00B3B635 /* Alamofire.framework */; };
 		9AA6AC651E3B8DDA00B3B635 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9AA6AC621E3B8DDA00B3B635 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9AA6AC661E3B8DDA00B3B635 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AA6AC631E3B8DDA00B3B635 /* SwiftyJSON.framework */; };
 		9AA6AC671E3B8DDA00B3B635 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9AA6AC631E3B8DDA00B3B635 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9AA99D791E370C1800F5B475 /* CenterCellCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA99D781E370C1800F5B475 /* CenterCellCollectionViewFlowLayout.swift */; };
+		9AABF4431F541A32007933F7 /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AABF4421F541A32007933F7 /* Company.swift */; };
+		9AABF4451F5420DF007933F7 /* BankDebit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AABF4441F5420DF007933F7 /* BankDebit.swift */; };
 		9ABE926C1ED1C81F00D13CFB /* CardResultTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABE926B1ED1C81F00D13CFB /* CardResultTableView.swift */; };
 		9ABE92701ED1CC0D00D13CFB /* CardResultTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABE926F1ED1CC0D00D13CFB /* CardResultTableCell.swift */; };
 		9AD018101EF926CB00C6E20F /* CheckInternetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD0180F1EF926CB00C6E20F /* CheckInternetVC.swift */; };
 		9AD018121EF9277900C6E20F /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD018111EF9277900C6E20F /* Reachability.swift */; };
+		9AD933371F553B3600409938 /* SelectCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD933361F553B3600409938 /* SelectCard.swift */; };
+		9AD933391F555D8600409938 /* selectCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD933381F555D8600409938 /* selectCardCell.swift */; };
+		9AD9333B1F55622400409938 /* CardTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD9333A1F55622400409938 /* CardTableView.swift */; };
 		9ADC1C7A1E6D704B007450AE /* PlaceDetail_Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADC1C791E6D704B007450AE /* PlaceDetail_Test.swift */; };
 		9AE46EDD1E703B0100475C3A /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE46EDC1E703B0100475C3A /* LoadingOverlay.swift */; };
 		9AEC34381EFD116500DBAFA8 /* LandingPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEC34371EFD116500DBAFA8 /* LandingPageVC.swift */; };
@@ -95,6 +116,7 @@
 				9A1DF5B61E1D117400A87327 /* DatePickerDialog.framework in Embed Frameworks */,
 				9A5127851E79535600A6B70C /* SQLite.framework in Embed Frameworks */,
 				9AA6AC651E3B8DDA00B3B635 /* Alamofire.framework in Embed Frameworks */,
+				9A2EF9761F5D25DA0096AAE2 /* Mixpanel.framework in Embed Frameworks */,
 				9AA6AC671E3B8DDA00B3B635 /* SwiftyJSON.framework in Embed Frameworks */,
 				9A4677861E3F601A00B23CB6 /* DropDown.framework in Embed Frameworks */,
 				9A0FCF361ED6E135001FA250 /* Segmentio.framework in Embed Frameworks */,
@@ -107,6 +129,7 @@
 /* Begin PBXFileReference section */
 		9A0FCF331ED6E119001FA250 /* Segmentio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Segmentio.framework; path = Carthage/Build/iOS/Segmentio.framework; sourceTree = "<group>"; };
 		9A0FCF371ED6E3BF001FA250 /* SegmentedControllViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegmentedControllViewController.swift; path = Tests/SegmentedControllViewController.swift; sourceTree = "<group>"; };
+		9A12958B1F5E85B4009C7115 /* GuideForDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideForDetail.swift; sourceTree = "<group>"; };
 		9A17418D1EB358C700272EB8 /* DealDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DealDetailTableViewCell.swift; path = Page/DealDetail/DealDetailTableViewCell.swift; sourceTree = "<group>"; };
 		9A177DB21EDD62A500F9DDC4 /* AddMemberCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddMemberCardViewController.swift; path = ViewController/AddMemberCardViewController.swift; sourceTree = "<group>"; };
 		9A1DF5AE1E1D0B1500A87327 /* DatePickerDialog.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DatePickerDialog.framework; path = Carthage/Build/iOS/DatePickerDialog.framework; sourceTree = "<group>"; };
@@ -120,16 +143,28 @@
 		9A234EFC1E7A71AE0086FE1F /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		9A23C7FA1EAE3EA2001B0193 /* CollapsibleTableViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollapsibleTableViewHeader.swift; path = CustomView/CollapsibleTableViewHeader.swift; sourceTree = "<group>"; };
 		9A264DD01E641F710014362E /* Bank.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bank.swift; sourceTree = "<group>"; };
+		9A2C9F591F5FD16200BEF0DD /* MyCard_TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyCard_TableView.swift; path = Page/MyCard/MyCard_TableView.swift; sourceTree = "<group>"; };
+		9A2C9F5B1F5FE10700BEF0DD /* MyCard_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyCard_ViewController.swift; path = Page/MyCard/MyCard_ViewController.swift; sourceTree = "<group>"; };
+		9A2C9F5D1F5FE21100BEF0DD /* MyCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCardCell.swift; sourceTree = "<group>"; };
+		9A2C9F5F1F60218C00BEF0DD /* DialogForMyCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DialogForMyCard.swift; path = Page/MyCard/DialogForMyCard.swift; sourceTree = "<group>"; };
 		9A2E38111E32537600E7F5AA /* AddCardTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCardTabBar.swift; sourceTree = "<group>"; };
 		9A2ED4D11E9E25700060D816 /* DealDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealDetailViewController.swift; sourceTree = "<group>"; };
+		9A2EF9731F5D25C40096AAE2 /* Mixpanel.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mixpanel.framework; path = Carthage/Build/iOS/Mixpanel.framework; sourceTree = "<group>"; };
+		9A2EF9771F5D445C0096AAE2 /* GuideForNearby.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GuideForNearby.swift; path = Page/Nearby/GuideForNearby.swift; sourceTree = "<group>"; };
 		9A30F3741EE6AA090002B275 /* MyCardTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyCardTableCell.swift; path = Page/MyCard/MyCardTableCell.swift; sourceTree = "<group>"; };
 		9A30F3761EE7035C0002B275 /* SweetAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SweetAlert.swift; path = Lib/SweetAlert/SweetAlert.swift; sourceTree = "<group>"; };
 		9A30F3791EE7067C0002B275 /* SweetAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SweetAlertViewController.swift; path = Tests/SweetAlertViewController.swift; sourceTree = "<group>"; };
+		9A355DDA1F592C7A00502C72 /* Walkthrough.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Walkthrough.swift; sourceTree = "<group>"; };
 		9A35A4EB1EC9AA1F002BA45D /* PageMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PageMenuViewController.swift; path = Tests/PageMenuViewController.swift; sourceTree = "<group>"; };
+		9A366E5C1F624C61008E7DFC /* ConfrimDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConfrimDialog.swift; path = Page/MyCard/ConfrimDialog.swift; sourceTree = "<group>"; };
 		9A370C3F1EB84A73000613A7 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCollectionViewCell.swift; path = Page/DealDetail/ImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		9A39B4231F303FE4005DF046 /* Condition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Condition.swift; path = Page/Nearby/Condition.swift; sourceTree = "<group>"; };
+		9A39B4251F30828F005DF046 /* GuideForAddCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GuideForAddCard.swift; path = Page/Nearby/GuideForAddCard.swift; sourceTree = "<group>"; };
 		9A4677801E3F2C5100B23CB6 /* GlobalHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalHelper.swift; sourceTree = "<group>"; };
 		9A4677821E3F4ED100B23CB6 /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomButton.swift; path = CustomElement/CustomButton.swift; sourceTree = "<group>"; };
 		9A4677841E3F601A00B23CB6 /* DropDown.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DropDown.framework; path = Carthage/Build/iOS/DropDown.framework; sourceTree = "<group>"; };
+		9A46FBB41F67AA36008CDD80 /* DialogEditePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DialogEditePoint.swift; path = Page/DealDetail/DialogEditePoint.swift; sourceTree = "<group>"; };
+		9A46FBB61F67D2AF008CDD80 /* Button_custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Button_custom.swift; sourceTree = "<group>"; };
 		9A4CB9211ECDB2EE00FFB9D1 /* BankCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BankCollectionView.swift; path = Page/AddCard/BankCollectionView.swift; sourceTree = "<group>"; };
 		9A5127821E79534700A6B70C /* SQLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SQLite.framework; path = Carthage/Build/iOS/SQLite.framework; sourceTree = "<group>"; };
 		9A58C4691E8E69CD00509825 /* DealCell_OneStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealCell_OneStep.swift; sourceTree = "<group>"; };
@@ -153,13 +188,20 @@
 		9A8647791E5C2CD600E3BEE9 /* Deal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deal.swift; sourceTree = "<group>"; };
 		9A86477B1E5DD33B00E3BEE9 /* DealViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealViewController.swift; sourceTree = "<group>"; };
 		9A88E3471E1527C4006B772B /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		9A96CCB91F53D6E40040BA52 /* AddCardController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddCardController.swift; path = Page/AddCard/AddCardController.swift; sourceTree = "<group>"; };
+		9A96CCBB1F53DC180040BA52 /* BankListClloctionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BankListClloctionView.swift; path = Page/AddCard/BankListClloctionView.swift; sourceTree = "<group>"; };
 		9AA6AC621E3B8DDA00B3B635 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		9AA6AC631E3B8DDA00B3B635 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		9AA99D781E370C1800F5B475 /* CenterCellCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterCellCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		9AABF4421F541A32007933F7 /* Company.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Company.swift; path = Models/Company.swift; sourceTree = "<group>"; };
+		9AABF4441F5420DF007933F7 /* BankDebit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BankDebit.swift; path = CustomView/PagerView/BankDebit.swift; sourceTree = "<group>"; };
 		9ABE926B1ED1C81F00D13CFB /* CardResultTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardResultTableView.swift; path = Page/AddCard/CardResultTableView.swift; sourceTree = "<group>"; };
 		9ABE926F1ED1CC0D00D13CFB /* CardResultTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardResultTableCell.swift; path = Page/AddCard/CardResultTableCell.swift; sourceTree = "<group>"; };
 		9AD0180F1EF926CB00C6E20F /* CheckInternetVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckInternetVC.swift; path = Tests/CheckInternetVC.swift; sourceTree = "<group>"; };
 		9AD018111EF9277900C6E20F /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = Models/Reachability.swift; sourceTree = "<group>"; };
+		9AD933361F553B3600409938 /* SelectCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectCard.swift; path = Page/AddCard/SelectCard.swift; sourceTree = "<group>"; };
+		9AD933381F555D8600409938 /* selectCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = selectCardCell.swift; sourceTree = "<group>"; };
+		9AD9333A1F55622400409938 /* CardTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTableView.swift; sourceTree = "<group>"; };
 		9ADC1C791E6D704B007450AE /* PlaceDetail_Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaceDetail_Test.swift; path = Tests/PlaceDetail_Test.swift; sourceTree = "<group>"; };
 		9AE46EDC1E703B0100475C3A /* LoadingOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingOverlay.swift; path = CustomElement/LoadingOverlay.swift; sourceTree = "<group>"; };
 		9AEC34371EFD116500DBAFA8 /* LandingPageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LandingPageVC.swift; path = ViewController/LandingPageVC.swift; sourceTree = "<group>"; };
@@ -185,6 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A5127841E79535600A6B70C /* SQLite.framework in Frameworks */,
+				9A2EF9751F5D25DA0096AAE2 /* Mixpanel.framework in Frameworks */,
 				9A722D6C1E6812CD0077F92A /* CoreLocation.framework in Frameworks */,
 				9A0FCF351ED6E135001FA250 /* Segmentio.framework in Frameworks */,
 				9A722D691E66C2B70077F92A /* SDWebImage.framework in Frameworks */,
@@ -211,6 +254,8 @@
 			children = (
 				9AF7DD831E111A0900B66822 /* PlaceViewController.swift */,
 				9A1FFDB21F027B0600971BF9 /* NoConnectionView.swift */,
+				9A39B4231F303FE4005DF046 /* Condition.swift */,
+				9A2EF9771F5D445C0096AAE2 /* GuideForNearby.swift */,
 			);
 			name = Nearby;
 			sourceTree = "<group>";
@@ -219,6 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				9A1DF5B01E1D0BDE00A87327 /* DetailViewController.swift */,
+				9A12958B1F5E85B4009C7115 /* GuideForDetail.swift */,
 			);
 			name = Detail;
 			sourceTree = "<group>";
@@ -226,6 +272,7 @@
 		9A1DF5AD1E1D0B1400A87327 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9A2EF9731F5D25C40096AAE2 /* Mixpanel.framework */,
 				9A0FCF331ED6E119001FA250 /* Segmentio.framework */,
 				9A5127821E79534700A6B70C /* SQLite.framework */,
 				9A722D6B1E6812CD0077F92A /* CoreLocation.framework */,
@@ -246,6 +293,8 @@
 				9A264DD01E641F710014362E /* Bank.swift */,
 				9A234EFC1E7A71AE0086FE1F /* Card.swift */,
 				9AF9FD901F0DF85400DD665D /* Store.swift */,
+				9AABF4421F541A32007933F7 /* Company.swift */,
+				9AABF4441F5420DF007933F7 /* BankDebit.swift */,
 			);
 			name = "Class Variable";
 			sourceTree = "<group>";
@@ -270,6 +319,8 @@
 				9A7D1E021ED31B7A00ED9556 /* FSPager */,
 				9A84E7C11E2644470063E750 /* SWRevealViewController */,
 				9AA99D781E370C1800F5B475 /* CenterCellCollectionViewFlowLayout.swift */,
+				9A2C9F5D1F5FE21100BEF0DD /* MyCardCell.swift */,
+				9AD933381F555D8600409938 /* selectCardCell.swift */,
 				9AF9FD921F0E343900DD665D /* LoadingOverlayGPS.swift */,
 				9A4677821E3F4ED100B23CB6 /* CustomButton.swift */,
 				9AE46EDC1E703B0100475C3A /* LoadingOverlay.swift */,
@@ -296,6 +347,8 @@
 				9A58C4691E8E69CD00509825 /* DealCell_OneStep.swift */,
 				9A58C46B1E8E6A0700509825 /* DealCell_TwoStep.swift */,
 				9A58C46D1E8E6A1A00509825 /* DealCell_ThreeStep.swift */,
+				9A46FBB41F67AA36008CDD80 /* DialogEditePoint.swift */,
+				9A46FBB61F67D2AF008CDD80 /* Button_custom.swift */,
 			);
 			name = Deal;
 			sourceTree = "<group>";
@@ -306,6 +359,10 @@
 				9A2276D11E2D1DC20065A23D /* MyCardViewController.swift */,
 				9A2276D31E2D1EBB0065A23D /* MyCardTableView.swift */,
 				9A30F3741EE6AA090002B275 /* MyCardTableCell.swift */,
+				9A2C9F5B1F5FE10700BEF0DD /* MyCard_ViewController.swift */,
+				9A2C9F591F5FD16200BEF0DD /* MyCard_TableView.swift */,
+				9A2C9F5F1F60218C00BEF0DD /* DialogForMyCard.swift */,
+				9A366E5C1F624C61008E7DFC /* ConfrimDialog.swift */,
 			);
 			name = MyCards;
 			sourceTree = "<group>";
@@ -330,17 +387,31 @@
 		9A32F9FE1ECC4C2D00502C7C /* AddCard */ = {
 			isa = PBXGroup;
 			children = (
+				9A39B4251F30828F005DF046 /* GuideForAddCard.swift */,
 				9A35A4EB1EC9AA1F002BA45D /* PageMenuViewController.swift */,
 				9A4CB9211ECDB2EE00FFB9D1 /* BankCollectionView.swift */,
 				9ABE926B1ED1C81F00D13CFB /* CardResultTableView.swift */,
 				9ABE926F1ED1CC0D00D13CFB /* CardResultTableCell.swift */,
+				9A96CCB91F53D6E40040BA52 /* AddCardController.swift */,
+				9A96CCBB1F53DC180040BA52 /* BankListClloctionView.swift */,
+				9AD933361F553B3600409938 /* SelectCard.swift */,
+				9AD9333A1F55622400409938 /* CardTableView.swift */,
 			);
 			name = AddCard;
+			sourceTree = "<group>";
+		};
+		9A355DD91F592C3800502C72 /* AppGuide */ = {
+			isa = PBXGroup;
+			children = (
+				9A355DDA1F592C7A00502C72 /* Walkthrough.swift */,
+			);
+			name = AppGuide;
 			sourceTree = "<group>";
 		};
 		9A722D701E6828600077F92A /* Page */ = {
 			isa = PBXGroup;
 			children = (
+				9A355DD91F592C3800502C72 /* AppGuide */,
 				9A06A6561EE801D000ACD7D6 /* Nearby */,
 				9A06A6571EE8020900ACD7D6 /* Detail */,
 				9A234EFE1E7AA74F0086FE1F /* Deal */,
@@ -522,6 +593,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Segmentio.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SQLite.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Mixpanel.framework",
 			);
 			outputPaths = (
 			);
@@ -537,15 +609,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A4677811E3F2C5100B23CB6 /* GlobalHelper.swift in Sources */,
+				9A12958C1F5E85B4009C7115 /* GuideForDetail.swift in Sources */,
 				9A2276D41E2D1EBB0065A23D /* MyCardTableView.swift in Sources */,
 				9ABE926C1ED1C81F00D13CFB /* CardResultTableView.swift in Sources */,
 				9AA99D791E370C1800F5B475 /* CenterCellCollectionViewFlowLayout.swift in Sources */,
+				9A96CCBC1F53DC180040BA52 /* BankListClloctionView.swift in Sources */,
 				9A58C46A1E8E69CD00509825 /* DealCell_OneStep.swift in Sources */,
 				9A7D1E0B1ED31B7A00ED9556 /* FSPagerCollectionView.swift in Sources */,
 				9A7D1E0A1ED31B7A00ED9556 /* FSPageControl.swift in Sources */,
+				9AD933391F555D8600409938 /* selectCardCell.swift in Sources */,
 				9A86477C1E5DD33B00E3BEE9 /* DealViewController.swift in Sources */,
 				9AD018101EF926CB00C6E20F /* CheckInternetVC.swift in Sources */,
+				9A96CCBA1F53D6E40040BA52 /* AddCardController.swift in Sources */,
 				9A370C401EB84A74000613A7 /* ImageCollectionViewCell.swift in Sources */,
+				9A366E5D1F624C61008E7DFC /* ConfrimDialog.swift in Sources */,
+				9A2EF9781F5D445C0096AAE2 /* GuideForNearby.swift in Sources */,
 				9A234EFB1E7A68960086FE1F /* CardDB.swift in Sources */,
 				9A264DD11E641F710014362E /* Bank.swift in Sources */,
 				9A30F3771EE7035C0002B275 /* SweetAlert.swift in Sources */,
@@ -554,11 +632,13 @@
 				9A88E3481E1527C4006B772B /* TableViewController.swift in Sources */,
 				9AF9FD931F0E343900DD665D /* LoadingOverlayGPS.swift in Sources */,
 				9AF7DD841E111A0900B66822 /* PlaceViewController.swift in Sources */,
+				9A46FBB71F67D2AF008CDD80 /* Button_custom.swift in Sources */,
 				9A2276D01E2D0B3A0065A23D /* PreferredViewController.swift in Sources */,
 				9A2E38121E32537600E7F5AA /* AddCardTabBar.swift in Sources */,
 				9AF28E6B1EE572FB00F74FF8 /* ContactViewController.swift in Sources */,
 				9A69A0641E60374800601DAC /* DealTableVC.swift in Sources */,
 				9A7D1E0E1ED31B7A00ED9556 /* FSPagerViewLayoutAttributes.swift in Sources */,
+				9A46FBB51F67AA36008CDD80 /* DialogEditePoint.swift in Sources */,
 				9A2276CC1E2CCB350065A23D /* PreferredTableVC.swift in Sources */,
 				9A30F37A1EE7067C0002B275 /* SweetAlertViewController.swift in Sources */,
 				9A86477A1E5C2CD600E3BEE9 /* Deal.swift in Sources */,
@@ -569,17 +649,22 @@
 				9A7D1E0C1ED31B7A00ED9556 /* FSPagerView.swift in Sources */,
 				9AF7DD6A1E0A932E00B66822 /* AppDelegate.swift in Sources */,
 				9AEC34381EFD116500DBAFA8 /* LandingPageVC.swift in Sources */,
+				9A39B4241F303FE4005DF046 /* Condition.swift in Sources */,
 				9A30F3751EE6AA090002B275 /* MyCardTableCell.swift in Sources */,
+				9AD933371F553B3600409938 /* SelectCard.swift in Sources */,
+				9A355DDB1F592C7B00502C72 /* Walkthrough.swift in Sources */,
 				9AF7DD801E1117C700B66822 /* Place.swift in Sources */,
 				9A177DB31EDD62A500F9DDC4 /* AddMemberCardViewController.swift in Sources */,
 				9AF9FD911F0DF85400DD665D /* Store.swift in Sources */,
 				9AF7DD821E1118DF00B66822 /* GlobalData.swift in Sources */,
 				9A234EFD1E7A71AE0086FE1F /* Card.swift in Sources */,
 				9A7D1E0D1ED31B7A00ED9556 /* FSPagerViewCell.swift in Sources */,
+				9A2C9F601F60218C00BEF0DD /* DialogForMyCard.swift in Sources */,
 				9A1DF5B11E1D0BDE00A87327 /* DetailViewController.swift in Sources */,
 				9AF28E691EE5488800F74FF8 /* PrimoNavigationController.swift in Sources */,
 				9AD018121EF9277900C6E20F /* Reachability.swift in Sources */,
 				9A23C7FB1EAE3EA2001B0193 /* CollapsibleTableViewHeader.swift in Sources */,
+				9AD9333B1F55622400409938 /* CardTableView.swift in Sources */,
 				9A17418E1EB358C700272EB8 /* DealDetailTableViewCell.swift in Sources */,
 				9A58C46C1E8E6A0700509825 /* DealCell_TwoStep.swift in Sources */,
 				9A4677831E3F4ED100B23CB6 /* CustomButton.swift in Sources */,
@@ -589,10 +674,16 @@
 				9A7D1E101ED31B7A00ED9556 /* FSPageViewTransformer.swift in Sources */,
 				9A2276D21E2D1DC20065A23D /* MyCardViewController.swift in Sources */,
 				9ABE92701ED1CC0D00D13CFB /* CardResultTableCell.swift in Sources */,
+				9A2C9F5C1F5FE10700BEF0DD /* MyCard_ViewController.swift in Sources */,
 				9A5DDA051EE96AA900219D92 /* PrimoAlert.swift in Sources */,
 				9A1FFDB31F027B0600971BF9 /* NoConnectionView.swift in Sources */,
+				9A39B4261F308290005DF046 /* GuideForAddCard.swift in Sources */,
+				9A2C9F5A1F5FD16200BEF0DD /* MyCard_TableView.swift in Sources */,
+				9A2C9F5E1F5FE21100BEF0DD /* MyCardCell.swift in Sources */,
 				9A2ED4D21E9E25700060D816 /* DealDetailViewController.swift in Sources */,
+				9AABF4451F5420DF007933F7 /* BankDebit.swift in Sources */,
 				9AE46EDD1E703B0100475C3A /* LoadingOverlay.swift in Sources */,
+				9AABF4431F541A32007933F7 /* Company.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

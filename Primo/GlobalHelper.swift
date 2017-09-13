@@ -42,20 +42,41 @@ func HexStringToUIColor (hex:String) -> UIColor
     }
 }
 
-func GenServiceParam (ownedCardList: [PrimoCard]) -> [[String: Any]]
+func GenServiceParam (ownedCardList: [PrimoCard] ,EditePoint :Bool = false ,card:  [PrimoCard]) -> [[String: Any]]
 {
     var result: [[String: Any]] = []
     
-    for card in ownedCardList {
-        var ownCard: [String: Any] = ["id": card.cardId]
-        if (card.point != nil) {
-            ownCard["point"] = card.point
-        } else {
-            ownCard["point"] = nil
+    if(EditePoint){
+        for mCard in card{
+            var ownCard: [String: Any] = ["id": mCard.cardId]
+            
+            if (mCard.point == nil) {
+                ownCard["point"] = 0
+            }else{
+                ownCard["point"] = mCard.point
+            }
+            result.append(ownCard)
         }
-        result.append(ownCard)
+    }else{
+        for mCard in ownedCardList {
+            var ownCard: [String: Any] = ["id": mCard.cardId]
+            
+            if (mCard.point == nil) {
+                ownCard["point"] = 0
+            }else{
+                ownCard["point"] = mCard.point
+            }
+            result.append(ownCard)
+        }
     }
-    
+  
+
+//        if (mCard.point != nil) {
+//            ownCard["point"] = mCard.point
+//        } else {
+//            ownCard["point"] = nil
+//        }
+
     return result
 }
 

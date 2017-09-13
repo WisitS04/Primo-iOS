@@ -1,6 +1,14 @@
 import SQLite
 
 class CardDB {
+    
+    var DataBaseVersion = UserDefaults.standard
+    var dataBaseVS_number:Int = 0
+    var fixVersionCardDB:Int = 1
+    
+    
+    var clonValue = [PrimoCard]()
+    
     static let instance = CardDB()
     private let db: Connection?
     
@@ -12,6 +20,7 @@ class CardDB {
     private let nameTH = Expression<String>("nameTH")
     private let imgUrl = Expression<String>("imgUrl")
     private let point = Expression<Int?>("point")
+    private let pointToUse = Expression<Int?>("pointToUse")
     
     private init() {
         let path = NSSearchPathForDirectoriesInDomains(
@@ -38,6 +47,8 @@ class CardDB {
                 table.column(nameTH)
                 table.column(imgUrl)
                 table.column(point)
+                table.column(pointToUse)
+
             })
         } catch {
             print("Unable to create table")
@@ -53,14 +64,16 @@ class CardDB {
         }
     }
     
-    func addCard(cId: Int64, cType: Int, cNameTH: String, cNameEN: String, cImgUrl: String, cPoint: Int? = nil) -> Int64 {
+    func addCard(cId: Int64, cType: Int, cNameTH: String, cNameEN:
+        String, cImgUrl: String, cPoint: Int? = nil, cPointToUse: Int? = nil) -> Int64 {
         do {
             let insert = cards.insert(cardId <- cId,
                                       type <- cType,
                                       nameTH <- cNameTH,
                                       nameEN <- cNameEN,
                                       imgUrl <- cImgUrl,
-                                      point <- cPoint)
+                                      point <- cPoint,
+                                      pointToUse <- cPointToUse)
             let id = try db!.run(insert)
             print("Insert SQL: \(insert.asSQL())")
             return id
@@ -107,7 +120,8 @@ class CardDB {
                                          nameEN <- newCard.nameEN,
                                          nameTH <- newCard.nameTH,
                                          imgUrl <- newCard.imgUrl,
-                                         point <- newCard.point])
+                                         point <- newCard.point,
+                                         pointToUse <- newCard.pointToUse])
             if try db!.run(update) > 0 {
                 return true
             }
@@ -115,6 +129,41 @@ class CardDB {
             print("Update failed: \(error)")
         }
         return false
+    }
+    
+    
+    
+    func CheckVertionCardDB(){
+        dataBaseVS_number  = DataBaseVersion.integer(forKey: MyCardDB)
+        
+        if(fixVersionCardDB == dataBaseVS_number){
+            print(" = ")
+        }else{
+            print(" != ")
+            ClonValueToDB()
+            DataBaseVersion.set(fixVersionCardDB, forKey: MyCardDB)
+        }
+
+    }
+    
+    
+    
+    func ClonValueToDB(){
+        clonValue = CardDB.instance.getCards()
+        if(!clonValue.isEmpty){
+            dropTable(table: cards)
+            createTable(table: cards)
+            
+            for item in clonValue{
+                _ = CardDB.instance.addCard(cId: item.cardId,
+                                            cType: item.type.rawValue,
+                                            cNameTH: item.nameTH,
+                                            cNameEN: item.nameEN,
+                                            cImgUrl: item.imgUrl,
+                                            cPoint: item.point,
+                                            cPointToUse: item.pointToUse)
+            }
+        }
     }
 
 }

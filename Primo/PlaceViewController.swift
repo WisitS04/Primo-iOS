@@ -2,6 +2,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import CoreLocation
+import Mixpanel
 
 class PlaceViewController: UITableViewController{
     
@@ -20,6 +21,7 @@ class PlaceViewController: UITableViewController{
     
     var LastLatLocation = UserDefaults.standard
     var LastLongLocation = UserDefaults.standard
+    
     var FirstRunStep  = UserDefaults.standard
     var nLocationlat : Double = 0
     var nLocationLong : Double = 0
@@ -32,33 +34,66 @@ class PlaceViewController: UITableViewController{
     var KeySH:String = ""
     
     var isDisableInternet: Bool = false
+    var projectToken: String = "1a4f60bd37af4cea7b199830b6bec468"
+    
+    var version: Double = 0.0
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    
+    
     // MARK: - View Setup
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // MARK: Set up Side bar
-        if revealViewController() != nil {
-            revealViewController().rightViewRevealWidth = 150
-            menuButton.target = self.revealViewController()
-            menuButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
-            
-            view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
-        }
-        
-        // MARK: Check Internet
-        CheckReachabilityStatus()
-        
-        SetupSearchBar()
-        // MARK: Pull and Refresh
 
-        // MARK: Get Location
-        locManager.delegate = self
-        locManager.desiredAccuracy = kCLLocationAccuracyBest
-        locManager.requestWhenInUseAuthorization()
         
-         self.refreshControl?.addTarget(self, action: #selector(HandleRefresh(_:)), for: UIControlEvents.valueChanged)
+        version = VersionNumber.double(forKey: KEYAppVersion)
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.setHidesBackButton(true, animated:true);
+        
+        if(cerrentVersin != version){
+            CheckAppVersion()
+        }else{
+//            GuideForNearby.shared.Show(view: self.view, navigationController: self.navigationController!, storyboard: self.storyboard!)
+            
+            
+            let uuid = UIDevice.current.identifierForVendor!.uuidString
+            
+            Mixpanel.initialize(token: projectToken)
+            Mixpanel.mainInstance().track(event: "Open Primo")
+            Mixpanel.mainInstance().identify(distinctId: uuid)
+            
+            
+            // MARK: Set up Side bar
+            if revealViewController() != nil {
+                revealViewController().rightViewRevealWidth = 150
+                menuButton.target = self.revealViewController()
+                menuButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
+                view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
+            }
+            
+            // MARK: Check Internet
+            CheckReachabilityStatus()
+            
+            SetupSearchBar()
+            // MARK: Pull and Refresh
+            
+            // MARK: Get Location
+            locManager.delegate = self
+            locManager.desiredAccuracy = kCLLocationAccuracyBest
+            locManager.requestWhenInUseAuthorization()
+            
+            self.refreshControl?.addTarget(self, action: #selector(HandleRefresh(_:)),for: UIControlEvents.valueChanged)
+        }
+
         
     }
+    
+
 
     // MARK: - Segues
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
@@ -83,7 +118,6 @@ class PlaceViewController: UITableViewController{
                     place = nearByPlace[indexPath.row]
                 }
                 detailView.selectedPlace = place
-                
 //                self.revealViewController().setFrontViewPosition(.left, animated: true)
             }
         }
@@ -152,6 +186,7 @@ class PlaceViewController: UITableViewController{
 //        CallWS(searchkey: searchText)
         GetLocation(searchkey: searchText)
     }
+   
 }
 
 // MARK: Search Bar
@@ -244,7 +279,10 @@ extension PlaceViewController
                 let getResult = StoreDB.instance.getStores()
                 
                 if(getResult.isEmpty){
-                    callNearbyService(searchkey: mSearchkey)
+                    CheckReachabilityStatus()
+                    if(!isDisableInternet){
+                        callNearbyService(searchkey: mSearchkey)
+                    }
                 }else{
                         self.nearByPlace.removeAll()
                         self.filteredPlace.removeAll()
@@ -284,8 +322,10 @@ extension PlaceViewController
                 }
                 
             }else{
-                
-                callNearbyService(searchkey: mSearchkey)
+                CheckReachabilityStatus()
+                if(!isDisableInternet){
+                   callNearbyService(searchkey: mSearchkey)
+                }
             }
             isClickSh = false
             locManager.stopUpdatingLocation()
@@ -321,6 +361,7 @@ extension PlaceViewController
                         self.isRefreshing = false
                     }
                     PrimoAlert().Error()
+                    
                 }
         }
     }
@@ -408,12 +449,21 @@ extension PlaceViewController
                 self.refreshControl?.endRefreshing()
                 self.isRefreshing = false
             }
+            
+            self.refreshControl = nil
             self.tableView.separatorStyle = .none
             
-            if(!statusOpenDialogIN){
+//            if(!statusOpenDialogIN){
+                LoadingOverlay.shared.hideOverlayView()
+                LoadingOverlay.shared.hideOverlayViewGPS()
+                
+                self.nearByPlace.removeAll()
+                self.filteredPlace.removeAll()
+                self.tableView.reloadData()
+
                 NoConnectionView.shared.Show(view: self.view,  action: self.reTryInternet)
                 statusOpenDialogIN = true
-            }
+//            }
             isDisableInternet = true
         }else{
             isDisableInternet = false
@@ -422,20 +472,32 @@ extension PlaceViewController
 
     
     func GetLocation(searchkey: String = ""){
-        if(!isDisableInternet){
-            NoConnectionView.shared.Hide()
-            self.tableView.separatorStyle = .singleLine
-            KeySH  = searchkey
-            mLocation = nil
-            statusRun = false
-            locManager.startUpdatingLocation()
+
+        if(FirstRunStep.bool(forKey: KEYFIRSTRUN)){
+                    if(!isDisableInternet){
+                        NoConnectionView.shared.Hide()
+                        self.tableView.separatorStyle = .singleLine
+                        KeySH  = searchkey
+                        mLocation = nil
+                        statusRun = false
+                        locManager.startUpdatingLocation()
             
-            if(mLocation != nil || stautsDisablePermission){
-                CallWS(searchkey: searchkey)
-            }else{
-                LoadingOverlay.shared.showDialogLoopGPS(view: self.view, action: self.isCancelLoopGPS)
-            }
+                        if(self.refreshControl == nil){
+                            self.refreshControl =  UIRefreshControl()
+                            self.refreshControl?.addTarget(self, action: #selector(HandleRefresh(_:)), for: UIControlEvents.valueChanged)
+                        }
+                        if(mLocation != nil || stautsDisablePermission){
+                            CallWS(searchkey: searchkey)
+                        }else{
+                            LoadingOverlay.shared.showDialogLoopGPS(view: self.view, action: self.isCancelLoopGPS)
+                        }
+                    }
+        }else{
+            self.refreshControl = nil
+            UIApplication.shared.statusBarStyle = .lightContent
+            Conidion.shared.Show(view: self.view, action: self.acceptCondition)
         }
+
     }
     
  
@@ -451,6 +513,16 @@ extension PlaceViewController
     func isCancelLoopGPS(isClick: Bool ) {
         CallWS()
     }
+    
+    func acceptCondition(isClick: Bool ) {
+        if(isClick){
+          FirstRunStep.set(true, forKey: KEYFIRSTRUN)
+          Conidion.shared.Hide()
+          GetLocation()
+        }
+    }
+    
+
     
     func CreatePlace(_ nearByJson: JSON) {
         
@@ -504,4 +576,11 @@ extension PlaceViewController
 
             
         }
+    
+    
+    func CheckAppVersion(){
+            let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "Walkthrough") as! Walkthrough
+            self.navigationController?.pushViewController(secondViewController, animated: true)
+
+    }
 }
