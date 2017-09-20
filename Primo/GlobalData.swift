@@ -48,12 +48,37 @@ enum CardType: Int {
 var BankSelectIndex: IndexPath =  IndexPath(item: -1, section: -1)
 
 
+///////////////////
+///KEY Guide App///
+///////////////////
+
+var KEYGuideNeayBy: String = "KEYNEAYBY"
+var StatusGuideNeayBy = UserDefaults.standard
+
+var KEYGuideAddCard: String = "KEYADDCARD"
+var StatusGuideAddCard = UserDefaults.standard
+
+var KEYGuideDetail: String = "KEYDETAIL"
+var StatusGuideDetail = UserDefaults.standard
+
+var KEYGuideNotDepDetail: String = "KEYDETAILNotDep"
+var StatusGuideDetailNotDep = UserDefaults.standard
+
+
+var KEYGuideDeals: String = "KEYDEALS"
+var StatusGuideDeals = UserDefaults.standard
+
+
+
+
 /////////////////////
 ///KEY APP Version///
 /////////////////////
 var KEYAppVersion: String = "KEYAPPVERSION"
 var VersionNumber = UserDefaults.standard
 var cerrentVersin: Double = 10.3
+
+
 
 
 
@@ -119,6 +144,7 @@ enum PrimoColor: String {
     case Red = "#BE293B"
     case Orange = "#F4744D"
     case Smoke = "#CCCCCC"
+    case greenNew = "#46BCA4"
     
     var UIColor: UIColor {
         return HexStringToUIColor(hex: self.rawValue)

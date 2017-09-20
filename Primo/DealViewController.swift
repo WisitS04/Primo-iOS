@@ -38,14 +38,14 @@ class DealViewController: UIViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         
         myCardList = CardDB.instance.getCards()
         myCardListBuffer = myCardList
-   //Benz Comment
-        
-        
-//        SetupDropDown()
+
         SetupKeyboard()
+//Benz Comment
+//        SetupDropDown()
 //        HidePointPanel()
         
         
@@ -65,17 +65,22 @@ class DealViewController: UIViewController
                   //Benz Comment
 //                self.SetupUsePointButton()
                 
+                SetupUsePointButton()
+                
                 dealTable.controllrtDeals = self
                 dealTable.date = self.date
                 dealTable.price = self.price
                 dealTable.store = self.store
                 dealTable.branch = self.branch
                 dealTable.departmentId = self.departmentId
-                dealTable.UpdateData(usePoint: self.usePointButton.isUsing,
-                                     installment: self.useInstallmentButton.isUsing,
-                                     Peyment: self.usePayFullButton.isUsing,
-                                     UnPoint: self.useNotUsePoint.isUsing,
-                                     mCard: myCardListBuffer)
+                
+                dealTable.UpdateData(usePoint: btn_point,
+                                         installment: btn_installment,
+                                         Peyment: btn_full_peyment,
+                                         UnPoint: btn_not_point,
+                                         callWS: true,
+                                         mCard: myCardListBuffer)
+                
                 self.dealTableView = dealTable
             }
         } else if (segue.identifier == "ShowDealDetail") {
@@ -290,11 +295,18 @@ extension DealViewController
 //        controllPanelHeight.constant = 110
 //    }
     
-//    func SetupUsePointButton() {
-//        usePointButton.isUsing = true
-//        usePointButton.OnUsing()
-//        
-//    }
+    func SetupUsePointButton() {
+        usePayFullButton.isUsing = true
+        usePayFullButton.OnUsing()
+        btn_full_peyment = true
+        btn_installment = false
+        
+        usePointButton.isUsing = true
+        usePointButton.OnUsing()
+        btn_point = true
+        btn_not_point = false
+
+    }
     
     func UpdateCardData(cardList: [PrimoCard]) {
         myCardList = cardList

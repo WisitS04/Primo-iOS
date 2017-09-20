@@ -20,11 +20,14 @@ class Walkthrough: UIViewController
     var numberOfPage: Int = 4
  var buttonLink = UIButton()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        
         setBG()
         AddFSPage()
         

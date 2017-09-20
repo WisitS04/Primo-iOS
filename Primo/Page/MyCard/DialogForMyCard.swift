@@ -46,11 +46,11 @@ class DialogForMyCard
         
         
         
-        dialogView.frame = CGRect(x: (mainView.bounds.width-270)/2, y: mainView.bounds.height/4, width: 270, height: 165)
+        dialogView.frame = CGRect(x: (mainView.bounds.width-270)/2, y: mainView.bounds.height/4, width: 270, height: 169.5)
         dialogView.backgroundColor = UIColor.white
         dialogView.alpha = 1
         dialogView.clipsToBounds = true
-        dialogView.layer.cornerRadius = 5
+        dialogView.layer.cornerRadius = 8
         mainView.addSubview(dialogView)
         
         
@@ -70,7 +70,9 @@ class DialogForMyCard
         textContent.frame = CGRect(x: 22, y: 80, width: dialogView.bounds.width-48, height: 24)
         textContent.backgroundColor = UIColor.white
         textContent.textAlignment = .center
-        textContent.text = String(mPoint)
+        if(mPoint > 0){
+           textContent.text = String(mPoint)
+        }
 //        textContent.placeholder = String(mPoint)
         textContent.keyboardType = UIKeyboardType.numberPad
         textContent.becomeFirstResponder()
@@ -83,7 +85,7 @@ class DialogForMyCard
         
         
         
-        let buttonLink = UIButton(frame: CGRect(x: 0, y: 120, width: dialogView.bounds.width/2, height: 48))
+        let buttonLink = UIButton(frame: CGRect(x: 0, y: 121.5, width: dialogView.bounds.width/2, height: 48))
 
         
         buttonLink.setTitle("Cancel",for: .normal)
@@ -96,7 +98,7 @@ class DialogForMyCard
         dialogView.addSubview(buttonLink)
         
     
-        let button =  UIButton(frame: CGRect(x: dialogView.bounds.width/2, y: 120, width: dialogView.bounds.width/2, height: 48))
+        let button =  UIButton(frame: CGRect(x: dialogView.bounds.width/2, y: 121.5, width: dialogView.bounds.width/2, height: 48))
         button.setTitle("OK", for: .normal)
         button.backgroundColor = UIColor.white
         button.layer.borderWidth = 1
@@ -127,7 +129,8 @@ class DialogForMyCard
             mTableView?.confrimDialog(value :Int(textContent.text!)!,id: mID!)
   
         }
-            Hide()
+        textContent.text = ""
+        Hide()
     }
     
     

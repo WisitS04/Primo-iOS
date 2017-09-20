@@ -37,6 +37,8 @@ class PlaceViewController: UITableViewController{
     var projectToken: String = "1a4f60bd37af4cea7b199830b6bec468"
     
     var version: Double = 0.0
+    var statusGuideNeayBy: Bool = false
+    var statusDrawTable:Bool = false
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -48,9 +50,16 @@ class PlaceViewController: UITableViewController{
     // MARK: - View Setup
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
+        //Hide top spat for Table View
+        self.tableView.contentInset = UIEdgeInsets.zero
+        self.automaticallyAdjustsScrollViewInsets = false
+        
+
+        self.navigationController?.navigationBar.isTranslucent = false
+        statusDrawTable = false
         version = VersionNumber.double(forKey: KEYAppVersion)
+        statusGuideNeayBy  = StatusGuideNeayBy.bool(forKey: KEYGuideNeayBy)
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.setHidesBackButton(true, animated:true);
@@ -58,9 +67,12 @@ class PlaceViewController: UITableViewController{
         if(cerrentVersin != version){
             CheckAppVersion()
         }else{
-//            GuideForNearby.shared.Show(view: self.view, navigationController: self.navigationController!, storyboard: self.storyboard!)
             
-            
+            if(!statusGuideNeayBy){
+                GuideForNearby.shared.Show(view: self.view, navigationController: self.navigationController!, storyboard: self.storyboard! ,statusDrawTable: statusDrawTable)
+                
+            }
+
             let uuid = UIDevice.current.identifierForVendor!.uuidString
             
             Mixpanel.initialize(token: projectToken)
@@ -88,9 +100,9 @@ class PlaceViewController: UITableViewController{
             locManager.requestWhenInUseAuthorization()
             
             self.refreshControl?.addTarget(self, action: #selector(HandleRefresh(_:)),for: UIControlEvents.valueChanged)
+            
+            GetLocation()
         }
-
-        
     }
     
 
@@ -226,6 +238,11 @@ extension PlaceViewController: UISearchResultsUpdating, UISearchBarDelegate
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchText = ""
         isClickSh = true
+        
+        //Hide top spat for Table View
+        self.tableView.contentInset = UIEdgeInsets.zero
+        self.automaticallyAdjustsScrollViewInsets = false
+        
         GetLocation();
 //        CallWS()
     }
@@ -238,11 +255,11 @@ extension PlaceViewController: CLLocationManagerDelegate
         if (status == CLAuthorizationStatus.authorizedWhenInUse
             || status == CLAuthorizationStatus.authorizedAlways) {
              stautsDisablePermission = false
-              GetLocation()
+//              GetLocation()
 //            CallWS()
         } else if (status == CLAuthorizationStatus.denied) {
               stautsDisablePermission = true
-              GetLocation()
+//              GetLocation()
 //            CallWS()
         }
     }
@@ -319,6 +336,7 @@ extension PlaceViewController
                         }
                         
                         LoadingOverlay.shared.hideOverlayView()
+                        statusDrawTable = true
                 }
                 
             }else{
@@ -376,6 +394,7 @@ extension PlaceViewController
         nLocationlat = 0
         nLocationLong = 0
         
+
          if let curLocation = mLocation {
                     location = Location(lat: Float(curLocation.coordinate.latitude),
                                         long: Float(curLocation.coordinate.longitude))
@@ -482,15 +501,18 @@ extension PlaceViewController
                         statusRun = false
                         locManager.startUpdatingLocation()
             
+                        print("GetLocation add call")
+                        
                         if(self.refreshControl == nil){
                             self.refreshControl =  UIRefreshControl()
                             self.refreshControl?.addTarget(self, action: #selector(HandleRefresh(_:)), for: UIControlEvents.valueChanged)
                         }
-                        if(mLocation != nil || stautsDisablePermission){
+                        if(mLocation != nil || stautsDisablePermission || mLocation != nil){
                             CallWS(searchkey: searchkey)
                         }else{
                             LoadingOverlay.shared.showDialogLoopGPS(view: self.view, action: self.isCancelLoopGPS)
                         }
+    
                     }
         }else{
             self.refreshControl = nil
@@ -574,7 +596,7 @@ extension PlaceViewController
                 self.isRefreshing = false
             }
 
-            
+            statusDrawTable = true
         }
     
     

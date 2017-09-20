@@ -14,6 +14,10 @@ class DealCell_ThreeStep: UITableViewCell {
     var statusMemberCard: Bool = false
     var statusCrediteCard: Bool = false
     var controllerForDeals: DealViewController? = nil
+    var firstCard: String = ""
+    var mtable: DealTableVC? = nil
+    var statusUsePointMenu: Bool = false
+    var statusUnUsePointMenu: Bool = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,9 +27,28 @@ class DealCell_ThreeStep: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func SetData(deal: Deal ,mControllerForDeals: DealViewController)
+    
+        func setStepCard(mDeal: Deal){
+            if(mDeal.card?.type != .memberCard){
+                if(firstCard == ""){
+                    firstCard = (mDeal.card?.imgUrl)!
+                }
+            }
+            if(mDeal.Childs != nil){
+                setStepCard(mDeal: mDeal.Childs!)
+            }
+            
+        }
+    
+    
+    func SetData(deal: Deal ,mControllerForDeals: DealViewController,
+                 statusUseMenuPoint: Bool, statusUnUsePoint: Bool,
+                 table :DealTableVC, AllDealList :[Deal])
     {
         controllerForDeals = mControllerForDeals
+        mtable = table
+        statusUsePointMenu = statusUseMenuPoint
+        statusUnUsePointMenu = statusUnUsePoint
         
         // color bar
         if let subview = self.viewWithTag(101) {
@@ -36,7 +59,8 @@ class DealCell_ThreeStep: UITableViewCell {
 //            }
             subview.backgroundColor = UIColor.clear
         }
-        
+        firstCard = ""
+        setStepCard(mDeal: deal)
         // card image
         if let subview = self.viewWithTag(102) as? UIImageView {
             let defaultCard = #imageLiteral(resourceName: "mock_card_3")
@@ -48,10 +72,18 @@ class DealCell_ThreeStep: UITableViewCell {
                     //print("Got Image")
                 }
             }
-            subview.sd_setImage(with: URL(string: (deal.card?.imgUrl)!),
-                                placeholderImage: defaultCard,
-                                options: .retryFailed,
-                                completed: block)
+            if(firstCard != ""){
+                subview.sd_setImage(with: URL(string: firstCard),
+                                    placeholderImage: defaultCard,
+                                    options: .retryFailed,
+                                    completed: block)
+            }else{
+                subview.sd_setImage(with: URL(string: (deal.card?.imgUrl)!),
+                                    placeholderImage: defaultCard,
+                                    options: .retryFailed,
+                                    completed: block)
+            }
+
         }
         
         // Download card 2
@@ -169,10 +201,11 @@ class DealCell_ThreeStep: UITableViewCell {
             
             loopCheckTypeCard(mDeal: deal)
             if(statusMemberCard){
-                subview.tag = 1
                 subview.mDealBuffer.removeAll()
-                subview.mDealBuffer.append(deal)
+                subview.mDealBuffer = AllDealList
+                subview.tag = 1
                 subview.addTarget(self, action: #selector(sendActionMember), for: .touchUpInside)
+                
             }
         }
         
@@ -185,9 +218,9 @@ class DealCell_ThreeStep: UITableViewCell {
             
             loopCheckTypeCard(mDeal: deal)
             if(statusCrediteCard){
-                subview.tag = 2
                 subview.mDealBuffer.removeAll()
-                subview.mDealBuffer.append(deal)
+                subview.mDealBuffer = AllDealList
+                subview.tag = 2
                 subview.addTarget(self, action: #selector(sendActionCredite), for: .touchUpInside)
             }
         }
@@ -238,16 +271,22 @@ class DealCell_ThreeStep: UITableViewCell {
     }
     
     @objc func sendActionCredite(_ sender: Any)  {
-        let value = sender as! Button_custom
-            DialogEditePoint.shared.Show(deal :value.mDealBuffer, controller: controllerForDeals!)
+        if(statusUsePointMenu && statusUnUsePointMenu != true){
+            let value = sender as! Button_custom
+            let index:Int = (mtable!.tableView.indexPath(for: self)?.row)!
+            DialogEditePoint.shared.Show(deal :[value.mDealBuffer[index]], controller: controllerForDeals!, statusCard: 1)
         
-        print("sendActionCredite")
+            print("sendActionCredite")
+        }
     }
     
     @objc func sendActionMember(_ sender: Any)  {
-        let value = sender as! Button_custom
-            DialogEditePoint.shared.Show(deal :value.mDealBuffer, controller: controllerForDeals!)
-        print("sendActionMember")
+        if(statusUsePointMenu && statusUnUsePointMenu != true){
+            let value = sender as! Button_custom
+            let index:Int = (mtable!.tableView.indexPath(for: self)?.row)!
+            DialogEditePoint.shared.Show(deal :[value.mDealBuffer[index]], controller: controllerForDeals!, statusCard: 4)
+            print("sendActionMember")
+        }
     }
     
 }

@@ -15,6 +15,7 @@ class GuideForNearby
     var dialogViewBG = UIView()
     var myStotybord : UIStoryboard? = nil
     var myNavigationController: UINavigationController? = nil
+    var StatusDrawTable: Bool = false
     class var shared: GuideForNearby
     {
         struct Static
@@ -25,9 +26,11 @@ class GuideForNearby
     }
     
     
-    public func Show(view: UIView, navigationController: UINavigationController, storyboard :UIStoryboard) {
+    public func Show(view: UIView, navigationController: UINavigationController, storyboard :UIStoryboard, statusDrawTable :Bool) {
         myStotybord = storyboard
         myNavigationController = navigationController
+        StatusDrawTable = statusDrawTable
+        
         let viewSize = UIScreen.main.bounds
         let hightStatusBar = UIApplication.shared.statusBarFrame.height
         
@@ -86,10 +89,12 @@ class GuideForNearby
     
     
     @objc func sendActionData(_ sender: Any)  {
-        if(myStotybord != nil && myNavigationController != nil){
+        if(myStotybord != nil && myNavigationController != nil && StatusDrawTable != true){
             Hide()
             let secondViewController = myStotybord?.instantiateViewController(withIdentifier: "AddCardController") as! AddCardController
             myNavigationController?.pushViewController(secondViewController, animated: true)
+            
+            StatusGuideNeayBy.set(true,forKey: KEYGuideNeayBy)
         }
     }
     

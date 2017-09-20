@@ -13,6 +13,8 @@ class BankListCollectionView: UICollectionView
     var debiteBankList: [Bank] = []
     var companyList: [Bank] = []
     var typeSelect : Int = 1
+    var statusGuideAddCard: Bool = false
+    
     func SetUp(viewController: AddCardController) {
         self.viewController = viewController
         self.delegate = self
@@ -71,6 +73,7 @@ extension BankListCollectionView
         let pass = Service_Password
         let cardType: Int = 1
         let param: Parameters = [ "cardType": cardType ]
+        
         Alamofire.request(url, parameters: param)
 
             .authenticate(user: user, password: pass)
@@ -153,8 +156,11 @@ extension BankListCollectionView
                     }
                     self.reloadData()
                     print("Call Company service success")
-                    self.viewController!.finishCallService()
                     LoadingOverlay.shared.hideOverlayView()
+                    self.statusGuideAddCard = StatusGuideAddCard.bool(forKey: KEYGuideAddCard)
+                    if(!self.statusGuideAddCard){
+                        self.viewController!.finishCallService()
+                    }
                 case .failure(let error):
                     print(error)
                     LoadingOverlay.shared.hideOverlayView()
@@ -195,15 +201,15 @@ extension BankListCollectionView: UICollectionViewDelegate, UICollectionViewData
         if(typeSelect == PrimoCardType.creditCard.rawValue ){
             
            cell.cardImage.sd_setImage(with: URL(string: crediteBankList[indexPath.row].logoUrl))
-           cell.NameBank.text = crediteBankList[indexPath.row].nameEN
+           cell.NameBank.text = crediteBankList[indexPath.row].abbreviationTH
             
         }else if(typeSelect == PrimoCardType.debitCard.rawValue){
             cell.cardImage.sd_setImage(with: URL(string: debiteBankList[indexPath.row].logoUrl))
-            cell.NameBank.text = debiteBankList[indexPath.row].nameEN
+            cell.NameBank.text = debiteBankList[indexPath.row].abbreviationTH
 
         }else{
             cell.cardImage.sd_setImage(with: URL(string: companyList[indexPath.row].logoUrl))
-            cell.NameBank.text = companyList[indexPath.row].nameEN
+            cell.NameBank.text = companyList[indexPath.row].abbreviationTH
 
         }
         
@@ -238,8 +244,7 @@ extension BankListCollectionView: UICollectionViewDelegate, UICollectionViewData
 //            
         }
     }
-    
-    
+
 }
 
 

@@ -16,14 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        UINavigationBar.appearance().barTintColor = HexStringToUIColor(hex: PrimoColor.Green.rawValue)
+//        UINavigationBar.appearance().barTintColor = HexStringToUIColor(hex: "#3FBCA5")
+//        let navBackgroundImage:UIImage! = UIImage(named: "radio_uncheck")
+//        UINavigationBar.appearance().setBackgroundImage(navBackgroundImage, for: .default)
+
+
         UINavigationBar.appearance().tintColor = UIColor.white
-        
         UINavigationBar.appearance().shadowImage = UIImage(named : "line_header")
         UINavigationBar.appearance().setBackgroundImage(UIImage(named : "line_header"), for: .default)
-        
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
-        
         UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
         
         // Check Internet

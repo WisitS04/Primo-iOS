@@ -33,10 +33,14 @@ public class LoadingOverlay
     public func showOverlay(view: UIView)
     {
         let screenSize = UIScreen.main.bounds
-        mainView.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height)
+        mainView.frame = CGRect(x: 0,
+                                y: 0,
+                                width: screenSize.width,
+                                height: screenSize.height)
         mainView.center = view.center
         mainView.backgroundColor = HexStringToUIColor(hex: "#FFFFFF00")
         mainView.alpha = 1
+        
         
         dialogView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         dialogView.center = mainView.center

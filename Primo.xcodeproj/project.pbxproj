@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A04857B1F6A75AF0075513F /* DialogGuideTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04857A1F6A75AF0075513F /* DialogGuideTop.swift */; };
+		9A04857D1F6A75EC0075513F /* DialogGuideBottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04857C1F6A75EC0075513F /* DialogGuideBottom.swift */; };
 		9A0FCF351ED6E135001FA250 /* Segmentio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0FCF331ED6E119001FA250 /* Segmentio.framework */; };
 		9A0FCF361ED6E135001FA250 /* Segmentio.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0FCF331ED6E119001FA250 /* Segmentio.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9A0FCF381ED6E3BF001FA250 /* SegmentedControllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0FCF371ED6E3BF001FA250 /* SegmentedControllViewController.swift */; };
@@ -127,6 +129,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9A04857A1F6A75AF0075513F /* DialogGuideTop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DialogGuideTop.swift; path = Page/DealDetail/DialogGuideTop.swift; sourceTree = "<group>"; };
+		9A04857C1F6A75EC0075513F /* DialogGuideBottom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DialogGuideBottom.swift; path = Page/DealDetail/DialogGuideBottom.swift; sourceTree = "<group>"; };
 		9A0FCF331ED6E119001FA250 /* Segmentio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Segmentio.framework; path = Carthage/Build/iOS/Segmentio.framework; sourceTree = "<group>"; };
 		9A0FCF371ED6E3BF001FA250 /* SegmentedControllViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegmentedControllViewController.swift; path = Tests/SegmentedControllViewController.swift; sourceTree = "<group>"; };
 		9A12958B1F5E85B4009C7115 /* GuideForDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideForDetail.swift; sourceTree = "<group>"; };
@@ -349,6 +353,8 @@
 				9A58C46D1E8E6A1A00509825 /* DealCell_ThreeStep.swift */,
 				9A46FBB41F67AA36008CDD80 /* DialogEditePoint.swift */,
 				9A46FBB61F67D2AF008CDD80 /* Button_custom.swift */,
+				9A04857A1F6A75AF0075513F /* DialogGuideTop.swift */,
+				9A04857C1F6A75EC0075513F /* DialogGuideBottom.swift */,
 			);
 			name = Deal;
 			sourceTree = "<group>";
@@ -629,6 +635,7 @@
 				9A30F3771EE7035C0002B275 /* SweetAlert.swift in Sources */,
 				9AF9FD8F1F0DEFB100DD665D /* StoreDB.swift in Sources */,
 				9ADC1C7A1E6D704B007450AE /* PlaceDetail_Test.swift in Sources */,
+				9A04857B1F6A75AF0075513F /* DialogGuideTop.swift in Sources */,
 				9A88E3481E1527C4006B772B /* TableViewController.swift in Sources */,
 				9AF9FD931F0E343900DD665D /* LoadingOverlayGPS.swift in Sources */,
 				9AF7DD841E111A0900B66822 /* PlaceViewController.swift in Sources */,
@@ -648,6 +655,7 @@
 				9A7D1E0F1ED31B7A00ED9556 /* FSPageViewLayout.swift in Sources */,
 				9A7D1E0C1ED31B7A00ED9556 /* FSPagerView.swift in Sources */,
 				9AF7DD6A1E0A932E00B66822 /* AppDelegate.swift in Sources */,
+				9A04857D1F6A75EC0075513F /* DialogGuideBottom.swift in Sources */,
 				9AEC34381EFD116500DBAFA8 /* LandingPageVC.swift in Sources */,
 				9A39B4241F303FE4005DF046 /* Condition.swift in Sources */,
 				9A30F3751EE6AA090002B275 /* MyCardTableCell.swift in Sources */,

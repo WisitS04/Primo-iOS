@@ -200,12 +200,14 @@ extension MyCard_TableView: UITableViewDataSource, UITableViewDelegate{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myCardList", for: indexPath) as! MyCardCell
         let card = myCardItems[indexPath.section][indexPath.row]
-         let point: String?
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+         let point: Int?
         
         if(card.point != nil){
-           point = String(card.point!)
+           point = card.point
         }else{
-           point = "0"
+           point = 0
         }
         
         cell.view_bg.layer.borderWidth = 1
@@ -218,7 +220,9 @@ extension MyCard_TableView: UITableViewDataSource, UITableViewDelegate{
         cell.nameEN?.text = card.nameEN
         cell.image_point.image = UIImage(named: "point_icon")
         cell.image_delete_card.image = UIImage(named : "bin_icon")
-        cell.point_value?.text = point
+        cell.point_value?.text = (formatter.string(from: NSNumber(value: point!)) ?? "0")
+        
+        
         
         cell.btn_delete?.backgroundColor = UIColor.clear
         cell.btn_delete.tag = Int(card.cardId)

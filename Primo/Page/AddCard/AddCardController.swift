@@ -17,8 +17,9 @@ class AddCardController: UIViewController
     var btn_back: UIButton!
     var request: Alamofire.Request?
     @IBOutlet weak var bankCollection: BankListCollectionView!
+    @IBOutlet weak var done_btn: GreenButton!
+    @IBOutlet var viewMain: UIView!
 
-    
     
     
     var cardType: Int = PrimoCardType.creditCard.rawValue
@@ -29,12 +30,17 @@ class AddCardController: UIViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.setHidesBackButton(true, animated:true);
         
-//        setUpBack()
+        self.navigationController?.navigationBar.isTranslucent = false
         
+        //Hide top spat for Table View
+        bankCollection.contentInset = UIEdgeInsets.zero
+        self.automaticallyAdjustsScrollViewInsets = false
+        
+//        setUpBack()
+//        checkCardList()
         AddSegmentioView()
         SetUpSegmentioView()
         
@@ -42,7 +48,6 @@ class AddCardController: UIViewController
 //        bankCollection.LoadBankList(cardType: cardType)
         bankCollection.CallCrediteBank()
     
-
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -95,12 +100,22 @@ extension AddCardController{
 //        Alamofire.cance
     }
     
+    
+    func checkCardList(){
+        
+        if(CardDB.instance.getCards().isEmpty){
+            done_btn.isHidden = true
+          }else{
+            done_btn.isHidden = false
+        }
+    }
+    
     func AddSegmentioView() {
-        let statusBarHeight = UIApplication.shared.statusBarFrame.height
-        let navigationBarHeight = self.navigationController?.navigationBar.bounds.height ?? 0
+//        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+//        let navigationBarHeight = self.navigationController?.navigationBar.bounds.height ?? 0
         let segmentioViewRect = CGRect(
             x: 0,
-            y: statusBarHeight + navigationBarHeight,
+            y: 0,
             width: UIScreen.main.bounds.width,
             height: 50)
         //print("segmentioViewRect = \(segmentioViewRect)")
@@ -152,7 +167,7 @@ extension AddCardController{
                 )
             )
             return SegmentioOptions(
-                backgroundColor: PrimoColor.Green.UIColor,
+                backgroundColor: PrimoColor.greenNew.UIColor,
                 maxVisibleItems: 3,
                 scrollEnabled: false,
                 indicatorOptions: segmentioIndicatorOptions,

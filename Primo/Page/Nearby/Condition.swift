@@ -14,6 +14,7 @@ class Conidion
     var checkBox = UIButton(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
     var dialogView = UIView()
     var dialogViewBG = UIView()
+    var statusCheck: Bool = false
     
     var Action: ((_ Button: Bool) -> Void)? = nil
     
@@ -29,7 +30,7 @@ class Conidion
     
     public func Show(view: UIView,  action: ((Bool) -> Void)?) {
         let viewSize = UIScreen.main.bounds
-        
+        statusCheck = false
     
         mainView.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height)
         mainView.center = view.center
@@ -147,19 +148,18 @@ class Conidion
             if (btn.isSelected) {
                 button.backgroundColor = HexStringToUIColor(hex: PrimoColor.Green.rawValue)
                 button.isEnabled = true
-
-                print("")
+                statusCheck = true
             } else {
                 button.backgroundColor = HexStringToUIColor(hex: PrimoColor.Smoke.rawValue)
                 button.isEnabled = false
-                print("")
+                statusCheck = false
             }
        }
           Action!(false)
     }
     
     @objc func sendActionData(_ sender: Any)  {
-         Action!(true)
+         Action!(statusCheck)
     }
     
     

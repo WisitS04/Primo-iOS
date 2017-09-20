@@ -50,10 +50,16 @@ func GenServiceParam (ownedCardList: [PrimoCard] ,EditePoint :Bool = false ,card
         for mCard in card{
             var ownCard: [String: Any] = ["id": mCard.cardId]
             
-            if (mCard.point == nil) {
-                ownCard["point"] = 0
+            if (mCard.pointToUse == nil) {
+                
+                if(mCard.point == nil){
+                    ownCard["point"] = 0
+                }else{
+                    ownCard["point"] = mCard.point
+                }
+                
             }else{
-                ownCard["point"] = mCard.point
+                ownCard["point"] = mCard.pointToUse
             }
             result.append(ownCard)
         }

@@ -6,20 +6,21 @@
 //  Copyright © 2560 Primo World Co., Ltd. All rights reserved.
 //
 
-class GuideForAddCard
+class DialogGuideBottom
 {
     var mainView = UIView()
     var imageView = UIImageView()
+    var imageView2 = UIImageView()
     var imageViewBG = UIImageView()
     var button = UIButton()
     var dialogView = UIView()
     var dialogViewBG = UIView()
     var SegmentSize :CGFloat = 50
-    class var shared: GuideForAddCard
+    class var shared: DialogGuideBottom
     {
         struct Static
         {
-            static let instance: GuideForAddCard = GuideForAddCard()
+            static let instance: DialogGuideBottom = DialogGuideBottom()
         }
         return Static.instance
     }
@@ -37,37 +38,33 @@ class GuideForAddCard
         mainView.backgroundColor = UIColor.clear
         mainView.contentMode = UIViewContentMode.scaleAspectFit
         mainView.alpha = 1
-        //        guide_nearby
         
         imageViewBG.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height)
         imageViewBG.contentMode = .scaleAspectFit
-        imageViewBG.image = UIImage(named: "guide_add_card")
+        imageViewBG.image = UIImage(named: "bg_guide_deals_bottom")
         mainView.addSubview(imageViewBG)
         
-//        dialogViewBG.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height)
-////        dialogViewBG.center = mainView.center
-////                dialogViewBG.backgroundColor = HexStringToUIColor(hex: "#444444")
-//        dialogViewBG.backgroundColor = UIColor.clear
-//        dialogViewBG.contentMode = .scaleAspectFit
-//        dialogViewBG.alpha = 0.5
-//        dialogViewBG.clipsToBounds = true
-//        //        dialogViewBG.layer.cornerRadius = 4
-//        mainView.addSubview(dialogViewBG)
         
         
-        imageView.frame = CGRect(x: 0, y: hightStatusBar, width: navigationBarWidth, height: SegmentSize + hightStatusBar + navigationBarHeight)
-        imageView.contentMode = .scaleAspectFit
+        imageView.frame = CGRect(x: 0,
+                                 y: hightStatusBar + navigationBarHeight  + 218.5,
+                                 width: navigationBarWidth,
+                                 height: 31.5)
+        imageView.contentMode = .scaleAspectFill
 //        imageView.backgroundColor = UIColor.gray
-        imageView.image = UIImage(named: "cover_add_card")
+                imageView.image = UIImage(named: "big_circle")
         mainView.addSubview(imageView)
         
         
-//        dialogView.frame = CGRect(x: 0, y: hightStatusBar, width: navigationBarWidth, height: SegmentSize + hightStatusBar + navigationBarHeight)
-//        dialogView.backgroundColor = HexStringToUIColor(hex: "#444444")
-//        dialogView.alpha = 1
-//        dialogView.clipsToBounds = true
-//        dialogView.layer.cornerRadius = 4
-//        mainView.addSubview(dialogView)
+        
+        imageView2.frame = CGRect(x: (navigationBarWidth - 160)-16,
+                                 y: hightStatusBar + navigationBarHeight  + 260,
+                                 width: 170,
+                                 height: 48.5)
+        imageView2.contentMode = .scaleAspectFill
+//        imageView2.backgroundColor = UIColor.green
+        imageView2.image = UIImage(named: "small_circle")
+        mainView.addSubview(imageView2)
         
         
         
@@ -88,8 +85,8 @@ class GuideForAddCard
     
     
     @objc func sendActionData(_ sender: Any)  {
-            Hide()
-            StatusGuideAddCard.set(true,forKey: KEYGuideAddCard)
+        Hide()
+        StatusGuideDeals.set(true,forKey: KEYGuideDeals)
     }
     
     

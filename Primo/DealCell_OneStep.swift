@@ -4,7 +4,9 @@ import SDWebImage
 class DealCell_OneStep: UITableViewCell {
 
     var controllerForDeals: DealViewController? = nil
-    
+    var mtable: DealTableVC? = nil
+    var statusUsePointMenu: Bool = false
+    var statusUnUsePointMenu: Bool = false
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -13,9 +15,14 @@ class DealCell_OneStep: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func SetData(deal: Deal ,mControllerForDeals: DealViewController)
+    func SetData(deal: Deal ,mControllerForDeals: DealViewController ,
+                 statusUseMenuPoint: Bool , statusUnUsePoint: Bool,
+                 table :DealTableVC, AllDealList :[Deal])
     {
         controllerForDeals = mControllerForDeals
+        mtable = table
+        statusUsePointMenu = statusUseMenuPoint
+        statusUnUsePointMenu = statusUnUsePoint
         
         // color bar
         if let subview = self.viewWithTag(101) {
@@ -126,9 +133,8 @@ class DealCell_OneStep: UITableViewCell {
         if let subview = self.viewWithTag(11) as? Button_custom {
             subview.backgroundColor = UIColor.clear
             if(deal.card?.type == .memberCard){
-                subview.tag = 1
                 subview.mDealBuffer.removeAll()
-                subview.mDealBuffer.append(deal)
+                subview.mDealBuffer = AllDealList
                 subview.addTarget(self, action: #selector(sendActionMember), for: .touchUpInside)
             }
            
@@ -139,9 +145,8 @@ class DealCell_OneStep: UITableViewCell {
             subview.backgroundColor = UIColor.clear
             
             if(deal.card?.type != .memberCard){
-                subview.tag = 2
                 subview.mDealBuffer.removeAll()
-                subview.mDealBuffer.append(deal)
+                subview.mDealBuffer = AllDealList
                 subview.addTarget(self, action: #selector(sendActionCredite), for: .touchUpInside)
             }
         }
@@ -174,16 +179,22 @@ class DealCell_OneStep: UITableViewCell {
     }
     
     @objc func sendActionCredite(_ sender: Any)  {
-        let value = sender as! Button_custom
-        DialogEditePoint.shared.Show(deal :value.mDealBuffer,controller: controllerForDeals!)
         
-        print("sendActionCredite")
+        if(statusUsePointMenu && statusUnUsePointMenu != true){
+            let value = sender as! Button_custom
+            let index:Int = (mtable!.tableView.indexPath(for: self)?.row)!
+            DialogEditePoint.shared.Show(deal :[value.mDealBuffer[index]],controller: controllerForDeals!, statusCard: 1)
+            print("sendActionCredite")
+        }
     }
     
     @objc func sendActionMember(_ sender: Any)  {
-        let value = sender as! Button_custom
-         DialogEditePoint.shared.Show(deal :value.mDealBuffer,controller: controllerForDeals!)
-        print("sendActionMember")
+        if(statusUsePointMenu && statusUnUsePointMenu != true){
+            let value = sender as! Button_custom
+            let index:Int = (mtable!.tableView.indexPath(for: self)?.row)!
+            DialogEditePoint.shared.Show(deal :[value.mDealBuffer[index]],controller: controllerForDeals!, statusCard: 4)
+            print("sendActionMember")
+        }
     }
     
 }

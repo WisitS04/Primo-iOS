@@ -14,12 +14,13 @@ struct Section {
     var title: String!
     var cardImage: UIImage!
     var howto: String!
+    var howtoNotPoitToUse: String!
     var description: String!
     var term: String!
-    
     var smsMsg: String!
     var smsDesc: String!
     var smsNumber: String!
+    var urlCard: String!
     
     var collapsed: Bool!
 
@@ -36,8 +37,10 @@ struct Section {
         self.cardImage = deal.card?.image
         self.description = deal.description
         self.term = deal.termsAndConditions
+        self.urlCard = deal.card?.imgUrl
 //        self.howto = "\(deal.proName!) ใช้ทั้งหมด \(pointRequired) แต้ม"
        
+        self.howtoNotPoitToUse = "\(deal.proName!)"
         if(deal.pointRequired != 0){
             self.howto = "\(deal.proName!) \nใช้ทั้งหมด \(pointRequired) แต้ม"
         }else{
@@ -156,7 +159,7 @@ extension DealDetailViewController
                 // fore card
                 AddCard(image: deal.card?.image, position: .fore, defaultCard: #imageLiteral(resourceName: "mock_card_3"))
                 break
-            case 3:
+             default:
                 // back card
                 AddCard(image: #imageLiteral(resourceName: "mock_card_3"), position: .back, defaultCard: #imageLiteral(resourceName: "mock_card_3"))
                 // middle card
@@ -164,8 +167,8 @@ extension DealDetailViewController
                 // fore card
                 AddCard(image: deal.card?.image, position: .fore, defaultCard: #imageLiteral(resourceName: "mock_card_3"))
                 break
-            default:
-                break
+//            default:
+//                break
             }
         }
     }
@@ -201,6 +204,11 @@ extension DealDetailViewController
             formatter.numberStyle = .decimal
             rewardValue.text = (formatter.string(from: NSNumber(value: value)) ?? "0") + " ฿"
         }
+        
+        if let rewardValue = view.viewWithTag(106) {
+             rewardValue.layer.cornerRadius = 5
+        }
+    
     }
     
     func SetRewardDetail(deal: Deal) {
@@ -439,9 +447,13 @@ extension DealDetailViewController: UITableViewDelegate, UITableViewDataSource {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as? CollapsibleTableViewHeader ?? CollapsibleTableViewHeader(reuseIdentifier: "header")
         
         header.indexLabel.text = "\(sections[section].index!)"
-        header.cardImageView.image = sections[section].cardImage
+//        header.cardImageView.image = sections[section].cardImage
+        header.cardImageView.sd_setImage(with: URL(string: sections[section].urlCard))
+        
+//         cell.card_img.sd_setImage(with: URL(string: cardListFiter[indexPath.row].imageUrl))
+        
 //        header.titleLabel.text = sections[section].title
-        header.titleLabel.text = sections[section].howto
+        header.titleLabel.text = sections[section].howtoNotPoitToUse
         header.arrowLabel.text = ">"
         header.setCollapsed(sections[section].collapsed)
                 

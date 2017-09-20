@@ -27,10 +27,15 @@ class DetailViewController: UIViewController
     var currentPercentDiscount: Float = 0.0
     var dateSelected: String = ""
     var depSelect: Int = 0
+    var statusGuideDetail: Bool = false
+    var statusGuideDetailNotDep: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+         statusGuideDetail  = StatusGuideDetail.bool(forKey: KEYGuideDetail)
+         statusGuideDetailNotDep = StatusGuideDetailNotDep.bool(forKey: KEYGuideNotDepDetail)
+        
 //         GuideForDetail.shared.Show(view: self.view, navigationController: self.navigationController!)
         
         // Set up SideBar
@@ -220,8 +225,17 @@ extension DetailViewController
                         self.ShowPlaceDepartment(json: json)
                     }
                     
-                    GuideForDetail.shared.Show(view: self.view, navigationController: self.navigationController! , MydepartmentCount :departmentCount)
+                    if(departmentCount > 0){
+                        if(!self.statusGuideDetail){
+                            GuideForDetail.shared.Show(view: self.view, navigationController: self.navigationController! , MydepartmentCount :departmentCount)
+                        }
+                    }else{
+                        if(!self.statusGuideDetailNotDep){
+                            GuideForDetail.shared.Show(view: self.view, navigationController: self.navigationController! , MydepartmentCount :departmentCount)
+                        }
+                    }
                     
+                  
                     LoadingOverlay.shared.hideOverlayView()
                 case .failure(let error):
                     print(error)

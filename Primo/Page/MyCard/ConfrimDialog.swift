@@ -46,11 +46,11 @@ class ConfrimDialog
         
         
         
-        dialogView.frame = CGRect(x: (mainView.bounds.width-270)/2, y: mainView.bounds.height/4, width: 270, height: 165)
+        dialogView.frame = CGRect(x: (mainView.bounds.width-270)/2, y: mainView.bounds.height/4, width: 270, height: 195)
         dialogView.backgroundColor = UIColor.white
         dialogView.alpha = 1
         dialogView.clipsToBounds = true
-        dialogView.layer.cornerRadius = 5
+        dialogView.layer.cornerRadius = 8
         mainView.addSubview(dialogView)
         
         
@@ -68,10 +68,12 @@ class ConfrimDialog
         
         
         
-        textContent.frame = CGRect(x: 22, y: 70, width: dialogView.bounds.width-48, height: 60)
+        textContent.frame = CGRect(x: 22, y: 70, width: dialogView.bounds.width-48, height: 70)
         textContent.backgroundColor = UIColor.white
         textContent.textColor = UIColor.black
         textContent.textAlignment = .center
+        textContent.font = textContent.font.withSize(15)
+        textContent.numberOfLines = 0
         textContent.text = "คุณแน่ใจว่าต้องการลบบัตรนี้ออกจากบัตรของฉัน"
         dialogView.addSubview(textContent)
         
@@ -79,9 +81,7 @@ class ConfrimDialog
         
         
         
-        let buttonLink = UIButton(frame: CGRect(x: 0, y: 120, width: dialogView.bounds.width/2, height: 48))
-        
-        
+        let buttonLink = UIButton(frame: CGRect(x: 0, y: 150, width: dialogView.bounds.width/2, height: 48))
         buttonLink.setTitle("Cancel",for: .normal)
         buttonLink.setTitleColor(UIColor.blue, for: .normal)
         buttonLink.backgroundColor = UIColor.white
@@ -92,7 +92,7 @@ class ConfrimDialog
         dialogView.addSubview(buttonLink)
         
         
-        let button =  UIButton(frame: CGRect(x: dialogView.bounds.width/2, y: 120, width: dialogView.bounds.width/2, height: 48))
+        let button =  UIButton(frame: CGRect(x: dialogView.bounds.width/2, y: 150, width: dialogView.bounds.width/2, height: 48))
         button.setTitle("OK", for: .normal)
         button.backgroundColor = UIColor.white
         button.layer.borderWidth = 1

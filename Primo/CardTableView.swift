@@ -95,24 +95,38 @@ extension CardTableView
         if let btn = sender as? UIButton {
             btn.isSelected = !btn.isSelected
             if (btn.isSelected) {
-                let card = cardResultList[btn.tag]
-                let result = CardDB.instance.addCard(cId: Int64(card.id),
-                                                     cType: cardType,
-                                                     cNameTH: card.nameTH,
-                                                     cNameEN: card.nameEN,
-                                                     cImgUrl: card.imageUrl)
-                print("OnCheck add card result: \(result)")
-                if (result != -1) {
-                    cardResultList[btn.tag].isAdded = true
-                    GetCardDatabase()
+//                let card = cardResultList[btn.tag]
+                var countIndex: Int = 0
+                for item in cardResultList{
+                    if(item.id == btn.tag){
+                        let card = item
+                        let result = CardDB.instance.addCard(cId: Int64(card.id),
+                                                             cType: cardType,
+                                                             cNameTH: card.nameTH,
+                                                             cNameEN: card.nameEN,
+                                                             cImgUrl: card.imageUrl)
+                        print("OnCheck add card result: \(result)")
+                        if (result != -1) {
+                            cardResultList[countIndex].isAdded = true
+                            GetCardDatabase()
+                        }
+
+                    }
+                    countIndex = countIndex+1
                 }
-            } else {
-                let card = cardResultList[btn.tag]
-                let result = CardDB.instance.deleteCard(cId: Int64(card.id))
-                print("OnCheck delete card result: \(result)")
-                if (result) {
-                    cardResultList[btn.tag].isAdded = false
-                    GetCardDatabase()
+             } else {
+                var countIndex: Int = 0
+                for item in cardResultList{
+                    if(item.id == btn.tag){
+                        let card = item
+                        let result = CardDB.instance.deleteCard(cId: Int64(card.id))
+                        print("OnCheck delete card result: \(result)")
+                        if (result) {
+                            cardResultList[countIndex].isAdded = false
+                            GetCardDatabase()
+                        }
+                    }
+                    countIndex = countIndex+1
                 }
             }
         }
@@ -143,7 +157,8 @@ extension CardTableView: UITableViewDelegate, UITableViewDataSource
             
             cell.select_card_checkbox.removeTarget(nil, action: nil, for: .allEvents)
             cell.select_card_checkbox.addTarget(self, action: #selector(OnCheck(_:)), for: .touchUpInside)
-            cell.select_card_checkbox.tag = indexPath.row
+//            cell.select_card_checkbox.tag = indexPath.row
+            cell.select_card_checkbox.tag = cardListFiter[indexPath.row].id
             
             cell.select_card_checkbox.isSelected = cardListFiter[indexPath.row].isAdded
             
@@ -157,7 +172,8 @@ extension CardTableView: UITableViewDelegate, UITableViewDataSource
             
             cell.select_card_checkbox.removeTarget(nil, action: nil, for: .allEvents)
             cell.select_card_checkbox.addTarget(self, action: #selector(OnCheck(_:)), for: .touchUpInside)
-            cell.select_card_checkbox.tag = indexPath.row
+//            cell.select_card_checkbox.tag = indexPath.row
+            cell.select_card_checkbox.tag = cardResultList[indexPath.row].id
             
             cell.select_card_checkbox.isSelected = cardResultList[indexPath.row].isAdded
             

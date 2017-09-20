@@ -9,5 +9,6 @@
 class Button_custom: UIButton
 {
   var mDealBuffer: [Deal] = []
+  var mBufferDeal: Deal?
     
 }

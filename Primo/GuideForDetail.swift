@@ -26,6 +26,7 @@ class GuideForDetail
     var spaceButtonForSection: CGFloat = 20
     
     var sumHightForSetion: CGFloat = 57
+    var devCount: Int = 0
     
     class var shared: GuideForDetail
     {
@@ -38,6 +39,8 @@ class GuideForDetail
     
     
     public func Show(view: UIView, navigationController: UINavigationController , MydepartmentCount: Int) {
+        devCount = 0
+        devCount = MydepartmentCount
         let viewSize = UIScreen.main.bounds
         let hightStatusBar = UIApplication.shared.statusBarFrame.height
         
@@ -145,6 +148,13 @@ class GuideForDetail
     
     @objc func sendActionData(_ sender: Any)  {
         Hide()
+        if(devCount > 0){
+            StatusGuideDetail.set(true,forKey: KEYGuideDetail)
+        }else{
+            StatusGuideDetailNotDep.set(true,forKey: KEYGuideNotDepDetail)
+        }
+        
+
     }
     
     

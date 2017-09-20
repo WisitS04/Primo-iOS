@@ -14,7 +14,8 @@ class DialogEditePoint
     var dialogView = UIView()
     let textContent = UITextField()
     let myCardButton = UIButton()
-    let image = UIImageView()
+    let imageLineOne = UIImageView()
+    let imageLineTwo = UIImageView()
     
     var index: Int?
     let dropDown = DropDown()
@@ -24,6 +25,7 @@ class DialogEditePoint
     var cardList: [String] = ["  กรุณาเลือกบัตรที่จะใช้คะแนนสะสม"]
     var cardBuffer: [PrimoCard] = []
     var mController: DealViewController? = nil
+    var statusmCard: Int = 0
     
     class var shared: DialogEditePoint
     {
@@ -35,11 +37,14 @@ class DialogEditePoint
     }
     
     
-    public func Show(deal :[Deal] ,controller :DealViewController) {
+    public func Show(deal :[Deal] ,controller :DealViewController,statusCard :Int) {
         let viewSize = UIScreen.main.bounds
         MyDeal.removeAll()
+        statusmCard = 0
+        
         MyDeal = deal
         mController = controller
+        statusmCard = statusCard
         
         mainView.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height)
         mainView.backgroundColor = HexStringToUIColor(hex: "#FFFFFF00")
@@ -57,9 +62,9 @@ class DialogEditePoint
         
         
         dialogView.frame = CGRect(x: (mainView.bounds.width-330)/2,
-                                  y: 80,
+                                  y: 115,
                                   width: 330,
-                                  height: 334)
+                                  height: 278)
         
         dialogView.backgroundColor = UIColor.white
         dialogView.alpha = 1
@@ -91,7 +96,11 @@ class DialogEditePoint
         myCardButton.backgroundColor = HexStringToUIColor(hex: "#F2F2F2")
         myCardButton.setTitleColor(HexStringToUIColor(hex: "#AAAAAA"), for: .normal)
         myCardButton.layer.cornerRadius = 5
-        myCardButton.setTitle("กรุณาเลือกบัตรที่จะใช้คะแนนสะสม", for: .normal)
+        if(statusmCard == 4){
+            myCardButton.setTitle(" เลือกบัตรสมาชิก", for: .normal)
+        }else{
+            myCardButton.setTitle(" เลือกบัตรเครดิต", for: .normal)
+        }
         myCardButton.layer.borderColor = UIColor.init(red:222/255.0,
                                                       green:225/255.0,
                                                       blue:227/255.0,
@@ -101,12 +110,12 @@ class DialogEditePoint
         
         
         
-        image.frame = CGRect(x: 0,
+        imageLineOne.frame = CGRect(x: 0,
                              y: 153.5,
                              width: dialogView.bounds.width,
                              height: 1)
-        image.backgroundColor = HexStringToUIColor(hex: "#F2F2F2")
-        
+        imageLineOne.backgroundColor = HexStringToUIColor(hex: "#F2F2F2")
+        dialogView.addSubview(imageLineOne)
         
         
         
@@ -117,7 +126,7 @@ class DialogEditePoint
         textContent.backgroundColor = HexStringToUIColor(hex: "#F2F2F2")
         textContent.textAlignment = .center
 //        textContent.text = String(mPoint)
-        //        textContent.placeholder = String(mPoint)
+        textContent.placeholder = "ใส่คะแนน"
         textContent.keyboardType = UIKeyboardType.numberPad
         textContent.becomeFirstResponder()
         textContent.font = textContent.font?.withSize(17)
@@ -125,7 +134,7 @@ class DialogEditePoint
         textContent.layer.cornerRadius = 5
         textContent.tintColor = HexStringToUIColor(hex: "#AAAAAA")
         textContent.layer.borderWidth = 1
-        textContent.isHidden = true
+        textContent.isUserInteractionEnabled = false
         textContent.layer.borderColor = UIColor.init(red:222/255.0,
                                                      green:225/255.0,
                                                      blue:227/255.0,
@@ -134,10 +143,19 @@ class DialogEditePoint
         
         
         
+        imageLineTwo.frame = CGRect(x: 0,
+                                    y: 230.5,
+                                    width: dialogView.bounds.width,
+                                    height: 1)
+        imageLineTwo.backgroundColor = HexStringToUIColor(hex: "#F2F2F2")
+        dialogView.addSubview(imageLineTwo)
+
+        
+        
         
         
         let buttonLink = UIButton(frame: CGRect(x: 0,
-                                                y: 286,
+                                                y: 230.5,
                                                 width: dialogView.bounds.width/2,
                                                 height: 48))
         buttonLink.setTitle("Cancel",for: .normal)
@@ -152,7 +170,7 @@ class DialogEditePoint
         
         
         let button =  UIButton(frame: CGRect(x: dialogView.bounds.width/2,
-                                             y: 286,
+                                             y: 230.5,
                                              width: dialogView.bounds.width/2,
                                              height: 48))
         button.setTitle("OK", for: .normal)
@@ -220,7 +238,12 @@ class DialogEditePoint
         
         clearData()
         
-        cardList.append("กรุณาเลือกบัตรที่จะใช้คะแนนสะสม")
+        if(statusmCard == 4){
+            cardList.append(" เลือกบัตรสมาชิก")
+        }else{
+            cardList.append(" เลือกบัตรเครดิต")
+        }
+        
         myCardList = CardDB.instance.getCards()
         dropDown.anchorView = myCardButton
         loopCheckTypeCard(mDeal: MyDeal[0])
@@ -229,10 +252,13 @@ class DialogEditePoint
             dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
                 self.myCardButton.setTitle(item, for: .normal)
                 if (index == 0) {
-                    self.textContent.isHidden = true
+                    self.textContent.isUserInteractionEnabled = false
+                    self.textContent.placeholder = "ใส่คะแนน"
                     self.index = index
                 } else {
-                    self.textContent.isHidden = false
+                    self.textContent.isUserInteractionEnabled = true
+                    self.textContent.placeholder = ""
+                    self.textContent.becomeFirstResponder()
                     self.index = index
                 }
             }
@@ -248,8 +274,20 @@ class DialogEditePoint
             for card in myCardList {
                 if(card.cardId == mDeal.card?.cardId){
                     if(!cardList.contains(card.nameTH)){
-                        cardList.append(card.nameTH)
-                        cardBuffer.append(card)
+                        
+                        if(statusmCard == 4){
+                            if(card.type == .memberCard){
+                                cardList.append(card.nameTH)
+                                cardBuffer.append(card)
+                            }
+                            
+                        }else{
+                            if(card.type == .creditCard || card.type == .debitCard){
+                                cardList.append(card.nameTH)
+                                cardBuffer.append(card)
+                            }
+                        }
+
                     }
                 }
             }
@@ -258,8 +296,21 @@ class DialogEditePoint
             for card in myCardList {
                 if(card.cardId == mDeal.card?.cardId){
                     if(!cardList.contains(card.nameTH)){
-                        cardList.append(card.nameTH)
-                        cardBuffer.append(card)
+                        
+                        if(statusmCard == 4){
+                            if(card.type == .memberCard){
+                                cardList.append(card.nameTH)
+                                cardBuffer.append(card)
+                            }
+                            
+                        }else{
+                            if(card.type == .creditCard || card.type == .debitCard){
+                                cardList.append(card.nameTH)
+                                cardBuffer.append(card)
+                            }
+                        }
+                        
+                        
                     }
                 }
             }

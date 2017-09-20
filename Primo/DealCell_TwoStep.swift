@@ -12,6 +12,11 @@ import SDWebImage
 class DealCell_TwoStep: UITableViewCell {
 
     var controllerForDeals: DealViewController? = nil
+    var UrlFirstCard: String = ""
+    var UrlNotFirstCard: String = ""
+    var mtable: DealTableVC? = nil
+    var statusUsePointMenu: Bool = false
+    var statusUnUsePointMenu: Bool = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,10 +25,17 @@ class DealCell_TwoStep: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-
-    func SetData(deal: Deal ,mControllerForDeals: DealViewController)
+    
+    
+    func SetData(deal: Deal ,mControllerForDeals: DealViewController,
+                 statusUseMenuPoint: Bool, statusUnUsePoint: Bool,
+                 table :DealTableVC, AllDealList :[Deal])
     {
        controllerForDeals = mControllerForDeals
+       mtable = table
+       statusUsePointMenu = statusUseMenuPoint
+       statusUnUsePointMenu = statusUnUsePoint
+        
         // color bar
         if let subview = self.viewWithTag(101) {
 //            if (deal.isOwnedDeal!) {
@@ -36,6 +48,23 @@ class DealCell_TwoStep: UITableViewCell {
         
         // card image
         // fore card
+        
+        if(deal.card?.type != .memberCard){
+            UrlFirstCard = (deal.card?.imgUrl)!
+            UrlNotFirstCard = (deal.Childs?.card?.imgUrl)!
+        }else{
+            if(deal.Childs?.card?.type != .memberCard){
+                UrlFirstCard = (deal.Childs?.card?.imgUrl)!
+                UrlNotFirstCard = (deal.card?.imgUrl)!
+            }else{
+                UrlFirstCard = (deal.card?.imgUrl)!
+                UrlNotFirstCard = (deal.Childs?.card?.imgUrl)!
+            }
+        }
+        
+        
+        
+        
         if let subview = self.viewWithTag(102) as? UIImageView {
             let defaultCard = #imageLiteral(resourceName: "mock_card_3")
             let block = { (image: UIImage?, error: Error?, cache: SDImageCacheType, url: URL?) in
@@ -46,7 +75,7 @@ class DealCell_TwoStep: UITableViewCell {
                     //print("Got Image")
                 }
             }
-            subview.sd_setImage(with: URL(string: (deal.card?.imgUrl)!),
+            subview.sd_setImage(with: URL(string: (UrlFirstCard)),
                                 placeholderImage: defaultCard,
                                 options: .retryFailed,
                                 completed: block)
@@ -58,11 +87,11 @@ class DealCell_TwoStep: UITableViewCell {
                 if (error != nil) {
                     print(error!)
                 } else {
-                    deal.Childs?.card?.image = image
+                   deal.Childs?.card?.image = image
                     //print("Got Image")
                 }
             }
-            subview.sd_setImage(with: URL(string: (deal.Childs?.card?.imgUrl)!),
+            subview.sd_setImage(with: URL(string: (UrlNotFirstCard)),
                                 placeholderImage: defaultCard,
                                 options: .retryFailed,
                                 completed: block)
@@ -138,29 +167,36 @@ class DealCell_TwoStep: UITableViewCell {
             
             
         }
+
         
         
         if let subview = self.viewWithTag(23) as? Button_custom {
             subview.backgroundColor = UIColor.clear
-  
+        
+            
+            subview.mBufferDeal? = deal
+
             if(deal.card?.type == .memberCard
                 || deal.Childs?.card?.type == .memberCard){
-                subview.tag = 1
                 subview.mDealBuffer.removeAll()
-                subview.mDealBuffer.append(deal)
+                subview.mDealBuffer = AllDealList
                 subview.addTarget(self, action: #selector(sendActionMember), for: .touchUpInside)
+
             }
         }
         
         
         if let subview = self.viewWithTag(24) as? Button_custom {
             subview.backgroundColor = UIColor.clear
+
+            subview.mBufferDeal? = deal
+            
             if(deal.card?.type != .memberCard
                 || deal.Childs?.card?.type != .memberCard){
-                subview.tag = 2
                 subview.mDealBuffer.removeAll()
-                subview.mDealBuffer.append(deal)
-                subview.addTarget(self, action: #selector(sendActionMember), for: .touchUpInside)
+                subview.mDealBuffer = AllDealList
+                subview.addTarget(self, action: #selector(sendActionCredite), for: .touchUpInside)
+                
             }
         }
         
@@ -191,17 +227,23 @@ class DealCell_TwoStep: UITableViewCell {
     }
     
     @objc func sendActionCredite(_ sender: Any)  {
-        let value = sender as! Button_custom
-            DialogEditePoint.shared.Show(deal :value.mDealBuffer, controller: controllerForDeals!)
+        if(statusUsePointMenu && statusUnUsePointMenu != true){
+            let value = sender as! Button_custom
+            let index:Int = (mtable!.tableView.indexPath(for: self)?.row)!
+            DialogEditePoint.shared.Show(deal :[value.mDealBuffer[index]], controller: controllerForDeals!, statusCard: 1)
         
-        print("sendActionCredite")
+            print("sendActionCredite")
+        }
     }
     
     @objc func sendActionMember(_ sender: Any)  {
-        let value = sender as! Button_custom
-            DialogEditePoint.shared.Show(deal :value.mDealBuffer, controller: controllerForDeals!)
+        if(statusUsePointMenu && statusUnUsePointMenu != true){
+            let value = sender as! Button_custom
+            let index:Int = (mtable!.tableView.indexPath(for: self)?.row)!
         
-        print("sendActionMember")
+            DialogEditePoint.shared.Show(deal :[value.mDealBuffer[index]], controller: controllerForDeals!, statusCard: 4)
+            print("sendActionMember")
+        }
     }
     
 }

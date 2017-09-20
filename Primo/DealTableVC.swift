@@ -61,21 +61,26 @@ class DealTableVC: UITableViewController
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        let deal = self.dealItems[indexPath.section][indexPath.row]
         let deal = dealBuffer[indexPath.row]
-        
         if (deal.totalStep! == 1) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DealCell_OneStep",
                                                      for: indexPath) as! DealCell_OneStep
-            cell.SetData(deal: deal,mControllerForDeals :controllrtDeals!)
+            cell.SetData(deal: deal,mControllerForDeals :controllrtDeals!,
+                         statusUseMenuPoint: isUsePoint, statusUnUsePoint: isUnPoint,
+                         table: self, AllDealList :dealBuffer)
             return cell
         } else if (deal.totalStep! == 2) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DealCell_TwoStep",
                                                      for: indexPath) as! DealCell_TwoStep
-            cell.SetData(deal: deal,mControllerForDeals :controllrtDeals!)
+            cell.SetData(deal: deal,mControllerForDeals :controllrtDeals!,
+                         statusUseMenuPoint: isUsePoint, statusUnUsePoint: isUnPoint,
+                         table: self, AllDealList :dealBuffer)
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DealCell_ThreeStep",
                                                      for: indexPath) as! DealCell_ThreeStep
-            cell.SetData(deal: deal,mControllerForDeals :controllrtDeals!)
+            cell.SetData(deal: deal,mControllerForDeals :controllrtDeals!,
+                         statusUseMenuPoint: isUsePoint, statusUnUsePoint: isUnPoint,
+                         table: self, AllDealList :dealBuffer)
             return cell
         }
     }
@@ -113,7 +118,7 @@ extension DealTableVC
     }
     
     func CallWebservice(statusEditePoint :Bool = false , Card: [PrimoCard]) {
-        LoadingOverlay.shared.showOverlay(view: self.view)
+        LoadingOverlay.shared.showOverlay(view: (controllrtDeals?.view)!)
         //
         // Parameters
         //
@@ -136,10 +141,23 @@ extension DealTableVC
         // Get dealsWithoutInstallment
         //
         isGotDealsWithoutInstallment = false
+        
+        
+        let headers: HTTPHeaders = [
+//            "authorization": "Basic YW5vbnltb3VzOnNwb3Rvbi1wcmltbw==",
+            "Content-Type": "application/json",
+            "uuid":"1111111",
+            "client": "iPhone6",
+            "client_ver": "iOS"
+            
+        ]
+        
+        
         Alamofire.request(Service.DealsPromotion.url + "?pagesize=20&page=1",
                           method: .post,
                           parameters: param,
-                          encoding: JSONEncoding.default)
+                          encoding: JSONEncoding.default,
+                          headers: headers)
             .authenticate(user: Service_User, password: Service_Password)
             .responseJSON { response in
                 switch response.result {
@@ -149,21 +167,71 @@ extension DealTableVC
                     self.dealsWithoutInstallment = self.CreateDealList(json)
                     self.isGotDealsWithoutInstallment = true
                     self.OnCallDealsPromotionServiceSuccess()
-                    print("Call DealsPromotion service [Without Installment] -> success")
+                    print("Call DealsPromotion service not installment -> success")
+                    self.CallServiceInstallMent(mStatusEditePoint: statusEditePoint, sCard: Card)
                 case .failure(let error):
                     print(error)
                     self.OnCallDealsPromotionServiceSuccess(isError: true)
                 }
         }
-        //
-        // Get dealsWithInstallment
-        //
-        param["installment"] = 1
+        
+        
+        
+//        Alamofire.request(Service.DealsPromotion.url + "?pagesize=20&page=1",
+//                          method: .post,
+//                          parameters: param,
+//                          encoding: JSONEncoding.default)
+//            .authenticate(user: Service_User, password: Service_Password)
+//            .responseJSON { response in
+//                switch response.result {
+//                case .success(let value):
+//                    let json = JSON(value)
+//                    self.dealsWithoutInstallment.removeAll()
+//                    self.dealsWithoutInstallment = self.CreateDealList(json)
+//                    self.isGotDealsWithoutInstallment = true
+//                    self.OnCallDealsPromotionServiceSuccess()
+//                    print("Call DealsPromotion service [Without Installment] -> success")
+//                case .failure(let error):
+//                    print(error)
+//                    self.OnCallDealsPromotionServiceSuccess(isError: true)
+//                }
+//        }
+        
+    }
+    
+    
+    func CallServiceInstallMent(mStatusEditePoint :Bool = false , sCard: [PrimoCard]){
+        var param: Parameters = [
+            "date": date,
+            "isDealsOwnedCardOnly": true,
+            "installment": 1, // 0 = false | 1 = true
+            "price": price,
+            "store": store,
+            "branch" : branch
+        ]
+        if (departmentId > 0) {
+            param["dept"] = departmentId
+        }
+        let cards = CardDB.instance.getCards()
+        if (cards.count > 0) {
+            param["ownedCardList"] = GenServiceParam(ownedCardList: cards, EditePoint: mStatusEditePoint, card: sCard)
+        }
         isGotDealsWithInstallment = false
+        let headers: HTTPHeaders = [
+            //            "authorization": "Basic YW5vbnltb3VzOnNwb3Rvbi1wcmltbw==",
+            "Content-Type": "application/json",
+            "uuid":"1111111",
+            "client": "iPhone6",
+            "client_ver": "iOS"
+            
+        ]
+
+        
         Alamofire.request(Service.DealsPromotion.url + "?pagesize=20&page=1",
                           method: .post,
                           parameters: param,
-                          encoding: JSONEncoding.default)
+                          encoding: JSONEncoding.default,
+                          headers: headers)
             .authenticate(user: Service_User, password: Service_Password)
             .responseJSON { response in
                 switch response.result {
@@ -173,13 +241,40 @@ extension DealTableVC
                     self.dealsWithInstallment = self.CreateDealList(json)
                     self.isGotDealsWithInstallment = true
                     self.OnCallDealsPromotionServiceSuccess()
-                    print("Call DealsPromotion service [With Installment] -> success")
+                    print("Call DealsPromotion service installment -> success")
+                    let statusGuideDeals  = StatusGuideDeals.bool(forKey: KEYGuideDeals)
+                    if(!statusGuideDeals){
+                        DialogGuideTop.shared.Show(view: (self.controllrtDeals?.view)!, navigationController: self.navigationController!)
+                    }
                 case .failure(let error):
                     print(error)
                     self.OnCallDealsPromotionServiceSuccess(isError: true)
                 }
         }
+        
+        
+        //        Alamofire.request(Service.DealsPromotion.url + "?pagesize=20&page=1",
+        //                          method: .post,
+        //                          parameters: param,
+        //                          encoding: JSONEncoding.default)
+        //            .authenticate(user: Service_User, password: Service_Password)
+        //            .responseJSON { response in
+        //                switch response.result {
+        //                case .success(let value):
+        //                    let json = JSON(value)
+        //                    self.dealsWithInstallment.removeAll()
+        //                    self.dealsWithInstallment = self.CreateDealList(json)
+        //                    self.isGotDealsWithInstallment = true
+        //                    self.OnCallDealsPromotionServiceSuccess()
+        //                    print("Call DealsPromotion service [With Installment] -> success")
+        //                case .failure(let error):
+        //                    print(error)
+        //                    self.OnCallDealsPromotionServiceSuccess(isError: true)
+        //                }
+        //        }
+        
     }
+    
     
     func OnCallDealsPromotionServiceSuccess(isError: Bool = false) {
         if (isGotDealsWithoutInstallment && isGotDealsWithInstallment) {
@@ -187,6 +282,7 @@ extension DealTableVC
             LoadingOverlay.shared.hideOverlayView()
         }
         if isError {
+            LoadingOverlay.shared.hideOverlayView()
             PrimoAlert().Error()
         }
     }

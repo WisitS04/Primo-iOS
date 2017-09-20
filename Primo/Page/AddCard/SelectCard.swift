@@ -67,6 +67,7 @@ extension SelectCard{
     @objc func clickSearch(_ sender: Any){
         self.navigationItem.setHidesBackButton(true, animated:true);
         self.navigationItem.rightBarButtonItem = nil
+        cardResultTable.reloadData()
         setUpSearchBar()
     }
     
@@ -145,6 +146,8 @@ extension SelectCard :UISearchBarDelegate ,UISearchResultsUpdating {
         if (searchBar.text?.isEmpty)! {
             searchText = searchBar.text!
         }
+        mySearchBar.endEditing(true)
+        cardResultTable.reloadData()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -156,6 +159,7 @@ extension SelectCard :UISearchBarDelegate ,UISearchResultsUpdating {
         mySearchBar.isHidden = true
         mySearchBar = nil
         setupHeaderBar()
+        cardResultTable.reloadData()
     }
 }
 
