@@ -88,7 +88,7 @@ class DialogForMyCard
         let buttonLink = UIButton(frame: CGRect(x: 0, y: 121.5, width: dialogView.bounds.width/2, height: 48))
 
         
-        buttonLink.setTitle("Cancel",for: .normal)
+        buttonLink.setTitle("ยกเลิก",for: .normal)
         buttonLink.setTitleColor(UIColor.blue, for: .normal)
         buttonLink.backgroundColor = UIColor.white
         buttonLink.titleLabel?.lineBreakMode = .byWordWrapping
@@ -99,7 +99,7 @@ class DialogForMyCard
         
     
         let button =  UIButton(frame: CGRect(x: dialogView.bounds.width/2, y: 121.5, width: dialogView.bounds.width/2, height: 48))
-        button.setTitle("OK", for: .normal)
+        button.setTitle("ตกลง", for: .normal)
         button.backgroundColor = UIColor.white
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.init(red:222/255.0, green:225/255.0, blue:227/255.0, alpha: 1.0).cgColor

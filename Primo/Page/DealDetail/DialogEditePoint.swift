@@ -16,6 +16,7 @@ class DialogEditePoint
     let myCardButton = UIButton()
     let imageLineOne = UIImageView()
     let imageLineTwo = UIImageView()
+    let imageCard = UIImageView()
     
     var index: Int?
     let dropDown = DropDown()
@@ -26,6 +27,8 @@ class DialogEditePoint
     var cardBuffer: [PrimoCard] = []
     var mController: DealViewController? = nil
     var statusmCard: Int = 0
+    var memberCardForList: Int = 0
+    var creditCardForList: Int = 0
     
     class var shared: DialogEditePoint
     {
@@ -37,10 +40,13 @@ class DialogEditePoint
     }
     
     
-    public func Show(deal :[Deal] ,controller :DealViewController,statusCard :Int) {
+    public func Show(deal :[Deal] ,controller :DealViewController,statusCard :Int , stepCard: Int) {
         let viewSize = UIScreen.main.bounds
         MyDeal.removeAll()
+        
         statusmCard = 0
+        memberCardForList = 0
+        creditCardForList = 0
         
         MyDeal = deal
         mController = controller
@@ -62,9 +68,12 @@ class DialogEditePoint
         
         
         dialogView.frame = CGRect(x: (mainView.bounds.width-330)/2,
-                                  y: 115,
+                                  y: 80,
                                   width: 330,
-                                  height: 278)
+                                  height: 350)
+        //278 h 
+        // 115 y
+        
         
         dialogView.backgroundColor = UIColor.white
         dialogView.alpha = 1
@@ -76,7 +85,7 @@ class DialogEditePoint
         
         
         
-        let textHeader = UILabel(frame: CGRect(x: 0, y: 26.5, width: dialogView.bounds.width, height: 40))
+        let textHeader = UILabel(frame: CGRect(x: 0, y: 26, width: dialogView.bounds.width, height: 40))
         textHeader.numberOfLines = 0;
         textHeader.backgroundColor = UIColor.white
         textHeader.textColor = UIColor.black
@@ -87,8 +96,11 @@ class DialogEditePoint
         dialogView.addSubview(textHeader)
         
         
+        
+        
+        
         myCardButton.frame = CGRect(x: 22,
-                                    y: 95,
+                                    y: 167,
                                     width: dialogView.bounds.width-48,
                                     height: 40)
         myCardButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
@@ -105,46 +117,66 @@ class DialogEditePoint
                                                       green:225/255.0,
                                                       blue:227/255.0,
                                                       alpha: 1.0).cgColor
-        SetupDropDown()
+    
+        SetupDropDown(step :stepCard)
+    
         dialogView.addSubview(myCardButton)
         
         
         
         imageLineOne.frame = CGRect(x: 0,
-                             y: 153.5,
+                             y: 225.5,
                              width: dialogView.bounds.width,
                              height: 1)
         imageLineOne.backgroundColor = HexStringToUIColor(hex: "#F2F2F2")
         dialogView.addSubview(imageLineOne)
         
         
+        imageCard.frame = CGRect(x: (dialogView.bounds.width - (dialogView.bounds.width-48)/2)/2,
+                                 y: 75,
+                                 width: (dialogView.bounds.width-48)/2,
+                                 height: 65)
+        imageCard.contentMode = .scaleAspectFit
+        imageCard.layer.cornerRadius = 5
+        dialogView.addSubview(imageCard)
+        
+        
         
         textContent.frame = CGRect(x: 22,
-                                   y: 172,
+                                   y: 244,
                                    width: dialogView.bounds.width-48,
                                    height: 40)
         textContent.backgroundColor = HexStringToUIColor(hex: "#F2F2F2")
         textContent.textAlignment = .center
 //        textContent.text = String(mPoint)
-        textContent.placeholder = "ใส่คะแนน"
+
         textContent.keyboardType = UIKeyboardType.numberPad
         textContent.becomeFirstResponder()
         textContent.font = textContent.font?.withSize(17)
-        textContent.layer.cornerRadius = 2
         textContent.layer.cornerRadius = 5
         textContent.tintColor = HexStringToUIColor(hex: "#AAAAAA")
         textContent.layer.borderWidth = 1
-        textContent.isUserInteractionEnabled = false
+        
+//        if(stepCard == 1){
+//            textContent.isUserInteractionEnabled = true
+//            textContent.placeholder = ""
+//        }else{
+//            textContent.isUserInteractionEnabled = false
+//            textContent.placeholder = "ใส่คะแนน"
+//        }
+        
         textContent.layer.borderColor = UIColor.init(red:222/255.0,
                                                      green:225/255.0,
                                                      blue:227/255.0,
                                                      alpha: 1.0).cgColor
+        
+        
         dialogView.addSubview(textContent)
         
         
         
         imageLineTwo.frame = CGRect(x: 0,
-                                    y: 230.5,
+                                    y: 302.5,
                                     width: dialogView.bounds.width,
                                     height: 1)
         imageLineTwo.backgroundColor = HexStringToUIColor(hex: "#F2F2F2")
@@ -155,10 +187,10 @@ class DialogEditePoint
         
         
         let buttonLink = UIButton(frame: CGRect(x: 0,
-                                                y: 230.5,
+                                                y: 302.5,
                                                 width: dialogView.bounds.width/2,
                                                 height: 48))
-        buttonLink.setTitle("Cancel",for: .normal)
+        buttonLink.setTitle("ยกเลิก",for: .normal)
         buttonLink.setTitleColor(UIColor.blue, for: .normal)
         buttonLink.backgroundColor = UIColor.white
         buttonLink.titleLabel?.lineBreakMode = .byWordWrapping
@@ -170,10 +202,10 @@ class DialogEditePoint
         
         
         let button =  UIButton(frame: CGRect(x: dialogView.bounds.width/2,
-                                             y: 230.5,
+                                             y: 302.5,
                                              width: dialogView.bounds.width/2,
                                              height: 48))
-        button.setTitle("OK", for: .normal)
+        button.setTitle("ตกลง", for: .normal)
         button.backgroundColor = UIColor.white
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
         button.layer.borderWidth = 1
@@ -234,40 +266,62 @@ class DialogEditePoint
     
     
     
-    public func SetupDropDown() {
+    public func SetupDropDown(step: Int) {
         
         clearData()
-        
-        if(statusmCard == 4){
-            cardList.append(" เลือกบัตรสมาชิก")
-        }else{
-            cardList.append(" เลือกบัตรเครดิต")
-        }
-        
         myCardList = CardDB.instance.getCards()
-        dropDown.anchorView = myCardButton
+        cardList.append(" เลือกบัตร")
         loopCheckTypeCard(mDeal: MyDeal[0])
-        dropDown.dataSource = cardList
-
-            dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
-                self.myCardButton.setTitle(item, for: .normal)
-                if (index == 0) {
-                    self.textContent.isUserInteractionEnabled = false
-                    self.textContent.placeholder = "ใส่คะแนน"
-                    self.index = index
-                } else {
-                    self.textContent.isUserInteractionEnabled = true
-                    self.textContent.placeholder = ""
-                    self.textContent.becomeFirstResponder()
-                    self.index = index
-                }
-            }
-            
-         myCardButton.addTarget(self, action: #selector(OnMyCardButtonClicked),for: .touchUpInside)
+        
+        if(memberCardForList == 1 || creditCardForList == 1){
+           setDropdownSumCardIsOne()
+        }else{
+           setDropdownSumCards()
+        }
     }
     
     
+    func setDropdownSumCardIsOne(){
+        myCardButton.setTitle(cardBuffer[0].nameTH, for: .normal)
+        myCardButton.isEnabled = false
+        self.index = 1
+        imageCard.sd_setImage(with: URL(string: cardBuffer[0].imgUrl))
+        textContent.isUserInteractionEnabled = true
+        textContent.placeholder = ""
+    }
     
+    func setDropdownSumCards(){
+//        if(statusmCard == 4){
+//            cardList.append(" เลือกบัตร")
+//        }else{
+//            cardList.append(" เลือกบัตร")
+//        }
+        imageCard.image = UIImage(named: "")
+        myCardButton.isEnabled = true
+        dropDown.anchorView = myCardButton
+//        loopCheckTypeCard(mDeal: MyDeal[0])
+        dropDown.dataSource = cardList
+        
+        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            self.myCardButton.setTitle(item, for: .normal)
+            if (index == 0) {
+                self.textContent.isUserInteractionEnabled = false
+                self.textContent.placeholder = "ใส่คะแนน"
+                self.index = index
+                self.imageCard.image = UIImage(named: "")
+            } else {
+                self.textContent.isUserInteractionEnabled = true
+                self.textContent.placeholder = ""
+                self.textContent.becomeFirstResponder()
+                self.index = index
+                self.imageCard.sd_setImage(with: URL(string: self.cardBuffer[index - 1].imgUrl))
+            }
+        }
+        
+        textContent.isUserInteractionEnabled = false
+        textContent.placeholder = "ใส่คะแนน"
+        myCardButton.addTarget(self, action: #selector(OnMyCardButtonClicked),for: .touchUpInside)
+    }
     
     func loopCheckTypeCard(mDeal: Deal) {
         if(mDeal.Childs != nil){
@@ -276,15 +330,17 @@ class DialogEditePoint
                     if(!cardList.contains(card.nameTH)){
                         
                         if(statusmCard == 4){
-                            if(card.type == .memberCard){
+                            if(card.type == .memberCard && mDeal.isStorewide != true){
                                 cardList.append(card.nameTH)
                                 cardBuffer.append(card)
+                                memberCardForList = memberCardForList + 1
                             }
                             
                         }else{
                             if(card.type == .creditCard || card.type == .debitCard){
                                 cardList.append(card.nameTH)
                                 cardBuffer.append(card)
+                                creditCardForList = creditCardForList + 1
                             }
                         }
 
@@ -297,16 +353,18 @@ class DialogEditePoint
                 if(card.cardId == mDeal.card?.cardId){
                     if(!cardList.contains(card.nameTH)){
                         
-                        if(statusmCard == 4){
+                        if(statusmCard == 4 && mDeal.isStorewide != true){
                             if(card.type == .memberCard){
                                 cardList.append(card.nameTH)
                                 cardBuffer.append(card)
+                                memberCardForList = memberCardForList + 1
                             }
                             
                         }else{
                             if(card.type == .creditCard || card.type == .debitCard){
                                 cardList.append(card.nameTH)
                                 cardBuffer.append(card)
+                                creditCardForList = creditCardForList + 1
                             }
                         }
                         

@@ -105,7 +105,7 @@ extension Walkthrough{
             buttonLink = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 35))
             
             buttonLink.center = CGPoint(x: viewSize.width / 2,
-                                        y: viewSize.height/1.04)
+                                        y: viewSize.height/1.08)
             
             buttonLink.layer.cornerRadius = 5
             buttonLink.setTitleColor(HexStringToUIColor(hex: PrimoColor.Green.rawValue), for: .normal)

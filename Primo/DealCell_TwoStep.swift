@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+import Mixpanel
 
 class DealCell_TwoStep: UITableViewCell {
 
@@ -17,6 +18,10 @@ class DealCell_TwoStep: UITableViewCell {
     var mtable: DealTableVC? = nil
     var statusUsePointMenu: Bool = false
     var statusUnUsePointMenu: Bool = false
+    var statusMemberCard: Bool = false
+    var statusCrediteCard: Bool = false
+    var statusNotStorewide: Bool = false
+    var projectToken: String = "1a4f60bd37af4cea7b199830b6bec468"
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,12 +34,25 @@ class DealCell_TwoStep: UITableViewCell {
     
     func SetData(deal: Deal ,mControllerForDeals: DealViewController,
                  statusUseMenuPoint: Bool, statusUnUsePoint: Bool,
-                 table :DealTableVC, AllDealList :[Deal])
+                 table :DealTableVC, AllDealList :[Deal], typeStoreID: Int)
     {
        controllerForDeals = mControllerForDeals
        mtable = table
        statusUsePointMenu = statusUseMenuPoint
        statusUnUsePointMenu = statusUnUsePoint
+        
+        
+        if let subview = self.viewWithTag(99) as? UILabel {
+            subview.lineBreakMode = .byWordWrapping
+            subview.numberOfLines = 0
+            if(typeStoreID == 11){
+                subview.text = "ส่วนลดรวมโดยประมาณ"
+            }else{
+                subview.text = "ส่วนลดรวม"
+            }
+            
+        }
+        
         
         // color bar
         if let subview = self.viewWithTag(101) {
@@ -122,7 +140,8 @@ class DealCell_TwoStep: UITableViewCell {
             let value = deal.totalReward
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
-            subview.text = "฿ "+(formatter.string(from: NSNumber(value: value!)) ?? "0") 
+//            subview.text = "฿ "+(formatter.string(from: NSNumber(value: value!)) ?? "0")
+            subview.text = (formatter.string(from: NSNumber(value: value!)) ?? "0") + " ฿"
         }
         
         // deal value bg
@@ -173,30 +192,35 @@ class DealCell_TwoStep: UITableViewCell {
         if let subview = self.viewWithTag(23) as? Button_custom {
             subview.backgroundColor = UIColor.clear
         
+            statusMemberCard = false
+            statusCrediteCard = false
             
-            subview.mBufferDeal? = deal
-
-            if(deal.card?.type == .memberCard
-                || deal.Childs?.card?.type == .memberCard){
+            loopCheckTypeCard(mDeal: deal)
+            
+            
+            if(statusMemberCard){
                 subview.mDealBuffer.removeAll()
                 subview.mDealBuffer = AllDealList
+                subview.tag = 1
                 subview.addTarget(self, action: #selector(sendActionMember), for: .touchUpInside)
-
+                
             }
+            
         }
         
         
         if let subview = self.viewWithTag(24) as? Button_custom {
             subview.backgroundColor = UIColor.clear
 
-            subview.mBufferDeal? = deal
+            statusMemberCard = false
+            statusCrediteCard = false
             
-            if(deal.card?.type != .memberCard
-                || deal.Childs?.card?.type != .memberCard){
+            loopCheckTypeCard(mDeal: deal)
+            
+            if(statusCrediteCard){
                 subview.mDealBuffer.removeAll()
                 subview.mDealBuffer = AllDealList
                 subview.addTarget(self, action: #selector(sendActionCredite), for: .touchUpInside)
-                
             }
         }
         
@@ -208,13 +232,15 @@ class DealCell_TwoStep: UITableViewCell {
             {
                 switch deal.rank! {
                 case 1:
-                    subview.image = #imageLiteral(resourceName: "medal_gold")
+                    subview.image = #imageLiteral(resourceName: "primo_rec")
                     break
                 case 2:
-                    subview.image = #imageLiteral(resourceName: "medal_sliver")
+                    subview.image = nil
+//                    subview.image = #imageLiteral(resourceName: "medal_sliver")
                     break
                 case 3:
-                    subview.image = #imageLiteral(resourceName: "medal_bronze")
+                    subview.image = nil
+//                    subview.image = #imageLiteral(resourceName: "medal_bronze")
                     break
                 default:
                     subview.image = nil
@@ -226,24 +252,70 @@ class DealCell_TwoStep: UITableViewCell {
         }
     }
     
+    
+    func loopCheckTypeCard(mDeal: Deal) {
+        if(mDeal.Childs != nil){
+            if(mDeal.card?.type == .memberCard){
+                statusMemberCard = true
+            }else{
+                statusCrediteCard = true
+            }
+            return loopCheckTypeCard(mDeal: mDeal.Childs!)
+        }else{
+            if(mDeal.card?.type == .memberCard){
+                statusMemberCard = true
+            }else{
+                statusCrediteCard = true
+            }
+        }
+    }
+    
     @objc func sendActionCredite(_ sender: Any)  {
         if(statusUsePointMenu && statusUnUsePointMenu != true){
             let value = sender as! Button_custom
             let index:Int = (mtable!.tableView.indexPath(for: self)?.row)!
-            DialogEditePoint.shared.Show(deal :[value.mDealBuffer[index]], controller: controllerForDeals!, statusCard: 1)
+            DialogEditePoint.shared.Show(deal :[value.mDealBuffer[index]], controller: controllerForDeals!, statusCard: 1, stepCard: 2)
         
             print("sendActionCredite")
+            
+            sendEventForMixpanal(EventName : "i_DealSel_CreditPtsEdite")
         }
     }
     
     @objc func sendActionMember(_ sender: Any)  {
+        
         if(statusUsePointMenu && statusUnUsePointMenu != true){
             let value = sender as! Button_custom
             let index:Int = (mtable!.tableView.indexPath(for: self)?.row)!
-        
-            DialogEditePoint.shared.Show(deal :[value.mDealBuffer[index]], controller: controllerForDeals!, statusCard: 4)
-            print("sendActionMember")
+            statusNotStorewide = false
+            loopCheckStorewi(mDeal: value.mDealBuffer[index])
+            if(statusNotStorewide){
+                DialogEditePoint.shared.Show(deal :[value.mDealBuffer[index]], controller: controllerForDeals!, statusCard: 4, stepCard: 2)
+                print("sendActionMember")
+
+                sendEventForMixpanal(EventName : "i_DealSel_MemPtsEdite")
+            }
         }
+    }
+    
+    func loopCheckStorewi(mDeal: Deal){
+        if(mDeal.Childs != nil){
+            if(!mDeal.isStorewide! && mDeal.card?.type == .memberCard){
+                statusNotStorewide = true
+            }
+            return loopCheckStorewi(mDeal: mDeal.Childs!)
+        }else{
+            if(!mDeal.isStorewide! && mDeal.card?.type == .memberCard){
+                statusNotStorewide = true
+            }
+        }
+    }
+    
+    func sendEventForMixpanal(EventName : String){
+        let uuid = UIDevice.current.identifierForVendor!.uuidString
+        Mixpanel.initialize(token: projectToken)
+        Mixpanel.mainInstance().track(event: EventName)
+        Mixpanel.mainInstance().identify(distinctId: uuid)
     }
     
 }

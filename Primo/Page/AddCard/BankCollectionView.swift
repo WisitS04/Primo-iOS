@@ -40,7 +40,7 @@ extension BankCollectionView
                     self.bankList.removeAll()
                     for (_, subJson):(String, JSON) in json["data"]
                     {
-                        let bank = Bank(json: subJson)
+                        let bank = Bank(json: subJson, mCardType: cardType)
                         self.bankList.append(bank)
                         //print("Add bank \(bank.abbreviationTH!) \nURL: \(bank.logoUrl!)")
                     }

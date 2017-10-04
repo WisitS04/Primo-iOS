@@ -211,7 +211,7 @@ open class SweetAlert: UIViewController {
     }
     
     open func showAlert(_ title: String, subTitle: String?, style: AlertStyle) -> SweetAlert {
-        _ = showAlert(title, subTitle: subTitle, style: style, buttonTitle: "OK")
+        _ = showAlert(title, subTitle: subTitle, style: style, buttonTitle: "ตกลง")
         return self
 
     }

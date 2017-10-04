@@ -12,6 +12,7 @@ class MyCard_ViewController: UITableViewController
     override func viewDidLoad() {
         super.viewDidLoad()
 //        CheckVertionCardDB
+         self.navigationController?.navigationBar.isTranslucent = false
         _ = CardDB.instance.CheckVertionCardDB()
 
         

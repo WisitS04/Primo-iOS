@@ -12,12 +12,15 @@ struct Place
     
     var imageUrl: String
     
-    init(storeId: Int, branchId: Int, nameTH: String, nameEN: String, distance: Int, imageUrl: String) {
+    var storeTypeId: Int?
+    
+    init(storeId: Int, branchId: Int, nameTH: String, nameEN: String, distance: Int, imageUrl: String, storeTypeId: Int? = nil) {
         self.storeId = storeId
         self.branchId = branchId
         self.nameTH = nameTH
         self.nameEN = nameEN
         self.distance = distance
         self.imageUrl = imageUrl
+        self.storeTypeId = storeTypeId
     }
 }

@@ -52,7 +52,7 @@ class NoConnectionView
         dialogView.addSubview(imageView)
         
         
-        button.setTitle("Tap to retry", for: .normal)
+        button.setTitle("ลองอีกครั้ง", for: .normal)
         button.center = CGPoint(x: dialogView.bounds.width / 2,
                                 y: dialogView.bounds.height / 1.6)
         button.backgroundColor = HexStringToUIColor(hex: PrimoColor.Green.rawValue)

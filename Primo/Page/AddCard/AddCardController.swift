@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import Segmentio
+import Mixpanel
 
 class AddCardController: UIViewController
 {
@@ -26,6 +27,7 @@ class AddCardController: UIViewController
     var bankID: Int = -1
     var networkID: Int = -1
     var firstOpent: Int = -1
+    var projectToken: String = "1a4f60bd37af4cea7b199830b6bec468"
 
     
     override func viewDidLoad() {
@@ -77,11 +79,11 @@ class AddCardController: UIViewController
         self.navigationController?.popViewController(animated: true)
     }
     
-    func OnBankSelected(id: Int) {
+    func OnBankSelected(id: Int, mCardType: Int) {
         bankID = id
         let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectCard") as! SelectCard
         secondViewController.BankID = bankID
-        secondViewController.CardType = cardType
+        secondViewController.CardType = mCardType
         self.navigationController?.pushViewController(secondViewController, animated: true)
 
     }
@@ -195,12 +197,20 @@ extension AddCardController{
         if (segmentIndex == 0) {
             BankSelectIndex =  IndexPath(item: -1, section: -1)
             cardType = PrimoCardType.creditCard.rawValue // Select Credit
+            
+             trackEvent(EventName: "i_CardSel_Credit")
+            
         }else if(segmentIndex == 1){
             BankSelectIndex =  IndexPath(item: -1, section: -1)
             cardType = PrimoCardType.debitCard.rawValue // Select Debit
+            
+            trackEvent(EventName: "i_CardSel_Debit")
         }else {
             BankSelectIndex =  IndexPath(item: -1, section: -1)
             cardType = PrimoCardType.memberCard.rawValue // Select Member
+            
+            trackEvent(EventName: "i_CardSel_Member")
+            
         }
         bankID = -1
 //        bankCollection.LoadBankList(cardType: cardType)
@@ -210,4 +220,23 @@ extension AddCardController{
         
 
     }
+    
+    func trackEvent(EventName : String){
+        let uuid = UIDevice.current.identifierForVendor!.uuidString
+        
+        //Mixpanel.initialize(token: projectToken)
+        //Mixpanel.mainInstance().identify(distinctId: uuid)
+       // Mixpanel.getInstance(name: "Primo")?.track(event: EventName)
+        
+        
+      //  let mixpanel = Mixpanel.mainInstance()
+       // mixpanel.identify(distinctId: uuid)
+      //  mixpanel.track(event: EventName)
+
+         Mixpanel.initialize(token: projectToken)
+         Mixpanel.mainInstance().identify(distinctId: uuid)
+         Mixpanel.mainInstance().track(event: EventName)
+
+    }
 }
+

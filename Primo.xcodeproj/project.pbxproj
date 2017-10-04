@@ -85,6 +85,7 @@
 		9AABF4451F5420DF007933F7 /* BankDebit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AABF4441F5420DF007933F7 /* BankDebit.swift */; };
 		9ABE926C1ED1C81F00D13CFB /* CardResultTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABE926B1ED1C81F00D13CFB /* CardResultTableView.swift */; };
 		9ABE92701ED1CC0D00D13CFB /* CardResultTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABE926F1ED1CC0D00D13CFB /* CardResultTableCell.swift */; };
+		9AC991F81F78E7F20049BBC5 /* RestaurantPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC991F71F78E7F20049BBC5 /* RestaurantPrice.swift */; };
 		9AD018101EF926CB00C6E20F /* CheckInternetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD0180F1EF926CB00C6E20F /* CheckInternetVC.swift */; };
 		9AD018121EF9277900C6E20F /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD018111EF9277900C6E20F /* Reachability.swift */; };
 		9AD933371F553B3600409938 /* SelectCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD933361F553B3600409938 /* SelectCard.swift */; };
@@ -105,6 +106,7 @@
 		9AF9FD8F1F0DEFB100DD665D /* StoreDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF9FD8E1F0DEFB100DD665D /* StoreDB.swift */; };
 		9AF9FD911F0DF85400DD665D /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF9FD901F0DF85400DD665D /* Store.swift */; };
 		9AF9FD931F0E343900DD665D /* LoadingOverlayGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF9FD921F0E343900DD665D /* LoadingOverlayGPS.swift */; };
+		9AFE3E891F737E1D00B2D120 /* StoreAddColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE3E881F737E1D00B2D120 /* StoreAddColumn.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -201,6 +203,7 @@
 		9AABF4441F5420DF007933F7 /* BankDebit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BankDebit.swift; path = CustomView/PagerView/BankDebit.swift; sourceTree = "<group>"; };
 		9ABE926B1ED1C81F00D13CFB /* CardResultTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardResultTableView.swift; path = Page/AddCard/CardResultTableView.swift; sourceTree = "<group>"; };
 		9ABE926F1ED1CC0D00D13CFB /* CardResultTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardResultTableCell.swift; path = Page/AddCard/CardResultTableCell.swift; sourceTree = "<group>"; };
+		9AC991F71F78E7F20049BBC5 /* RestaurantPrice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RestaurantPrice.swift; path = Models/RestaurantPrice.swift; sourceTree = "<group>"; };
 		9AD0180F1EF926CB00C6E20F /* CheckInternetVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckInternetVC.swift; path = Tests/CheckInternetVC.swift; sourceTree = "<group>"; };
 		9AD018111EF9277900C6E20F /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = Models/Reachability.swift; sourceTree = "<group>"; };
 		9AD933361F553B3600409938 /* SelectCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectCard.swift; path = Page/AddCard/SelectCard.swift; sourceTree = "<group>"; };
@@ -223,6 +226,7 @@
 		9AF9FD8E1F0DEFB100DD665D /* StoreDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StoreDB.swift; path = Models/StoreDB.swift; sourceTree = "<group>"; };
 		9AF9FD901F0DF85400DD665D /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Store.swift; path = CustomView/Store.swift; sourceTree = "<group>"; };
 		9AF9FD921F0E343900DD665D /* LoadingOverlayGPS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingOverlayGPS.swift; path = Lib/SweetAlert/LoadingOverlayGPS.swift; sourceTree = "<group>"; };
+		9AFE3E881F737E1D00B2D120 /* StoreAddColumn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreAddColumn.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -299,6 +303,8 @@
 				9AF9FD901F0DF85400DD665D /* Store.swift */,
 				9AABF4421F541A32007933F7 /* Company.swift */,
 				9AABF4441F5420DF007933F7 /* BankDebit.swift */,
+				9AFE3E881F737E1D00B2D120 /* StoreAddColumn.swift */,
+				9AC991F71F78E7F20049BBC5 /* RestaurantPrice.swift */,
 			);
 			name = "Class Variable";
 			sourceTree = "<group>";
@@ -626,6 +632,7 @@
 				9AD933391F555D8600409938 /* selectCardCell.swift in Sources */,
 				9A86477C1E5DD33B00E3BEE9 /* DealViewController.swift in Sources */,
 				9AD018101EF926CB00C6E20F /* CheckInternetVC.swift in Sources */,
+				9AC991F81F78E7F20049BBC5 /* RestaurantPrice.swift in Sources */,
 				9A96CCBA1F53D6E40040BA52 /* AddCardController.swift in Sources */,
 				9A370C401EB84A74000613A7 /* ImageCollectionViewCell.swift in Sources */,
 				9A366E5D1F624C61008E7DFC /* ConfrimDialog.swift in Sources */,
@@ -650,6 +657,7 @@
 				9A30F37A1EE7067C0002B275 /* SweetAlertViewController.swift in Sources */,
 				9A86477A1E5C2CD600E3BEE9 /* Deal.swift in Sources */,
 				9A7D1DFF1ED3063000ED9556 /* PagerViewController.swift in Sources */,
+				9AFE3E891F737E1D00B2D120 /* StoreAddColumn.swift in Sources */,
 				9A4CB9221ECDB2EE00FFB9D1 /* BankCollectionView.swift in Sources */,
 				9A84E7C01E2644140063E750 /* SWRevealViewController.m in Sources */,
 				9A7D1E0F1ED31B7A00ED9556 /* FSPageViewLayout.swift in Sources */,

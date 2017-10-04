@@ -3,6 +3,8 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import SDWebImage
+import Mixpanel
+
 
 class CardTableView: UITableView
 {
@@ -15,6 +17,7 @@ class CardTableView: UITableView
     
     var cardType: Int = -1
     var statusSearch: Bool = false
+    var projectToken: String = "1a4f60bd37af4cea7b199830b6bec468"
     
     func SetUp(viewController: SelectCard) {
         self.viewController = viewController
@@ -48,11 +51,6 @@ extension CardTableView
         let url = Service.Card.url
         let user = Service_User
         let pass = Service_Password
-//        let param: Parameters = [
-//            "company": bankId,
-//            "type" : cardType,
-//            "cardNetwork" : cardNetwork
-//        ]
 
         let param: Parameters = [
             "company": bankId,
@@ -76,18 +74,74 @@ extension CardTableView
                             self.cardResultList.append(cardResult)
                         }
                     }
-                    self.viewController!.OnSelectAllCard(list: self.cardResultList)
-                    
-                    self.reloadData()
+//                    self.viewController!.OnSelectAllCard(list: self.cardResultList)
+//                    self.reloadData()
 //                    self.viewController.OnGotCardResult(count: self.cardResultList.count)
                     print("Call Card service success")
-                    LoadingOverlay.shared.hideOverlayView()
+                    self.LoadData2(bankId: bankId, cardType: cardType, cardNetwork: cardNetwork)
+//                    LoadingOverlay.shared.hideOverlayView()
                 case .failure(let error):
                     print(error)
                     LoadingOverlay.shared.hideOverlayView()
                 }
         }
     }
+    
+    
+    
+    func LoadData2(bankId: Int, cardType: Int, cardNetwork: Int) {
+        
+        if(cardType == 4){
+            
+            self.cardType = cardType
+            
+            let url = Service.Card.url
+            let user = Service_User
+            let pass = Service_Password
+            
+            let param: Parameters = [
+                "company": bankId,
+                "type" : 3,
+                ]
+
+            
+            Alamofire.request(url, parameters: param)
+                .authenticate(user: user, password: pass)
+                .responseJSON { response in
+                    switch response.result {
+                    case .success(let value):
+                        let json = JSON(value)
+                        for (_, subJson):(String, JSON) in json["data"]
+                        {
+                            var cardResult = CardResult(json: subJson)
+                            if (!cardResult.inactive) {
+                                if self.cardDB.contains(where: { $0.cardId == Int64(cardResult.id) }) {
+                                    cardResult.isAdded = true
+                                }
+                                self.cardResultList.append(cardResult)
+                            }
+                        }
+                        self.viewController!.OnSelectAllCard(list: self.cardResultList)
+                        
+                        self.reloadData()
+                        //                    self.viewController.OnGotCardResult(count: self.cardResultList.count)
+                        print("Call Card service success")
+                        LoadingOverlay.shared.hideOverlayView()
+                    case .failure(let error):
+                        print(error)
+                        LoadingOverlay.shared.hideOverlayView()
+                    }
+            }
+            
+            
+        }else{
+            self.viewController!.OnSelectAllCard(list: self.cardResultList)
+            self.reloadData()
+            LoadingOverlay.shared.hideOverlayView()
+        }
+        
+    }
+    
     
     
     
@@ -104,11 +158,19 @@ extension CardTableView
                                                              cType: cardType,
                                                              cNameTH: card.nameTH,
                                                              cNameEN: card.nameEN,
-                                                             cImgUrl: card.imageUrl)
+                                                             cImgUrl: card.imageUrl,
+                                                             cPoint: 7000)
                         print("OnCheck add card result: \(result)")
                         if (result != -1) {
                             cardResultList[countIndex].isAdded = true
                             GetCardDatabase()
+                            
+                            let uuid = UIDevice.current.identifierForVendor!.uuidString
+                            
+                            Mixpanel.initialize(token: projectToken)
+                            Mixpanel.mainInstance().track(event: "i_CardSel_selectCard",
+                                                          properties: ["id" : card.id])
+                            Mixpanel.mainInstance().identify(distinctId: uuid)
                         }
 
                     }
@@ -132,6 +194,9 @@ extension CardTableView
         }
     }
     
+    
+    
+
     
 }
 

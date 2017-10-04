@@ -2,7 +2,6 @@ import SQLite
 
 class CardDB {
     
-    var DataBaseVersion = UserDefaults.standard
     var dataBaseVS_number:Int = 0
     var fixVersionCardDB:Int = 1
     
@@ -134,14 +133,14 @@ class CardDB {
     
     
     func CheckVertionCardDB(){
-        dataBaseVS_number  = DataBaseVersion.integer(forKey: MyCardDB)
+        dataBaseVS_number  = DataBaseVersionCard.integer(forKey: MyCardDB)
         
         if(fixVersionCardDB == dataBaseVS_number){
             print(" = ")
         }else{
             print(" != ")
             ClonValueToDB()
-            DataBaseVersion.set(fixVersionCardDB, forKey: MyCardDB)
+            DataBaseVersionCard.set(fixVersionCardDB, forKey: MyCardDB)
         }
 
     }

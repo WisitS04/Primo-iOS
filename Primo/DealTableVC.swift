@@ -3,6 +3,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import SDWebImage
+import Mixpanel
 
 class DealTableVC: UITableViewController
 {
@@ -12,7 +13,7 @@ class DealTableVC: UITableViewController
     var dealsWithoutInstallment: [Deal] = []
     
     
-    
+    var projectToken: String = "1a4f60bd37af4cea7b199830b6bec468"
     
     var isGotDealsWithInstallment: Bool = false
     var isGotDealsWithoutInstallment: Bool = false
@@ -27,6 +28,7 @@ class DealTableVC: UITableViewController
     var store: Int = 0
     var branch: Int = 0
     var departmentId: Int = 0
+    var typeStoreID: Int = 0
     
     var isUsePoint: Bool = false
     var isInstallment: Bool = false
@@ -66,21 +68,21 @@ class DealTableVC: UITableViewController
                                                      for: indexPath) as! DealCell_OneStep
             cell.SetData(deal: deal,mControllerForDeals :controllrtDeals!,
                          statusUseMenuPoint: isUsePoint, statusUnUsePoint: isUnPoint,
-                         table: self, AllDealList :dealBuffer)
+                         table: self, AllDealList :dealBuffer, typeStoreID: typeStoreID)
             return cell
         } else if (deal.totalStep! == 2) {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DealCell_TwoStep",
                                                      for: indexPath) as! DealCell_TwoStep
             cell.SetData(deal: deal,mControllerForDeals :controllrtDeals!,
                          statusUseMenuPoint: isUsePoint, statusUnUsePoint: isUnPoint,
-                         table: self, AllDealList :dealBuffer)
+                         table: self, AllDealList :dealBuffer, typeStoreID: typeStoreID)
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "DealCell_ThreeStep",
                                                      for: indexPath) as! DealCell_ThreeStep
             cell.SetData(deal: deal,mControllerForDeals :controllrtDeals!,
                          statusUseMenuPoint: isUsePoint, statusUnUsePoint: isUnPoint,
-                         table: self, AllDealList :dealBuffer)
+                         table: self, AllDealList :dealBuffer, typeStoreID: typeStoreID)
             return cell
         }
     }
@@ -122,14 +124,20 @@ extension DealTableVC
         //
         // Parameters
         //
+        
         var param: Parameters = [
             "date": date,
             "isDealsOwnedCardOnly": true,
             "installment": 0, // 0 = false | 1 = true
             "price": price,
-            "store": store,
-            "branch" : branch
+            "store": store
         ]
+        
+        if(branch != 0){
+            param["branch"] = branch
+        }
+        
+        
         if (departmentId > 0) {
             param["dept"] = departmentId
         }
@@ -137,18 +145,31 @@ extension DealTableVC
         if (cards.count > 0) {
             param["ownedCardList"] = GenServiceParam(ownedCardList: cards, EditePoint: statusEditePoint, card: Card)
         }
+        
+        
         //
         // Get dealsWithoutInstallment
         //
         isGotDealsWithoutInstallment = false
         
+        let uuid = UIDevice.current.identifierForVendor!.uuidString
+        let nameDrivice = UIDevice.current.model
+        let systemVersion = UIDevice.current.systemVersion
+        
+        
+        Mixpanel.initialize(token: projectToken)
+        Mixpanel.mainInstance().track(event: "i_Deals",
+                                      properties: param as? Properties)
+        Mixpanel.mainInstance().identify(distinctId: uuid)
+
+        
         
         let headers: HTTPHeaders = [
 //            "authorization": "Basic YW5vbnltb3VzOnNwb3Rvbi1wcmltbw==",
             "Content-Type": "application/json",
-            "uuid":"1111111",
-            "client": "iPhone6",
-            "client_ver": "iOS"
+            "uuid": uuid,
+            "client": nameDrivice,
+            "client_ver": systemVersion
             
         ]
         
@@ -206,9 +227,14 @@ extension DealTableVC
             "isDealsOwnedCardOnly": true,
             "installment": 1, // 0 = false | 1 = true
             "price": price,
-            "store": store,
-            "branch" : branch
+            "store": store
         ]
+        
+        
+        if(branch != 0){
+            param["branch"] = branch
+        }
+        
         if (departmentId > 0) {
             param["dept"] = departmentId
         }
@@ -217,12 +243,23 @@ extension DealTableVC
             param["ownedCardList"] = GenServiceParam(ownedCardList: cards, EditePoint: mStatusEditePoint, card: sCard)
         }
         isGotDealsWithInstallment = false
+        
+        let uuid = UIDevice.current.identifierForVendor!.uuidString
+        let nameDrivice = UIDevice.current.model
+        let systemVersion = UIDevice.current.systemVersion
+        
+        
+        Mixpanel.initialize(token: projectToken)
+        Mixpanel.mainInstance().track(event: "i_Deals",
+                                      properties: param as? Properties)
+        Mixpanel.mainInstance().identify(distinctId: uuid)
+        
         let headers: HTTPHeaders = [
             //            "authorization": "Basic YW5vbnltb3VzOnNwb3Rvbi1wcmltbw==",
             "Content-Type": "application/json",
-            "uuid":"1111111",
-            "client": "iPhone6",
-            "client_ver": "iOS"
+            "uuid":uuid,
+            "client": nameDrivice,
+            "client_ver": systemVersion
             
         ]
 
@@ -331,6 +368,18 @@ extension DealTableVC
         deal.comboCreditAbs = json["comboCreditAbs"].floatValue
         deal.comboDiscountAbs = json["comboDiscountAbs"].floatValue
         
+        deal.isStorewide = json["isStorewide"].boolValue
+
+        deal.promotionTypeId = json["promotionTypeId"].intValue
+        
+//        deal.specialCondition = json["specialCondition"].stringValue
+        
+        deal.specialMenu = json["specialMenu"].floatValue
+        deal.specialBeverage = json["specialBeverage"].floatValue
+        deal.gift = json["gift"].floatValue
+        
+        deal.specialCondition = json["specialTerms"].stringValue
+
         deal.totalReward = json["totalReward"].floatValue
         
         if (!json["child"].isEmpty) {

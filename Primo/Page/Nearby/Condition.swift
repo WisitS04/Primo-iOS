@@ -32,7 +32,7 @@ class Conidion
         let viewSize = UIScreen.main.bounds
         statusCheck = false
     
-        mainView.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height)
+        mainView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         mainView.center = view.center
         mainView.backgroundColor = HexStringToUIColor(hex: "#FFFFFF00")
         mainView.contentMode = UIViewContentMode.scaleAspectFill
@@ -40,7 +40,7 @@ class Conidion
         
         
         
-        dialogViewBG.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height)
+        dialogViewBG.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         dialogViewBG.center = mainView.center
         dialogViewBG.backgroundColor = HexStringToUIColor(hex: "#444444")
         dialogViewBG.alpha = 0.5
@@ -75,7 +75,7 @@ class Conidion
         buttonLink.center = CGPoint(x: dialogView.bounds.width / 2.2,
                                  y: dialogView.bounds.height / 2.6)
    
-        buttonLink.setTitle("http://beta.primo.mobi/ term.html",for: .normal)
+        buttonLink.setTitle("ข้อตกลงและเงื่อนไข",for: .normal)
         buttonLink.setTitleColor(UIColor.blue, for: .normal)
         buttonLink.backgroundColor = UIColor.white
         buttonLink.titleLabel?.lineBreakMode = .byWordWrapping
@@ -132,8 +132,7 @@ class Conidion
     }
     
      @objc func UrlLink(_ sender: Any){
-        let url = URL(string: "http://beta.primo.mobi/term.html")!
-        
+        let url = URL(string: "http://terms.primo.mobi/")!
         if #available(iOS 10.0, *) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {

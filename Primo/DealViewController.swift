@@ -1,6 +1,7 @@
 
 import UIKit
 import DropDown
+import Mixpanel
 
 class DealViewController: UIViewController
 {
@@ -24,6 +25,8 @@ class DealViewController: UIViewController
     var store: Int = 0
     var branch: Int = 0
     var departmentId: Int = 0
+    var typeStoreID: Int = 0
+    var RestaurantStatus: Int = 0
     let dropDown = DropDown()
     
     var myCardList: [PrimoCard] = []
@@ -36,9 +39,14 @@ class DealViewController: UIViewController
     var btn_full_peyment:Bool = false
     var btn_installment:Bool = false
     
+    var projectToken: String = "1a4f60bd37af4cea7b199830b6bec468"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        if(typeStoreID  == 11){
+            useInstallmentButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
+        }
         
         myCardList = CardDB.instance.getCards()
         myCardListBuffer = myCardList
@@ -73,7 +81,7 @@ class DealViewController: UIViewController
                 dealTable.store = self.store
                 dealTable.branch = self.branch
                 dealTable.departmentId = self.departmentId
-                
+                dealTable.typeStoreID = self.typeStoreID
                 dealTable.UpdateData(usePoint: btn_point,
                                          installment: btn_installment,
                                          Peyment: btn_full_peyment,
@@ -87,6 +95,13 @@ class DealViewController: UIViewController
             if let dealDetailView = segue.destination as? DealDetailViewController {
                 if (selectedDeal != nil) {
                     dealDetailView.SetDeal(selectedDeal!)
+                    dealDetailView.mRestaurantStatus = RestaurantStatus
+                    dealDetailView.mTypeStoreID = typeStoreID
+                    
+                    let uuid = UIDevice.current.identifierForVendor!.uuidString
+                    Mixpanel.initialize(token: projectToken)
+                    Mixpanel.mainInstance().track(event: "i_DealSel")
+                    Mixpanel.mainInstance().identify(distinctId: uuid)
                 }
             }
         }
@@ -119,28 +134,34 @@ class DealViewController: UIViewController
     }
     
     @IBAction func OnUseInstallmentButtonClicked(_ sender: Any) {
-        let btn = sender as! DealFilterButton
-        
-        btn_installment = true
-        btn_full_peyment = false
-        
-        btn.isUsing = true
-        btn.OnUsing()
-        if(btn.isUsing){
-           usePayFullButton.OnUnuse()
+        if(typeStoreID != 11){
+             useInstallmentButton.isEnabled = true
+            let btn = sender as! DealFilterButton
+            
+            btn_installment = true
+            btn_full_peyment = false
+            
+            btn.isUsing = true
+            btn.OnUsing()
+            if(btn.isUsing){
+                usePayFullButton.OnUnuse()
+            }
+            //        btn.isUsing = !btn.isUsing
+            //        if (btn.isUsing) {
+            //            btn.OnUsing()
+            //        } else {
+            //            btn.OnUnuse()
+            //        }
+            dealTableView.UpdateData(usePoint: btn_point,
+                                     installment: btn_installment,
+                                     Peyment: btn_full_peyment,
+                                     UnPoint: btn_not_point,
+                                     callWS: false,
+                                     mCard: myCardListBuffer)
+        }else{
+            useInstallmentButton.isEnabled = false
+            useInstallmentButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
         }
-//        btn.isUsing = !btn.isUsing
-//        if (btn.isUsing) {
-//            btn.OnUsing()
-//        } else {
-//            btn.OnUnuse()
-//        }
-        dealTableView.UpdateData(usePoint: btn_point,
-                                 installment: btn_installment,
-                                 Peyment: btn_full_peyment,
-                                 UnPoint: btn_not_point,
-                                 callWS: false,
-                                 mCard: myCardListBuffer)
     }
     
     
@@ -153,7 +174,11 @@ class DealViewController: UIViewController
          btn.isUsing = true
          btn.OnUsing()
         if(btn.isUsing){
-            useInstallmentButton.OnUnuse()
+            if(typeStoreID == 11){
+                useInstallmentButton.setTitleColor(UIColor.gray, for: UIControlState.normal)
+            }else{
+                useInstallmentButton.OnUnuse()
+            }
         }
 //        btn.isUsing = !btn.isUsing
 //        if (btn.isUsing) {

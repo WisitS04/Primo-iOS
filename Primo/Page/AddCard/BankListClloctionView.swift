@@ -49,7 +49,7 @@ extension BankListCollectionView
                     self.bankList.removeAll()
                     for (_, subJson):(String, JSON) in json["data"]
                     {
-                        let bank = Bank(json: subJson)
+                        let bank = Bank(json: subJson, mCardType: cardType)
                         self.bankList.append(bank)
                         //print("Add bank \(bank.abbreviationTH!) \nURL: \(bank.logoUrl!)")
                     }
@@ -85,7 +85,7 @@ extension BankListCollectionView
                     self.crediteBankList.removeAll()
                     for (_, subJson):(String, JSON) in json["data"]
                     {
-                        let bank = Bank(json: subJson)
+                        let bank = Bank(json: subJson, mCardType: 1)
 //                        self.bankList.append(bank)
                         self.crediteBankList.append(bank)
                         //print("Add bank \(bank.abbreviationTH!) \nURL: \(bank.logoUrl!)")
@@ -105,7 +105,7 @@ extension BankListCollectionView
         let user = Service_User
         let pass = Service_Password
         let cardType: Int = 2
-        let param: Parameters = [ "cardType": cardType ]
+        let param: Parameters = [ "cardType": cardType]
         
         
         
@@ -119,7 +119,7 @@ extension BankListCollectionView
                     self.debiteBankList.removeAll()
                     for (_, subJson):(String, JSON) in json["data"]
                     {
-                        let bank = Bank(json: subJson)
+                        let bank = Bank(json: subJson, mCardType: 2)
 //                        self.bankList.append(bank)
                         self.debiteBankList.append(bank)
                     }
@@ -138,7 +138,8 @@ extension BankListCollectionView
         let url = Service.Company.url
         let user = Service_User
         let pass = Service_Password
-        let param: Parameters = [ "cardType": cardType ]
+        let param: Parameters = [ "cardType": cardType,
+                                  "Inactive": 0]
   
         Alamofire.request(url, parameters: param)
             .authenticate(user: user, password: pass)
@@ -149,9 +150,54 @@ extension BankListCollectionView
                     self.companyList.removeAll()
                     for (_, subJson):(String, JSON) in json["data"]
                     {
-                        let company = Bank(json: subJson)
+                        let company = Bank(json: subJson, mCardType: 4)
 //                        self.bankList.append(bank)
                         self.companyList.append(company)
+                        //print("Add bank \(bank.abbreviationTH!) \nURL: \(bank.logoUrl!)")
+                    }
+                    self.reloadData()
+                    print("Call Company service success")
+                    self.CallCompanyE_MoneyCard()
+                case .failure(let error):
+                    print(error)
+                    LoadingOverlay.shared.hideOverlayView()
+                    PrimoAlert().Error()
+                }
+        }
+    }
+    
+    func CallCompanyE_MoneyCard(){
+        let cardType: Int = 3
+        let url = Service.Company.url
+        let user = Service_User
+        let pass = Service_Password
+        let param: Parameters = [ "cardType": 3,
+                                  "Inactive": 0]
+        
+        Alamofire.request(url, parameters: param)
+            .authenticate(user: user, password: pass)
+            .responseJSON { response in
+                switch response.result {
+                case .success(let value):
+                    let json = JSON(value)
+//                    self.companyList.removeAll()
+                    for (_, subJson):(String, JSON) in json["data"]
+                    {
+                        let company = Bank(json: subJson, mCardType: cardType)
+                        //                        self.bankList.append(bank)
+                   
+                        var statusContran: Bool = false
+                        
+                        for item in self.companyList{
+                            if(item.id == company.id){
+                               statusContran = true
+                            }
+                        }
+             
+                        if(statusContran != true){
+                            self.companyList.append(company)
+                        }
+                        
                         //print("Add bank \(bank.abbreviationTH!) \nURL: \(bank.logoUrl!)")
                     }
                     self.reloadData()
@@ -168,6 +214,7 @@ extension BankListCollectionView
                 }
         }
     }
+    
     
     func SelectBankTypeAndCompany(cardType: Int){
         typeSelect = cardType
@@ -231,11 +278,11 @@ extension BankListCollectionView: UICollectionViewDelegate, UICollectionViewData
         if (viewController != nil) {
 
             if(typeSelect == PrimoCardType.creditCard.rawValue ){
-                self.viewController!.OnBankSelected(id: crediteBankList[indexPath.row].id)
+                self.viewController!.OnBankSelected(id: crediteBankList[indexPath.row].id , mCardType: crediteBankList[indexPath.row].cardType)
             }else if(typeSelect == PrimoCardType.debitCard.rawValue){
-                self.viewController!.OnBankSelected(id: debiteBankList[indexPath.row].id)
+                self.viewController!.OnBankSelected(id: debiteBankList[indexPath.row].id, mCardType: debiteBankList[indexPath.row].cardType)
             }else{
-                self.viewController!.OnBankSelected(id: companyList[indexPath.row].id)
+                self.viewController!.OnBankSelected(id: companyList[indexPath.row].id, mCardType: companyList[indexPath.row].cardType)
             }
             
 

@@ -7,20 +7,21 @@ enum Service: String {
     //case CardNetword = "CardNetword"
     case FindStoreDetailNearBy = "FindStoreDetailNearBy"
     case Department = "Department"
+    case RestaurantPrice = "RestaurantPrice" 
     case DealsPromotion = "DealsPromotion"
     case PromotionNotOwnedCard = "PromotionNotOwnedCard"
     case Banks = "Banks"
     case Card = "Card"
     case CardNetwork = "CardNetwork"
     case Company = "Company"
-
+    
     
     var url: String {
         return Service_Url + self.rawValue
     }
 }
-let Service_Url = "http://primovmset.southeastasia.cloudapp.azure.com/PrimoCustomerService/"
-//let Service_Url = "https://primoservice.co/PrimoCustomerService/"
+//let Service_Url = "http://primovmset.southeastasia.cloudapp.azure.com/PrimoCustomerService/"
+let Service_Url = "https://primoservice.co/PrimoCustomerService/"
 let Service_User = "anonymous" // "abc@abc.com"
 let Service_Password = "spoton-primo" // "Cust-2014"
 
@@ -87,6 +88,14 @@ var cerrentVersin: Double = 10.3
 //Key Versuin DB///
 ///////////////////
 var MyCardDB: String =  "KEYMYCARDDATABASE"
+var KEYStoreDB: String = "KEYSTOREDATABASE"
+
+
+//////////////
+//DB Version//
+//////////////
+var DataBaseVersionCard = UserDefaults.standard
+var DataBaseVersionStore = UserDefaults.standard
 
 /////////////
 // Locaion //
@@ -133,6 +142,9 @@ enum RewardDetail: String {
     case comboDiscountAbs = "ส่วนลด"
     case comboCreditAbs = "เงินคืน"
     case comboVoucher = "บัตรกำนัล"
+    case specialMenu = "เมนูพิเศษ"
+    case specialBeverage = "เครื่องดื่มพิเศษ"
+    case gift = "ของพรีเมียม"
     
     var text: String {
         return self.rawValue

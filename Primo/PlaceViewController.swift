@@ -1,4 +1,4 @@
-import UIKit
+ import UIKit
 import Alamofire
 import SwiftyJSON
 import CoreLocation
@@ -51,6 +51,10 @@ class PlaceViewController: UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Check Stroe DB
+        _ = StoreDB.instance.CheckVertionStoreDB()
+        
+        
         //Hide top spat for Table View
         self.tableView.contentInset = UIEdgeInsets.zero
         self.automaticallyAdjustsScrollViewInsets = false
@@ -76,8 +80,10 @@ class PlaceViewController: UITableViewController{
             let uuid = UIDevice.current.identifierForVendor!.uuidString
             
             Mixpanel.initialize(token: projectToken)
-            Mixpanel.mainInstance().track(event: "Open Primo")
+            Mixpanel.mainInstance().track(event: "Open Primo iOS")
             Mixpanel.mainInstance().identify(distinctId: uuid)
+            Mixpanel.mainInstance().people.set(property: "UUID",
+                                               to: uuid)
             
             
             // MARK: Set up Side bar
@@ -130,6 +136,16 @@ class PlaceViewController: UITableViewController{
                     place = nearByPlace[indexPath.row]
                 }
                 detailView.selectedPlace = place
+                
+                let uuid = UIDevice.current.identifierForVendor!.uuidString
+                
+                Mixpanel.initialize(token: projectToken)
+                Mixpanel.mainInstance().track(event: "i_LocationSel_select",
+                                              properties: ["StoreID" : place.storeId,
+                                                           "BranchID" : place.branchId])
+                Mixpanel.mainInstance().identify(distinctId: uuid)
+                
+                
 //                self.revealViewController().setFrontViewPosition(.left, animated: true)
             }
         }
@@ -227,6 +243,10 @@ extension PlaceViewController: UISearchResultsUpdating, UISearchBarDelegate
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+//        self.tableView.contentInset = UIEdgeInsets.zero
+//        self.automaticallyAdjustsScrollViewInsets = false
+        
         if !(searchBar.text?.isEmpty)! {
             searchText = searchBar.text!
             isClickSh = true
@@ -242,6 +262,11 @@ extension PlaceViewController: UISearchResultsUpdating, UISearchBarDelegate
         //Hide top spat for Table View
         self.tableView.contentInset = UIEdgeInsets.zero
         self.automaticallyAdjustsScrollViewInsets = false
+
+        if (self.isRefreshing) {
+            self.refreshControl?.endRefreshing()
+            self.isRefreshing = false
+        }
         
         GetLocation();
 //        CallWS()
@@ -293,7 +318,7 @@ extension PlaceViewController
             
             if (distance < 200 && isClickSh != true){
                 
-                let getResult = StoreDB.instance.getStores()
+                let getResult = StoreDB.instance.getNewStores()
                 
                 if(getResult.isEmpty){
                     CheckReachabilityStatus()
@@ -314,6 +339,7 @@ extension PlaceViewController
                             let branchNameEng = item.branchNameEng
                             let distance = item.distance
                             let imageUrl = item.imageUrl
+                            let storeTypeId = item.storeTypeId
                             
                             let nameTH = (storeName != "") ? storeName + " " + branchName : branchName
                             let nameEN = (storeNameEng != "") ? storeNameEng + " " + branchNameEng : branchNameEng
@@ -323,7 +349,8 @@ extension PlaceViewController
                                               nameTH: nameTH,
                                               nameEN: nameEN,
                                               distance: Int(distance),
-                                              imageUrl: imageUrl)
+                                              imageUrl: imageUrl,
+                                              storeTypeId: storeTypeId)
                             self.nearByPlace.append(place)
                             
                         }
@@ -460,7 +487,7 @@ extension PlaceViewController
     }
     
     
-    func CheckReachabilityStatus() {
+    func CheckReachabilityStatus(statusDialogInternet: Bool? = false) {
         guard let status = Network.reachability?.status else { return }
         
         if (status == .unreachable) {
@@ -479,8 +506,10 @@ extension PlaceViewController
                 self.nearByPlace.removeAll()
                 self.filteredPlace.removeAll()
                 self.tableView.reloadData()
-
-                NoConnectionView.shared.Show(view: self.view,  action: self.reTryInternet)
+                if(statusDialogInternet != true){
+                  NoConnectionView.shared.Show(view: self.view,  action: self.reTryInternet)
+                }
+            
                 statusOpenDialogIN = true
 //            }
             isDisableInternet = true
@@ -526,7 +555,7 @@ extension PlaceViewController
     //retry Internet
     func reTryInternet(ClickBtn: Bool){
         if(ClickBtn){
-            CheckReachabilityStatus()
+            CheckReachabilityStatus(statusDialogInternet: true)
             GetLocation()
         }
     }
@@ -567,10 +596,11 @@ extension PlaceViewController
                 
                 let distance = subJson["distance"].intValue
                 let imageUrl = subJson["logoUrl"].stringValue
+                let storeTypeId = subJson["storeTypeId"].intValue
                 
                 let result = StoreDB.instance.addStore(cStoreId: Int64(storeId), cBranchId: Int64(branchId), cStoreName: storeName,
                                                        cStoreNameEng: storeNameEng, cBranchName: branchName, cBranchNameEng: branchNameEng,
-                                                       cImageUrl: imageUrl, cDistance: Int64(distance))
+                                                       cImageUrl: imageUrl, cDistance: Int64(distance), cStoreTypeId: storeTypeId)
                 if(result == -1){
                     PrimoAlert().Error()
                 }else{
@@ -583,7 +613,8 @@ extension PlaceViewController
                                       nameTH: nameTH,
                                       nameEN: nameEN,
                                       distance: distance,
-                                      imageUrl: imageUrl)
+                                      imageUrl: imageUrl,
+                                      storeTypeId: storeTypeId)
                     self.nearByPlace.append(place)
                 }
                 
@@ -605,4 +636,5 @@ extension PlaceViewController
             self.navigationController?.pushViewController(secondViewController, animated: true)
 
     }
+    
 }

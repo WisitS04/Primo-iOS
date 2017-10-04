@@ -256,7 +256,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="JYn-bE-h65"/>
                                 </constraints>
-                                <state key="normal" title="DONE"/>
+                                <state key="normal" title="เสร็จสิ้น"/>
                                 <connections>
                                     <segue destination="LoT-w0-Prx" kind="presentation" id="gSp-Se-Z7z"/>
                                 </connections>
@@ -485,7 +485,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="4Ir-7Z-sOC"/>
                                 </constraints>
-                                <state key="normal" title="Next"/>
+                                <state key="normal" title="เสร็จสิ้น"/>
                                 <connections>
                                     <segue destination="4xO-rn-hTW" kind="show" identifier="ShowDeal" id="R80-R7-xgg"/>
                                 </connections>
@@ -494,12 +494,19 @@
                                 <rect key="frame" x="194" y="437" width="165" height="30"/>
                                 <state key="normal" title="0.00"/>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qJL-qV-Jvr" userLabel="Label dascription">
+                                <rect key="frame" x="0.0" y="475" width="375" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.74509803919999995" green="0.16078431369999999" blue="0.23137254900000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="rTe-PY-KyD" secondAttribute="trailing" id="68W-2x-0mO"/>
                             <constraint firstItem="YeK-ai-pis" firstAttribute="top" secondItem="yeU-rQ-RX7" secondAttribute="bottom" constant="20" id="77v-cQ-TDN"/>
                             <constraint firstItem="eiU-06-HbZ" firstAttribute="top" secondItem="baI-Pt-anD" secondAttribute="top" id="AcL-Us-9k6"/>
+                            <constraint firstItem="qJL-qV-Jvr" firstAttribute="leading" secondItem="yeU-rQ-RX7" secondAttribute="leading" id="CjI-Ex-dAq"/>
                             <constraint firstItem="yeU-rQ-RX7" firstAttribute="top" secondItem="VCE-qr-cS0" secondAttribute="bottom" id="E1F-ZB-8cV"/>
                             <constraint firstItem="DGb-A8-BhZ" firstAttribute="height" secondItem="1BJ-qj-sgm" secondAttribute="height" id="G6y-jY-KaA"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xCk-qr-tdj" secondAttribute="trailing" id="GWt-Bb-SgZ"/>
@@ -523,6 +530,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="YeK-ai-pis" secondAttribute="trailing" id="cg2-pj-wWo"/>
                             <constraint firstItem="5Km-Qb-6wb" firstAttribute="leading" secondItem="zOB-qQ-L8M" secondAttribute="leadingMargin" id="dFM-me-CT2"/>
                             <constraint firstItem="67g-dk-T2r" firstAttribute="leading" secondItem="zOB-qQ-L8M" secondAttribute="leadingMargin" id="fUr-SM-R17"/>
+                            <constraint firstItem="qJL-qV-Jvr" firstAttribute="top" secondItem="fTv-iF-G49" secondAttribute="bottom" constant="85" id="hju-cx-CpQ"/>
                             <constraint firstItem="DGb-A8-BhZ" firstAttribute="centerX" secondItem="eiU-06-HbZ" secondAttribute="centerX" id="jdA-rQ-H2c"/>
                             <constraint firstItem="baI-Pt-anD" firstAttribute="leading" secondItem="zOB-qQ-L8M" secondAttribute="leadingMargin" id="kKg-yD-gA6"/>
                             <constraint firstItem="Dqf-lo-D74" firstAttribute="leading" secondItem="zOB-qQ-L8M" secondAttribute="leadingMargin" id="lNv-jZ-dfB"/>
@@ -534,6 +542,7 @@
                             <constraint firstItem="yeU-rQ-RX7" firstAttribute="leading" secondItem="zOB-qQ-L8M" secondAttribute="leading" id="ujT-of-ggm"/>
                             <constraint firstItem="baI-Pt-anD" firstAttribute="top" secondItem="fTv-iF-G49" secondAttribute="bottom" constant="20" id="vQv-qt-j4U"/>
                             <constraint firstItem="1BJ-qj-sgm" firstAttribute="width" secondItem="baI-Pt-anD" secondAttribute="width" id="wtQ-Np-6eZ"/>
+                            <constraint firstItem="qJL-qV-Jvr" firstAttribute="trailing" secondItem="yeU-rQ-RX7" secondAttribute="trailing" id="z1f-rs-lfO"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="รายละเอียดการจับจ่าย" id="sjJ-ZQ-agj">
@@ -544,6 +553,11 @@
                         <outlet property="departmentButton" destination="67g-dk-T2r" id="iR5-Ow-ikJ"/>
                         <outlet property="departmentLabel" destination="rTe-PY-KyD" id="Z1k-QJ-CjI"/>
                         <outlet property="discountedPriceButton" destination="DGb-A8-BhZ" id="bLL-9U-uHJ"/>
+                        <outlet property="lableDiscount" destination="eiU-06-HbZ" id="n5h-6R-j5a"/>
+                        <outlet property="lablePercen" destination="baI-Pt-anD" id="JpI-0q-LbU"/>
+                        <outlet property="lablePrice" destination="xCk-qr-tdj" id="jNK-Cb-vSt"/>
+                        <outlet property="lable_description" destination="qJL-qV-Jvr" id="hdj-b9-J51"/>
+                        <outlet property="line_top_description" destination="hju-cx-CpQ" id="YXC-yA-5qs"/>
                         <outlet property="menuButton" destination="6Ma-H1-VeQ" id="jEL-2C-Ti9"/>
                         <outlet property="percentDiscountButton" destination="1BJ-qj-sgm" id="ZLn-OD-b0m"/>
                         <outlet property="placeCell" destination="yeU-rQ-RX7" id="CuH-VW-cUn"/>
@@ -555,7 +569,7 @@
             </objects>
             <point key="canvasLocation" x="-1346" y="606"/>
         </scene>
-        <!--ผลการคำนวณจากพรีโม-->
+        <!-- ผลการคำนวณ-->
         <scene sceneID="kVf-eO-PHj">
             <objects>
                 <viewController id="4xO-rn-hTW" customClass="DealViewController" customModule="Primo" customModuleProvider="target" sceneMemberID="viewController">
@@ -630,7 +644,7 @@
                                             <constraint firstAttribute="height" constant="35" id="khd-bB-NdY"/>
                                             <constraint firstAttribute="width" constant="124.5" id="sFd-gw-bqv"/>
                                         </constraints>
-                                        <state key="normal" title="ใช้แต้ม"/>
+                                        <state key="normal" title="ใช้คะแนน"/>
                                         <connections>
                                             <action selector="OnUsePointButtonClicked:" destination="4xO-rn-hTW" eventType="touchUpInside" id="gVp-PN-W4h"/>
                                         </connections>
@@ -641,7 +655,7 @@
                                             <constraint firstAttribute="height" constant="35" id="HUw-Rr-PJV"/>
                                             <constraint firstAttribute="width" constant="124.5" id="MuP-mT-a8K"/>
                                         </constraints>
-                                        <state key="normal" title="ไม่ใช้แต้ม"/>
+                                        <state key="normal" title="ไม่ใช้คะแนน"/>
                                         <connections>
                                             <action selector="OnUseNotPointRedemButtonClicked:" destination="4xO-rn-hTW" eventType="touchUpInside" id="2lm-TV-6d5"/>
                                         </connections>
@@ -688,7 +702,7 @@
                             <constraint firstItem="Ix1-45-Oe5" firstAttribute="top" secondItem="f9L-ig-D4o" secondAttribute="bottom" constant="118" id="zir-ve-AfG"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="ผลการคำนวณจากพรีโม" id="Orl-Gw-a9i"/>
+                    <navigationItem key="navigationItem" title=" ผลการคำนวณ" id="Orl-Gw-a9i"/>
                     <connections>
                         <outlet property="useInstallmentButton" destination="BfR-8s-Vv9" id="Z3I-u4-jnr"/>
                         <outlet property="useNotUsePoint" destination="10C-3r-keT" id="f18-co-D7N"/>
@@ -755,8 +769,8 @@
                                                 <constraint firstItem="vN2-kX-E3D" firstAttribute="height" secondItem="4Ev-FJ-b7i" secondAttribute="height" id="w8C-pC-t05"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="105" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DealTitle" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKP-w1-qmN" userLabel="DealTitle">
-                                            <rect key="frame" x="120" y="8" width="191" height="90"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="105" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DealTitle" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKP-w1-qmN" userLabel="DealTitle">
+                                            <rect key="frame" x="120" y="8" width="172" height="90"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -884,14 +898,14 @@
                                             </constraints>
                                         </view>
                                         <imageView userInteractionEnabled="NO" tag="108" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gcU-z5-7nG" userLabel="MedalImage">
-                                            <rect key="frame" x="319" y="33" width="40" height="40"/>
+                                            <rect key="frame" x="304" y="25.5" width="55" height="55"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="40" id="InX-E3-avP"/>
-                                                <constraint firstAttribute="width" constant="40" id="oen-4m-8a1"/>
+                                                <constraint firstAttribute="height" constant="55" id="InX-E3-avP"/>
+                                                <constraint firstAttribute="width" constant="55" id="oen-4m-8a1"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ได้ส่วนลดรวม" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AET-VE-cZN">
-                                            <rect key="frame" x="22" y="144.5" width="84.5" height="18"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="99" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ส่วนลดรวมโดยประมาณ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AET-VE-cZN">
+                                            <rect key="frame" x="22" y="144.5" width="147.5" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -918,7 +932,7 @@
                                         <constraint firstItem="cKP-w1-qmN" firstAttribute="leading" secondItem="1nf-Ha-J1M" secondAttribute="trailing" constant="8" id="cfl-FE-sl8"/>
                                         <constraint firstItem="cKP-w1-qmN" firstAttribute="top" secondItem="ANH-xW-FGg" secondAttribute="topMargin" id="ctR-cZ-h1r"/>
                                         <constraint firstItem="gcU-z5-7nG" firstAttribute="centerY" secondItem="cKP-w1-qmN" secondAttribute="centerY" id="fNm-k2-0eU"/>
-                                        <constraint firstItem="cKP-w1-qmN" firstAttribute="trailing" secondItem="gcU-z5-7nG" secondAttribute="leading" constant="-8" id="fSQ-2J-w7q"/>
+                                        <constraint firstItem="cKP-w1-qmN" firstAttribute="trailing" secondItem="gcU-z5-7nG" secondAttribute="leading" constant="-12" id="fSQ-2J-w7q"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="GY7-Jn-4kS" secondAttribute="leading" constant="8" id="jfe-nN-1um"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="lF9-5g-nDT" secondAttribute="trailing" constant="6" id="krV-Zc-LlZ"/>
                                         <constraint firstItem="RX8-yo-E3D" firstAttribute="bottom" secondItem="HL9-vD-phJ" secondAttribute="bottom" id="lpD-YK-eN9"/>
@@ -980,17 +994,17 @@
                                                 <constraint firstAttribute="trailing" secondItem="9pT-RY-0gR" secondAttribute="trailing" id="xbI-qX-2Kr"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="105" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ใช้ 2 บัตร เพื่อรับสิทธิประโยชน์" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PJW-Ps-La6" userLabel="DealTitle">
-                                            <rect key="frame" x="120" y="8" width="191" height="90"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="105" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ใช้ 2 บัตร เพื่อรับสิทธิประโยชน์" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PJW-Ps-La6" userLabel="DealTitle">
+                                            <rect key="frame" x="120" y="8" width="172" height="90"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" tag="108" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FMq-px-6kx" userLabel="MedalImage">
-                                            <rect key="frame" x="319" y="33" width="40" height="40"/>
+                                            <rect key="frame" x="304" y="25.5" width="55" height="55"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="40" id="6LE-Ih-Oma"/>
-                                                <constraint firstAttribute="height" constant="40" id="6XT-0o-9SO"/>
+                                                <constraint firstAttribute="width" constant="55" id="6LE-Ih-Oma"/>
+                                                <constraint firstAttribute="height" constant="55" id="6XT-0o-9SO"/>
                                             </constraints>
                                         </imageView>
                                         <view tag="13" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bli-JI-fwy" userLabel="Member Box">
@@ -1102,8 +1116,8 @@
                                                 <constraint firstItem="a0l-Am-pom" firstAttribute="leading" secondItem="rm0-ic-9tm" secondAttribute="leading" id="zd8-8Q-gt3"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ได้ส่วนลดรวม" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H8V-TF-2Vv">
-                                            <rect key="frame" x="22" y="144.5" width="84.5" height="18"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="99" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ส่วนลดรวมโดยประมาณ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H8V-TF-2Vv">
+                                            <rect key="frame" x="22" y="144.5" width="147.5" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -1127,7 +1141,7 @@
                                         <constraint firstItem="bR2-0a-ONE" firstAttribute="leading" secondItem="rm0-ic-9tm" secondAttribute="leading" id="3QX-zA-peq"/>
                                         <constraint firstAttribute="bottom" secondItem="Bpy-Xn-ziN" secondAttribute="bottom" constant="8" id="3jY-en-gWO"/>
                                         <constraint firstItem="PJW-Ps-La6" firstAttribute="leading" secondItem="rQG-Mq-T9M" secondAttribute="trailing" constant="8" id="4HJ-WO-75P"/>
-                                        <constraint firstItem="PJW-Ps-La6" firstAttribute="trailing" secondItem="FMq-px-6kx" secondAttribute="leading" constant="-8" id="4KI-kq-cVH"/>
+                                        <constraint firstItem="PJW-Ps-La6" firstAttribute="trailing" secondItem="FMq-px-6kx" secondAttribute="leading" constant="-12" id="4KI-kq-cVH"/>
                                         <constraint firstItem="bR2-0a-ONE" firstAttribute="trailing" secondItem="rm0-ic-9tm" secondAttribute="trailing" id="50o-aa-Zg3"/>
                                         <constraint firstItem="797-cp-Tln" firstAttribute="bottom" secondItem="bR2-0a-ONE" secondAttribute="bottom" id="6H6-GT-hrD"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="cBH-hn-msc" secondAttribute="trailing" constant="-8" id="7mc-q5-Lbi"/>
@@ -1194,8 +1208,8 @@
                                                 <constraint firstItem="s2D-09-ZhF" firstAttribute="height" secondItem="Zr3-Dd-Lmo" secondAttribute="height" id="uXH-UF-8W0"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="105" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DealTitle" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L3B-Nr-c4H" userLabel="DealTitle">
-                                            <rect key="frame" x="133.5" y="8" width="177.5" height="90"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="105" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="DealTitle" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L3B-Nr-c4H" userLabel="DealTitle">
+                                            <rect key="frame" x="133.5" y="8" width="158.5" height="90"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1255,10 +1269,10 @@
                                             </constraints>
                                         </view>
                                         <imageView userInteractionEnabled="NO" tag="108" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JH8-aK-7Xu" userLabel="MedalImage">
-                                            <rect key="frame" x="319" y="33" width="40" height="40"/>
+                                            <rect key="frame" x="304" y="25.5" width="55" height="55"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="40" id="Jai-Yq-NRE"/>
-                                                <constraint firstAttribute="height" constant="40" id="Tqu-Pj-av7"/>
+                                                <constraint firstAttribute="width" constant="55" id="Jai-Yq-NRE"/>
+                                                <constraint firstAttribute="height" constant="55" id="Tqu-Pj-av7"/>
                                             </constraints>
                                         </imageView>
                                         <view tag="16" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aHl-tK-8Vd" userLabel="Credite Box">
@@ -1322,8 +1336,8 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ได้ส่วนลดรวม" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dyz-20-n1w">
-                                            <rect key="frame" x="22" y="144.5" width="84.5" height="18"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="99" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ส่วนลดรวมโดยประมาณ" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dyz-20-n1w" userLabel="ส่วนลดรวม">
+                                            <rect key="frame" x="22" y="144.5" width="147.5" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -1345,7 +1359,7 @@
                                         <constraint firstItem="cjV-F7-HaL" firstAttribute="trailing" secondItem="aHl-tK-8Vd" secondAttribute="trailing" id="SCb-SI-cbA"/>
                                         <constraint firstItem="L3B-Nr-c4H" firstAttribute="bottom" secondItem="Zr3-Dd-Lmo" secondAttribute="bottom" id="SqI-JJ-i86"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="aHl-tK-8Vd" secondAttribute="trailing" constant="6" id="TQz-QH-615"/>
-                                        <constraint firstItem="L3B-Nr-c4H" firstAttribute="trailing" secondItem="JH8-aK-7Xu" secondAttribute="leading" constant="-8" id="UMG-sv-hpI"/>
+                                        <constraint firstItem="L3B-Nr-c4H" firstAttribute="trailing" secondItem="JH8-aK-7Xu" secondAttribute="leading" constant="-12" id="UMG-sv-hpI"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="dyz-20-n1w" secondAttribute="bottom" constant="31.5" id="UvI-tk-tTF"/>
                                         <constraint firstItem="6EV-aL-16O" firstAttribute="leading" secondItem="liq-lG-E3u" secondAttribute="leadingMargin" id="aR3-ji-oNI"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="FPV-S2-X1L" secondAttribute="bottom" constant="-8" id="dZ2-vd-lW4"/>
@@ -1663,7 +1677,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="mlI-Ni-xEt"/>
                                 </constraints>
-                                <state key="normal" title="DONE"/>
+                                <state key="normal" title="เสร็จสิ้น"/>
                                 <connections>
                                     <segue destination="LoT-w0-Prx" kind="presentation" id="3aT-YZ-0fZ"/>
                                 </connections>
@@ -1722,7 +1736,7 @@
                                     <constraint firstAttribute="height" constant="50" id="quh-wU-1Vw"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
-                                <state key="normal" title="Done"/>
+                                <state key="normal" title="เสร็จสิ้น"/>
                             </button>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lkp-rd-fOh">
                                 <rect key="frame" x="0.0" y="64" width="375" height="529"/>
@@ -2040,7 +2054,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GjB-hl-sge" userLabel="Header">
+                            <view tag="99" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GjB-hl-sge" userLabel="Header">
                                 <rect key="frame" x="0.0" y="64" width="375" height="180"/>
                                 <subviews>
                                     <view tag="100" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F9O-1g-llK" userLabel="CardsContainerView">
@@ -2051,17 +2065,17 @@
                                             <constraint firstAttribute="width" constant="90" id="rCN-fj-laS"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deal Title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vqn-ou-8eW" userLabel="DealTitle">
-                                        <rect key="frame" x="106" y="8" width="213" height="90"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deal Title" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vqn-ou-8eW" userLabel="DealTitle">
+                                        <rect key="frame" x="106" y="8" width="194" height="90"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" tag="102" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MU0-fV-tVt" userLabel="MedalImage">
-                                        <rect key="frame" x="327" y="33" width="40" height="40"/>
+                                        <rect key="frame" x="312" y="25.5" width="55" height="55"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="VKc-3e-Zwx"/>
-                                            <constraint firstAttribute="width" constant="40" id="eeG-8E-x7V"/>
+                                            <constraint firstAttribute="height" constant="55" id="VKc-3e-Zwx"/>
+                                            <constraint firstAttribute="width" constant="55" id="eeG-8E-x7V"/>
                                         </constraints>
                                     </imageView>
                                     <view tag="104" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VYs-3w-9Ym" userLabel="DetailContain">
@@ -2071,8 +2085,8 @@
                                             <constraint firstAttribute="height" constant="30" id="svi-3z-633"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ได้ส่วนลดรวม" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwF-Hm-u3Z" userLabel="RewardTitle">
-                                        <rect key="frame" x="161.5" y="146" width="95.5" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" tag="88" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ส่วนลดรวมโดยประมาณ" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwF-Hm-u3Z" userLabel="RewardTitle">
+                                        <rect key="frame" x="89.5" y="146" width="167.5" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -2095,7 +2109,7 @@
                                     <constraint firstItem="vqn-ou-8eW" firstAttribute="top" secondItem="GjB-hl-sge" secondAttribute="topMargin" id="AFe-C4-IFQ"/>
                                     <constraint firstItem="nQF-c5-F8F" firstAttribute="leading" secondItem="gwF-Hm-u3Z" secondAttribute="trailing" constant="8" id="FmY-hL-Uan"/>
                                     <constraint firstAttribute="bottom" secondItem="4gG-bk-HOi" secondAttribute="bottom" constant="13" id="Frn-Fa-Cxs"/>
-                                    <constraint firstItem="MU0-fV-tVt" firstAttribute="leading" secondItem="vqn-ou-8eW" secondAttribute="trailing" constant="8" id="IdC-2k-X3S"/>
+                                    <constraint firstItem="MU0-fV-tVt" firstAttribute="leading" secondItem="vqn-ou-8eW" secondAttribute="trailing" constant="12" id="IdC-2k-X3S"/>
                                     <constraint firstItem="F9O-1g-llK" firstAttribute="leading" secondItem="GjB-hl-sge" secondAttribute="leadingMargin" id="J4e-SF-hak"/>
                                     <constraint firstItem="nQF-c5-F8F" firstAttribute="height" secondItem="4gG-bk-HOi" secondAttribute="height" constant="10" id="RMw-G1-Wgc"/>
                                     <constraint firstAttribute="height" constant="180" id="UUb-gs-Qj5"/>
@@ -2572,7 +2586,7 @@
             </objects>
             <point key="canvasLocation" x="-5093" y="2112"/>
         </scene>
-        <!--เพิ่มบัตร/แก้ไขบ้ตร-->
+        <!--เพิ่มบัตร/แก้ไขบัตร-->
         <scene sceneID="HLz-hj-zn2">
             <objects>
                 <viewController storyboardIdentifier="AddCardController" id="yOQ-CU-3C8" customClass="AddCardController" customModule="Primo" customModuleProvider="target" sceneMemberID="viewController">
@@ -2651,7 +2665,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="hLS-Gc-KYu"/>
                                 </constraints>
-                                <state key="normal" title="DONE"/>
+                                <state key="normal" title="เสร็จสิ้น"/>
                                 <connections>
                                     <segue destination="LoT-w0-Prx" kind="presentation" id="euw-rO-wEc"/>
                                 </connections>
@@ -2672,7 +2686,7 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="เพิ่มบัตร/แก้ไขบ้ตร" id="WPw-6m-lWQ">
+                    <navigationItem key="navigationItem" title="เพิ่มบัตร/แก้ไขบัตร" id="WPw-6m-lWQ">
                         <barButtonItem key="leftBarButtonItem" image="Artboard 2" id="Trw-u7-I04" userLabel="back">
                             <connections>
                                 <segue destination="LoT-w0-Prx" kind="presentation" identifier="back" id="ZrG-26-OEs"/>
@@ -2770,7 +2784,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="zBW-Hy-mDe"/>
                                 </constraints>
-                                <state key="normal" title="DONE"/>
+                                <state key="normal" title="เสร็จสิ้น"/>
                                 <connections>
                                     <segue destination="Y4u-Tp-5a0" kind="presentation" id="eO0-U5-gc5"/>
                                 </connections>
@@ -2864,7 +2878,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="93"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qGh-Jl-c5X">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qGh-Jl-c5X">
                                             <rect key="frame" x="30" y="14" width="107" height="66"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="66" id="0RB-Nb-QdM"/>

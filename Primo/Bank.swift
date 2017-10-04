@@ -16,14 +16,14 @@ struct Bank {
     var typeName: String!
     var typeNameEng: String!
     
-   
+    var cardType: Int!
     
     
 //    var typeId: Int!
 //    var typeName: String!
 //    var typeNameEng: String!
     
-     init(json: JSON) {
+    init(json: JSON , mCardType: Int) {
         id = json["id"].intValue
         nameEN = json["nameEng"].stringValue
         nameTH = json["name"].stringValue
@@ -37,6 +37,6 @@ struct Bank {
         typeId = json["typeId"].intValue
         typeName = json["typeName"].stringValue
         typeNameEng = json["typeNameEng"].stringValue
-        
+        cardType = mCardType
     }
 }

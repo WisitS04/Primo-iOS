@@ -21,9 +21,9 @@ struct Section {
     var smsDesc: String!
     var smsNumber: String!
     var urlCard: String!
-    
     var collapsed: Bool!
-
+    var specialCondition: String! = ""
+    
     init(index: Int, deal: Deal, isCollapsed: Bool = false) {
         self.index = index
         self.collapsed = isCollapsed
@@ -50,6 +50,7 @@ struct Section {
         self.smsMsg = deal.smsMsg
         self.smsDesc = deal.smsDesc
         self.smsNumber = deal.smsNumber
+        self.specialCondition = deal.specialCondition
     }
 }
 
@@ -59,15 +60,18 @@ struct Section {
 class DealDetailViewController: UIViewController
 {
     @IBOutlet weak var tableView: UITableView!
-    
+    var mRestaurantStatus: Int? = 0
+    var mTypeStoreID: Int? = 0
     var deal: Deal?
-    
     var sections = [Section]()
+
     
     var cardNotOwnedInPromotionURL: [Int: [String]] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+
         
         if (deal != nil) {
             AddCardsView(deal: deal!)
@@ -177,19 +181,31 @@ extension DealDetailViewController
         if let titleLabel = view.viewWithTag(101) as? UILabel {
             titleLabel.text = title
         }
+        
+        if let titleLabel = view.viewWithTag(88) as? UILabel {
+            
+            if(mTypeStoreID == 11){
+                titleLabel.text = "ส่วนลดรวมโดยประมาณ"
+            }else{
+                titleLabel.text = "ส่วนลดรวม"
+            }
+            
+        }
     }
     
     func SetMedalImage(rank: Int) {
         if let medalView = view.viewWithTag(102) as? UIImageView {
             switch rank {
             case 1:
-                medalView.image = #imageLiteral(resourceName: "medal_gold")
+                medalView.image = #imageLiteral(resourceName: "primo_rec")
                 break
             case 2:
-                medalView.image = #imageLiteral(resourceName: "medal_sliver")
+                medalView.image = nil
+//                medalView.image = #imageLiteral(resourceName: "medal_sliver")
                 break
             case 3:
-                medalView.image = #imageLiteral(resourceName: "medal_bronze")
+                medalView.image = nil
+//                medalView.image = #imageLiteral(resourceName: "medal_bronze")
                 break
             default:
                 medalView.image = nil
@@ -219,16 +235,23 @@ extension DealDetailViewController
             
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
-            label.text = "\(text) \(formatter.string(from: NSNumber(value: value))!)"
+            
+
+            label.textColor = PrimoColor.Red.UIColor
+            item.layer.cornerRadius = 15
+            
+            if(text == "..."){
+                label.text = text
+                item.layer.borderWidth = 0.5
+                item.layer.borderColor = UIColor.white.cgColor
+            }else{
+                label.text = "\(text) \(formatter.string(from: NSNumber(value: value))!)"
+                item.layer.borderWidth = 2
+                item.layer.borderColor = PrimoColor.Red.UIColor.cgColor
+            }
             label.font = label.font.withSize(10)
             
-            let color = PrimoColor.Red.UIColor
-            label.textColor = color
-            
-            item.layer.cornerRadius = 15
-            item.layer.borderWidth = 2
-            item.layer.borderColor = color.cgColor
-            
+
             label.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint(item: label, attribute: .centerX, relatedBy: .equal,
                                toItem: item, attribute: .centerX,
@@ -276,30 +299,156 @@ extension DealDetailViewController
         if let rewardDetailContainer = view.viewWithTag(104) {
             var items: [UIView] = []
             var count = 0
-            if (deal.comboDiscountAbs != nil && deal.comboDiscountAbs! > 0.0) {
+            if (deal.comboDiscountAbs != nil && deal.comboDiscountAbs! > 0.0 && count <= 3) {
                 items.append(CreateRewardItem(text: RewardDetail.comboDiscountAbs.text,
                                               value: deal.comboDiscountAbs!))
                 count += 1
             }
-            if (deal.comboCreditAbs != nil && deal.comboCreditAbs! > 0.0) {
-                if count > 0 {
+            if (deal.comboCreditAbs != nil && deal.comboCreditAbs! > 0.0 && count <= 3) {
+
+                if (count > 0) {
                     items.append(CreatePlusItem())
                 }
-                items.append(CreateRewardItem(text: RewardDetail.comboCreditAbs.text,
+                
+                var title: String?
+                if(count > 2){
+                    title = "..."
+                }else{
+                    title = RewardDetail.comboCreditAbs.text
+                }
+                items.append(CreateRewardItem(text: title!,
                                               value: deal.comboCreditAbs!))
                 count += 1
             }
-            if (deal.comboVoucher != nil && deal.comboVoucher! > 0.0) {
+            if (deal.promotionTypeId! == 9 && deal.comboVoucher != nil && deal.comboVoucher! > 0.0 && count <= 3) {
+
+                    if count > 0 {
+                        items.append(CreatePlusItem())
+                    }
+                    
+                    var title: String?
+                    if(count > 2){
+                        title = "..."
+                    }else{
+                        title = RewardDetail.comboVoucher.text
+                    }
+                    
+                    items.append(CreateRewardItem(text: title!,
+                                                  value: deal.comboVoucher!))
+                    count += 1
+            }
+            
+            if(deal.promotionTypeId! == 18 && deal.comboVoucher != nil && deal.comboVoucher! > 0.0 && count <= 3){
                 if count > 0 {
                     items.append(CreatePlusItem())
                 }
-                items.append(CreateRewardItem(text: RewardDetail.comboVoucher.text,
+                var title: String?
+                if(count > 2){
+                    title = "..."
+                }else{
+                    title = "เมนูพิเศษ"
+                }
+                
+                items.append(CreateRewardItem(text: title!,
                                               value: deal.comboVoucher!))
                 count += 1
             }
+            
+            if(deal.promotionTypeId! == 19 && deal.comboVoucher != nil && deal.comboVoucher! > 0.0 && count <= 3){
+                if count > 0 {
+                    items.append(CreatePlusItem())
+                }
+                var title: String?
+                if(count > 2){
+                    title = "..."
+                }else{
+                    title = "เครื่องดื่มพิเศษ"
+                }
+                
+                items.append(CreateRewardItem(text: title!,
+                                              value: deal.comboVoucher!))
+                count += 1
+            }
+            
+            
+            if(deal.promotionTypeId! == 20 && deal.comboVoucher != nil && deal.comboVoucher! > 0.0 && count <= 3){
+                if count > 0 {
+                    items.append(CreatePlusItem())
+                }
+                var title: String?
+                if(count > 2){
+                    title = "..."
+                }else{
+                    title = "ของพรีเมียม"
+                }
+                
+                items.append(CreateRewardItem(text: title!,
+                                              value: deal.comboVoucher!))
+                count += 1
+            }
+            
+//            if(deal.specialMenu != nil && deal.specialMenu! > 0.0 && count <= 3){
+//                if count > 0{
+//                    items.append(CreatePlusItem())
+//
+//                }
+//                var title: String?
+//                if(count > 2){
+//                    title = "..."
+//                }else{
+//                    title = RewardDetail.specialMenu.text
+//                }
+//                
+//                items.append(CreateRewardItem(text: title!,
+//                                              value: deal.specialMenu!))
+//                count += 1
+//            }
+//            
+//            
+//            if(deal.specialBeverage != nil && deal.specialBeverage! > 0.0 && count <= 3){
+//                if count > 0{
+//                    items.append(CreatePlusItem())
+//                    
+//                }
+//                
+//                var title: String?
+//                if(count > 2){
+//                    title = "..."
+//                }else{
+//                    title = RewardDetail.specialBeverage.text
+//                }
+//                
+//                items.append(CreateRewardItem(text: title!,
+//                                              value: deal.specialBeverage!))
+//                count += 1
+//            }
+//            
+//            
+//            if(deal.gift != nil && deal.gift! > 0.0 && count <= 3){
+//                if count > 0{
+//                    items.append(CreatePlusItem())
+//                    
+//                }
+//                
+//                var title: String?
+//                if(count > 2){
+//                    title = "..."
+//                }else{
+//                    title = RewardDetail.gift.text
+//                }
+//                
+//                items.append(CreateRewardItem(text: title!,
+//                                              value: deal.gift!))
+//                count += 1
+//            }
+            
+//
+            
             for i in 0 ..< items.count {
+                
                 rewardDetailContainer.addSubview(items[i])
                 items[i].translatesAutoresizingMaskIntoConstraints = false
+                
                 NSLayoutConstraint(item: items[i], attribute: .height, relatedBy: .equal,
                                    toItem: rewardDetailContainer, attribute: .height,
                                    multiplier: 1.0, constant: 0.0).isActive = true
@@ -405,7 +554,9 @@ extension DealDetailViewController: UITableViewDelegate, UITableViewDataSource {
                 //Benz -Start 04-07-2017 Edited case check Send SMS and Send Code
                 if (sections[indexPath.section].smsMsg[0] == "*") {
                     cell.SendSmsOrCommandButton.setTitle("SEND CODE", for: .normal)
-                } else {
+                } else if(sections[indexPath.section].smsMsg[0] == "*"){
+                    
+                }else{
                     cell.SendSmsOrCommandButton.setTitle("SEND SMS", for: .normal)
                 }
                 //Benz -End- 04-07-2017
@@ -445,14 +596,24 @@ extension DealDetailViewController: UITableViewDelegate, UITableViewDataSource {
     //
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as? CollapsibleTableViewHeader ?? CollapsibleTableViewHeader(reuseIdentifier: "header")
+  
+        header.Condition = sections[section].specialCondition
+        header.RestaurantStatus = mRestaurantStatus
+        if(mRestaurantStatus == 2){
+            header.lableCondition.isHidden = false
+            header.lableCondition.text = sections[section].specialCondition ?? ""
+        }else{
+            header.lableCondition.isHidden = true
+        }
         
         header.indexLabel.text = "\(sections[section].index!)"
+        
 //        header.cardImageView.image = sections[section].cardImage
         header.cardImageView.sd_setImage(with: URL(string: sections[section].urlCard))
         
-//         cell.card_img.sd_setImage(with: URL(string: cardListFiter[indexPath.row].imageUrl))
-        
+//        cell.card_img.sd_setImage(with: URL(string: cardListFiter[indexPath.row].imageUrl))
 //        header.titleLabel.text = sections[section].title
+        
         header.titleLabel.text = sections[section].howtoNotPoitToUse
         header.arrowLabel.text = ">"
         header.setCollapsed(sections[section].collapsed)
@@ -461,12 +622,26 @@ extension DealDetailViewController: UITableViewDelegate, UITableViewDataSource {
         if (sections[section].smsMsg.characters.count > 0) {
             if (sections[section].smsMsg[0] == "*") {
                 header.warningLabel.text = "กดรหัสเพื่อรับสิทธิ์"
-            } else {
+                header.warningBg.backgroundColor = PrimoColor.Green.UIColor
+                header.warningBg.layer.borderColor = PrimoColor.Green.UIColor.cgColor
+            } else if(sections[section].smsMsg[0] == "$"){
+                
+                let value = subString(value: sections[section].smsMsg)
+                header.warningLabel.text = value
+                header.warningBg.backgroundColor = PrimoColor.Smoke.UIColor
+                header.warningBg.layer.borderColor = PrimoColor.Smoke.UIColor.cgColor
+            }else{
+                header.warningBg.backgroundColor = PrimoColor.Green.UIColor
                 header.warningLabel.text = "ส่ง sms เพื่อรับสิทธิ์"
+                header.warningBg.layer.borderColor = PrimoColor.Green.UIColor.cgColor
             }
-            header.warningView.isHidden = false
+//            header.warningView.isHidden = false
+            header.warningBg.isHidden = false
+            header.warningLabel.isHidden = false
+
         } else {
-            header.warningView.isHidden = true
+            header.warningBg.isHidden = true
+            header.warningLabel.isHidden = true
         }
         //Benz -End 04-07-2017
         
@@ -485,26 +660,30 @@ extension DealDetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     func TagDialog(sender:UITapGestureRecognizer) {
         let index = sender.view?.tag
-        PrimoAlert().SmsDetail(desc: sections[index!].smsDesc!, number:sections[index!].smsNumber!) { (isOtherButton) -> Void in
-            if (!isOtherButton) {
-                if (self.sections[index!].smsMsg?[0] != "*") {
-                    let messageVC = MFMessageComposeViewController()
-                    
-                    messageVC.body = "\(self.sections[index!].smsMsg!)";
-                    messageVC.recipients = ["\(self.sections[index!].smsNumber!)"]
-                    messageVC.messageComposeDelegate = self;
-                    
-                    self.present(messageVC, animated: false, completion: nil)
-                } else {
-                    
-                    let encodedHost = self.sections[index!].smsNumber!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-                    if let url = URL(string: "tel://"+encodedHost!),
-                        UIApplication.shared.canOpenURL(url) {
-                        UIApplication.shared.openURL(url)
+        if(self.sections[index!].smsMsg?[0] != "$"){
+            PrimoAlert().SmsDetail(desc: sections[index!].smsDesc!, number:sections[index!].smsNumber!) { (isOtherButton) -> Void in
+                if (!isOtherButton) {
+                    if (self.sections[index!].smsMsg?[0] != "*") {
+                        let messageVC = MFMessageComposeViewController()
+                        
+                        messageVC.body = "\(self.sections[index!].smsMsg!)";
+                        messageVC.recipients = ["\(self.sections[index!].smsNumber!)"]
+                        messageVC.messageComposeDelegate = self;
+                        
+                        self.present(messageVC, animated: false, completion: nil)
+                    } else if(self.sections[index!].smsMsg?[0] != "$"){
+                        
+                        
+                    }else{
+                        let encodedHost = self.sections[index!].smsNumber!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+                        if let url = URL(string: "tel://"+encodedHost!),
+                            UIApplication.shared.canOpenURL(url) {
+                            UIApplication.shared.openURL(url)
+                        }
+                        
                     }
- 
+                    
                 }
-                
             }
         }
     }
@@ -516,11 +695,33 @@ extension DealDetailViewController: UITableViewDelegate, UITableViewDataSource {
         if (sections[section].smsNumber.characters.count > 0) {
             height = 90.0
         }
+     
+        if(mRestaurantStatus == 2){
+            if(sections[section].specialCondition != nil && sections[section].specialCondition.characters.count > 0){
+                height = height + 17
+            }
+        }
+     
         return height
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 1.0
+    }
+    
+    func subString(value :String ) -> String{
+        var total:String = ""
+        var mIndex:Int = 0
+    
+        for _ in 1...value.length{
+            if(value[mIndex] != "$"){
+                total = total + value[mIndex]
+            }
+            
+           mIndex = mIndex + 1
+         }
+        
+        return total
     }
 }
 
@@ -584,32 +785,35 @@ extension DealDetailViewController: MFMessageComposeViewControllerDelegate
     func SendCodeOrSMS(_ sender: Any) {
         let btn: SendSMSButton = sender as! SendSMSButton
         
-        PrimoAlert().SmsDetail(desc: btn.smsDesc!, number:btn.smsNumber!) { (isOtherButton) -> Void in
-            if (isOtherButton) {
-                if (btn.smsMsg?[0] != "*") {
-                    let messageVC = MFMessageComposeViewController()
-                    
-                    messageVC.body = "\(btn.smsMsg!)";
-                    messageVC.recipients = ["\(btn.smsNumber!)"]
-                    messageVC.messageComposeDelegate = self;
-                    
-                    self.present(messageVC, animated: false, completion: nil)
-                } else {
-
-                    let encodedHost = btn.smsNumber!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-                   
-                
-                    if let url = URL(string: "tel://"+encodedHost!),
-                        UIApplication.shared.canOpenURL(url) {
-                        UIApplication.shared.openURL(url)
+        if(btn.smsMsg?[0] != "$"){
+            PrimoAlert().SmsDetail(desc: btn.smsDesc!, number:btn.smsNumber!) { (isOtherButton) -> Void in
+                if (isOtherButton) {
+                    if (btn.smsMsg?[0] != "*") {
+                        let messageVC = MFMessageComposeViewController()
+                        
+                        messageVC.body = "\(btn.smsMsg!)";
+                        messageVC.recipients = ["\(btn.smsNumber!)"]
+                        messageVC.messageComposeDelegate = self;
+                        
+                        self.present(messageVC, animated: false, completion: nil)
+                    } else if(btn.smsMsg?[0] != "$") {
+                        
+                        
+                    }else{
+                        let encodedHost = btn.smsNumber!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+                        
+                        
+                        if let url = URL(string: "tel://"+encodedHost!),
+                            UIApplication.shared.canOpenURL(url) {
+                            UIApplication.shared.openURL(url)
+                        }
+                        
+                        
                     }
                     
-
                 }
-
             }
         }
-
     }
     
 

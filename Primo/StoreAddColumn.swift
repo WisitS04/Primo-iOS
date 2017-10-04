@@ -1,7 +1,7 @@
 
 import UIKit
 
-class Store
+class StoreAddColumn
 {
     var storeId: Int64
     var branchId: Int64
@@ -11,10 +11,11 @@ class Store
     var branchNameEng: String
     var imageUrl: String
     var distance: Int64
+    var storeTypeId: Int?
     
-
+    
     init(storeId: Int64, branchId: Int64, storeName: String, storeNameEng: String,
-         branchName: String, branchNameEng: String, imageUrl: String, distance: Int64) {
+         branchName: String, branchNameEng: String, imageUrl: String, distance: Int64, storeTypeId: Int? = nil) {
         
         self.storeId = storeId
         self.branchId = branchId
@@ -24,6 +25,6 @@ class Store
         self.branchNameEng = branchNameEng
         self.imageUrl = imageUrl
         self.distance = distance
-
+        self.storeTypeId = storeTypeId
     }
 }

@@ -18,10 +18,18 @@ class PrimoAlert {
         _ = SweetAlert().showAlert(title, subTitle: desc, style: .warning)
     }
     // Shoping Detail page
-    func PriceNotFound() {
-        let title = "ไม่พบยอดใช้จ่าย"
-        let desc = "โปรดใส่ยอดใช้จ่าย"
-        _ = SweetAlert().showAlert(title, subTitle: desc, style: .warning)
+    func PriceNotFound(index : Int) {
+        var title:String?
+        var desc:String?
+
+        if(index == 1){
+             title = "ไม่พบจำนวนคน"
+             desc = "โปรดใส่จำนวนคน"
+        }else{
+         title = "ไม่พบยอดใช้จ่าย"
+         desc = "โปรดใส่ยอดใช้จ่าย"
+        }
+        _ = SweetAlert().showAlert(title!, subTitle: desc, style: .warning)
     }
     // Add Member page
     func AddMemberSuccess(cardName: String) {
@@ -40,7 +48,7 @@ class PrimoAlert {
 //            action: action)
         
         if(number[0] == "*"){
-            btn = "OK"
+            btn = "ตกลง"
             _ = SweetAlert().showAlert(
                 title,
                 subTitle: desc,
@@ -48,11 +56,11 @@ class PrimoAlert {
                 buttonTitle:btn,
                 action: action)
         }else{
-            btn = "SEND"
+            btn = "ส่ง"
             _ = SweetAlert().showAlert(title,
                                        subTitle: desc,
                                        style: AlertStyle.none,
-                                       buttonTitle:"Cancel",
+                                       buttonTitle:"ยกเลิก",
                                        buttonColor:UIColor.darkGray,
                                        otherButtonTitle:  btn,
                                        otherButtonColor: PrimoColor.Green.UIColor,
@@ -66,9 +74,9 @@ class PrimoAlert {
         _ = SweetAlert().showAlert("เอาออกจากบัตรของฉัน",
                                    subTitle: "คุณแน่ใจว่าต้องการลบบัตรนี้ออกจากบัตรของฉัน",
                                    style: AlertStyle.none,
-                                   buttonTitle:"Cancel",
+                                   buttonTitle:"ยกเลิก",
                                    buttonColor:UIColor.darkGray,
-                                   otherButtonTitle:  "   OK   ",
+                                   otherButtonTitle:  "   ตกลง   ",
                                    otherButtonColor: PrimoColor.Green.UIColor,
                                    action: action)
 

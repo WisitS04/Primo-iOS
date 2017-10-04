@@ -39,10 +39,20 @@ class Deal {
     
     var pointRequired: Int?
     
+    var promotionTypeId: Int?
+    
     var comboDiscountAbs: Float? // ส่วนลด
     var comboCreditAbs: Float? // เงินคืน
     var comboVoucher: Float? // บัตรกำนัล
+    var specialMenu: Float? // เมนูพิเศษ
+    var specialBeverage: Float? // เครื่องดื่มพิเศษ
+    var gift: Float? // ของพรีเมียม
+    
+    var specialCondition: String!
+    
     var comboCoupon: Float?
+    
+    var isStorewide: Bool?
     
     var totalReward: Float?
     

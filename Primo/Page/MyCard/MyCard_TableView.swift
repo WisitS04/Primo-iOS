@@ -113,7 +113,7 @@ class MyCard_TableView: UITableView{
                  myCardItemsBuffer[0].append(item)
             }else if(item.type == .debitCard){
                  myCardItemsBuffer[1].append(item)
-            }else if(item.type == .memberCard){
+            }else if(item.type == .memberCard || item.type == .eMoneyCard){
                 myCardItemsBuffer[2].append(item)
             }
             

@@ -8,31 +8,45 @@ import SwiftyJSON
 class DetailViewController: UIViewController
 {
     @IBOutlet weak var menuButton: UIBarButtonItem!
-    
     @IBOutlet weak var placeCell: UIView!
-    
     @IBOutlet weak var dateButton: UIButton!
     @IBOutlet weak var departmentButton: UIButton!
     @IBOutlet weak var priceButton: UIButton!
-    @IBOutlet weak var percentDiscountButton: UIButton!
-    @IBOutlet weak var discountedPriceButton: UIButton!
-    
     @IBOutlet weak var departmentLabel: UILabel!
     @IBOutlet weak var priceLabelTop: NSLayoutConstraint!
+    
+    
+    @IBOutlet weak var lablePrice: UILabel!
+    @IBOutlet weak var percentDiscountButton: UIButton!
+    @IBOutlet weak var discountedPriceButton: UIButton!
+    @IBOutlet weak var lablePercen: UILabel!
+    @IBOutlet weak var lableDiscount: UILabel!
+
+    
+    @IBOutlet var line_top_description: NSLayoutConstraint!
+    @IBOutlet var lable_description: UILabel!
     
     let dropDown = DropDown()
     var selectedPlace: Place!
     var departmentList: [String] = ["ทุกแผนก"]
-    var departmentListId = [Int]()
+    var RestaurantList: [String] = ["โปรดเลือกวิธีคำนวณ","จำนวนคน","ยอดใช้จ่ายโดยประมาณ"]
+//    var departmentListId = [Int]()
+    
+    var DepAndRestaurant = [RestaurantPrice]()
+    
     var currentPercentDiscount: Float = 0.0
     var dateSelected: String = ""
     var depSelect: Int = 0
+    var selectTypeRestaurant: Int = 0
     var statusGuideDetail: Bool = false
     var statusGuideDetailNotDep: Bool = false
+    var TypeRestaurantPrice: Int? = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        lable_description.isHidden = true
+      
          statusGuideDetail  = StatusGuideDetail.bool(forKey: KEYGuideDetail)
          statusGuideDetailNotDep = StatusGuideDetailNotDep.bool(forKey: KEYGuideNotDepDetail)
         
@@ -46,11 +60,9 @@ class DetailViewController: UIViewController
             
             view.addGestureRecognizer(self.revealViewController().tapGestureRecognizer())
         }
-        
         SetPlaceCell()
         InitDateBtn(dateButton)
-        HidePlaceDepartment()
-        CallDepartmentService()
+        CheckpRestaurant()
     }
 
     // MARK: Segue
@@ -68,6 +80,8 @@ class DetailViewController: UIViewController
             dealView.store = selectedPlace.storeId
             dealView.branch = selectedPlace.branchId
             dealView.departmentId = depSelect
+            dealView.typeStoreID = selectedPlace.storeTypeId!
+            dealView.RestaurantStatus = selectTypeRestaurant
         }
     }
     
@@ -79,7 +93,7 @@ class DetailViewController: UIViewController
                 print("Price = \(price)")
                 return true
             } else {
-                PrimoAlert().PriceNotFound()
+                PrimoAlert().PriceNotFound(index :selectTypeRestaurant)
                 return false
             }
         }
@@ -116,37 +130,90 @@ class DetailViewController: UIViewController
     }
     
     @IBAction func OnPriceButtonClicked(_ sender: Any) {
-        let alertController = UIAlertController(title: "กรุณาใส่ราคา", message: "", preferredStyle: .alert)
+        
+        var titleForDialog: String?
+        TypeRestaurantPrice = 0
+        if(selectedPlace.storeTypeId! == 11){
             
-        let confirmAction = UIAlertAction(title: "Confirm", style: .default) { (_) in
-            if let field = alertController.textFields?[0] {
-                self.priceButton.setTitle(field.text?.DecimalFormat(withComma: true), for: .normal)
-                self.UpdateDiscountedPrice()
-            } else {
-                self.priceButton.setTitle("0.00", for: .normal)
+             if(selectTypeRestaurant == 1){
+                titleForDialog = "จำนวนคน"
+            }else if(selectTypeRestaurant == 2){
+                titleForDialog = "ยอดใช้จ่ายโดยประมาณ"
+             }
+            
+            if(selectTypeRestaurant > 0){
+                let alertController = UIAlertController(title: titleForDialog, message: "", preferredStyle: .alert)
+                
+                let confirmAction = UIAlertAction(title: "ตกลง", style: .default) { (_) in
+                    if let field = alertController.textFields?[0] {
+                        if((field.text?.length)! > 0){
+                            let value = field.text
+                            self.TypeRestaurantPrice = Int(value!)
+                        }else{
+                            self.TypeRestaurantPrice = 0
+                        }
+                        
+                        self.priceButton.setTitle(field.text?.DecimalFormat(withComma: true), for: .normal)
+                        self.UpdateDiscountedPrice()
+                    } else {
+                        self.priceButton.setTitle("0.00", for: .normal)
+                    }
+                }
+                
+                let cancelAction = UIAlertAction(title: "ยกเลิก", style: .cancel) { (_) in
+                    
+                }
+                
+                alertController.addTextField { (textField) in
+                    textField.delegate = self
+                    textField.keyboardType = .decimalPad
+                    if(self.selectTypeRestaurant == 1){
+                        textField.placeholder = "0"
+                    }else{
+                       textField.placeholder = "0.00"
+                    }
+                    
+                }
+                
+                alertController.addAction(confirmAction)
+                alertController.addAction(cancelAction)
+                
+                self.present(alertController, animated: true, completion: nil)
             }
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
             
+        }else{
+            let alertController = UIAlertController(title: "กรุณาใส่ราคา", message: "", preferredStyle: .alert)
+            
+            let confirmAction = UIAlertAction(title: "ตกลง", style: .default) { (_) in
+                if let field = alertController.textFields?[0] {
+                    self.priceButton.setTitle(field.text?.DecimalFormat(withComma: true), for: .normal)
+                    self.UpdateDiscountedPrice()
+                } else {
+                    self.priceButton.setTitle("0.00", for: .normal)
+                }
+            }
+            
+            let cancelAction = UIAlertAction(title: "ยกเลิก", style: .cancel) { (_) in
+                
+            }
+            
+            alertController.addTextField { (textField) in
+                textField.delegate = self
+                textField.keyboardType = .decimalPad
+                textField.placeholder = "0.00"
+            }
+            
+            alertController.addAction(confirmAction)
+            alertController.addAction(cancelAction)
+            
+            self.present(alertController, animated: true, completion: nil)
         }
-        
-        alertController.addTextField { (textField) in
-            textField.delegate = self
-            textField.keyboardType = .decimalPad
-            textField.placeholder = "0.00"
-        }
-        
-        alertController.addAction(confirmAction)
-        alertController.addAction(cancelAction)
-        
-        self.present(alertController, animated: true, completion: nil)
     }
     
     @IBAction func OnPercentDiscountButtonClicked(_ sender: Any) {
         let alertController = UIAlertController(title: "เปอร์เซ็นต์ส่วนลด (%)", message: "", preferredStyle: .alert)
         
-        let confirmAction = UIAlertAction(title: "Confirm", style: .default) { _ in
+        let confirmAction = UIAlertAction(title: "ตกลง", style: .default) { _ in
             if let field = alertController.textFields?[0] {
                 self.currentPercentDiscount = field.text!.floatValueWithoutComma
                 self.percentDiscountButton.setTitle("\(self.currentPercentDiscount)%", for: .normal)
@@ -157,7 +224,7 @@ class DetailViewController: UIViewController
             self.UpdateDiscountedPrice()
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+        let cancelAction = UIAlertAction(title: "ยกเลิก", style: .cancel) { (_) in
         
         }
         
@@ -246,6 +313,35 @@ extension DetailViewController
         }
     }
     
+    
+    func CallRestaurantPriceService(){
+        LoadingOverlay.shared.showOverlay(view: self.view)
+        let url = Service.RestaurantPrice.url
+        let user = Service_User
+        let pass = Service_Password
+        let params: Parameters = ["store": selectedPlace.storeId,
+                                  "branch": selectedPlace.branchId]
+        
+        
+        Alamofire.request(url, parameters: params)
+            .authenticate(user: user, password: pass)
+            .responseJSON { response in
+                switch response.result {
+                case .success(let value):
+                    let json = JSON(value)
+                    self.ShowPlaceDepartment(json: json)
+                    
+                    LoadingOverlay.shared.hideOverlayView()
+                case .failure(let error):
+                    print(error)
+                    self.HidePlaceDepartment()
+                    LoadingOverlay.shared.hideOverlayView()
+                    PrimoAlert().Error()
+                }
+        }
+        
+    }
+    
     func SetupDropdown() {
         // The view to which the drop down will appear on
         dropDown.anchorView = departmentButton // UIView or UIBarButtonItem
@@ -257,7 +353,7 @@ extension DetailViewController
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             self.departmentButton.setTitle(item, for: .normal)
             if(index > 0){
-              self.depSelect = self.departmentListId[index-1]
+              self.depSelect = Int(self.DepAndRestaurant[index-1].id!)
             }else{
               self.depSelect = 0
             }
@@ -270,6 +366,38 @@ extension DetailViewController
         dropDown.selectRow(at: startAtIndex)
         self.departmentButton.setTitle(departmentList[startAtIndex], for: .normal)
     }
+    
+    
+    func SetupDropdownRestaurant() {
+        dropDown.anchorView = departmentButton
+        dropDown.dataSource = RestaurantList
+        
+        // Action triggered on selection
+        dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
+            self.departmentButton.setTitle(item, for: .normal)
+            self.selectTypeRestaurant = index
+            
+            if(index == 0){
+                self.priceButton.setTitleColor(UIColor.gray, for: .normal)
+            }else{
+                self.priceButton.setTitleColor(UIColor.black, for: .normal)
+            }
+            
+            if(index == 2){
+               self.lable_description.isHidden = false
+               self.lable_description.text = "* ราคานี้ไม่รวมเครื่องดื่มทุกประเภท"
+               self.priceButton.setTitle("0.00", for: .normal)
+            }else{
+                self.priceButton.setTitle("0", for: .normal)
+                self.lable_description.isHidden = true
+            }
+            
+        }
+    }
+    
+    
+    
+    
     
     func SetPlaceCell() {
         if (selectedPlace == nil) { return }
@@ -299,18 +427,69 @@ extension DetailViewController
     }
     
     func ShowPlaceDepartment(json: JSON) {
+        DepAndRestaurant.removeAll()
         departmentList.removeAll()
-        departmentListId.removeAll()
+        
         departmentList.append("ทุกแผนก")
         for (_, subJson):(String, JSON) in json["data"] {
             departmentList.append(subJson["name"].stringValue)
-            departmentListId.append(subJson["id"].intValue)
+
+            //dep
+            let id = subJson["id"].int64Value
+            let name = subJson["name"].stringValue
+            
+            
+            //restaurant
+            let branchId = subJson["branchId"].int64Value
+            let branchName = subJson["branchName"].stringValue
+            let branchNameEng = subJson["branchNameEng"].stringValue
+            let brandId = subJson["brandId"].int64Value
+            let brandName = subJson["brandName"].stringValue
+            let brandNameEng = subJson["brandNameEng"].stringValue
+            let lowerPrice = subJson["lowerPrice"].intValue
+            let middlePrice = subJson["middlePrice"].intValue
+            let storeDetailId = subJson["storeDetailId"].int64Value
+            let storeId = subJson["storeId"].int64Value
+            let storeName = subJson["storeName"].stringValue
+            let storeNameEng = subJson["storeNameEng"].stringValue
+            let storeTypeId = subJson["storeTypeId"].int64Value
+            let storeTypeName = subJson["storeTypeName"].stringValue
+            let storeTypeNameEng = subJson["storeTypeNameEng"].stringValue
+            let upperPrice = subJson["upperPrice"].intValue
+            
+            let mDepAndRestaurant = RestaurantPrice(id: id,
+                                                    name: name,
+                                                    branchId: branchId,
+                                                    branchName: branchName,
+                                                    branchNameEng: branchNameEng,
+                                                    brandId: brandId,
+                                                    brandName: brandName,
+                                                    brandNameEng: brandNameEng,
+                                                    lowerPrice: lowerPrice,
+                                                    middlePrice: middlePrice,
+                                                    storeDetailId: storeDetailId,
+                                                    storeId: storeId,
+                                                    storeName: storeName,
+                                                    storeNameEng: storeNameEng,
+                                                    storeTypeId: storeTypeId,
+                                                    storeTypeName: storeTypeName,
+                                                    storeTypeNameEng: storeTypeNameEng,
+                                                    upperPrice: upperPrice)
+            
+            
+            DepAndRestaurant.append(mDepAndRestaurant)
+            
         }
-        SetupDropdown()
+        if(selectedPlace.storeTypeId! == 11){
+           SetupDropdownRestaurant()
+        }else{
+            SetupDropdown()
+        }
         
         departmentButton.isHidden = false
         departmentLabel.isHidden = false
         priceLabelTop.constant = 102
+        
     }
     
     func HidePlaceDepartment() {
@@ -327,9 +506,42 @@ extension DetailViewController
         
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
-        let s2 = formatter.string(from: NSNumber(value: newPrice))
-        print(s2 ?? "Can't format")
+        var s2 = formatter.string(from: NSNumber(value: newPrice))
+    
         
+        if(selectTypeRestaurant == 1 && selectedPlace.storeTypeId! == 11){
+            if(!DepAndRestaurant.isEmpty){
+                let data = TypeRestaurantPrice! * DepAndRestaurant[0].middlePrice!
+                s2 = formatter.string(from: NSNumber(value:data))
+            }else{
+                s2 = formatter.string(from: NSNumber(value:0))
+            }
+        }
+        print(s2 ?? "Can't format")
         self.discountedPriceButton.setTitle(s2, for: .normal)
+    }
+    
+    
+    func CheckpRestaurant(){
+        if(selectedPlace.storeTypeId! == 11){
+            
+           CallRestaurantPriceService()
+           percentDiscountButton.isHidden = true
+           discountedPriceButton.isHidden = true
+           lablePercen.isHidden = true
+           lableDiscount.isHidden = true
+           lablePrice.text = ""
+           departmentLabel.text = "จำนวนคน / ยอดใช้จ่ายโดยประมาณ"
+           departmentButton.setTitle("โปรดเลือกวิธีคำนวณ", for: .normal)
+           line_top_description.constant = 20
+           priceButton.setTitleColor(UIColor.gray, for: .normal)
+        }else{
+            HidePlaceDepartment()
+            CallDepartmentService()
+            percentDiscountButton.isHidden = false
+            discountedPriceButton.isHidden = false
+            lablePercen.isHidden = false
+            lableDiscount.isHidden = false
+        }
     }
 }
