@@ -27,14 +27,14 @@ class NoConnectionView
     
     public func Show(view: UIView,  action: ((Bool) -> Void)?) {
         let viewSize = UIScreen.main.bounds
-        mainView.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height)
+        mainView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
         mainView.center = view.center
         mainView.backgroundColor = UIColor.white
         mainView.alpha = 1
         
         
         
-        dialogView.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height)
+        dialogView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
         dialogView.center = mainView.center
         dialogView.backgroundColor = HexStringToUIColor(hex: "#ffffff")
         dialogView.alpha = 1
@@ -46,7 +46,7 @@ class NoConnectionView
         let imageName = "lost_internet.png"
         let image = UIImage(named: imageName)
         let imageView = UIImageView(image: image!)
-        imageView.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height/1.7)
+        imageView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height/1.7)
         imageView.center = CGPoint(x: dialogView.bounds.width / 2,
                                    y: dialogView.bounds.height/2.8)
         dialogView.addSubview(imageView)

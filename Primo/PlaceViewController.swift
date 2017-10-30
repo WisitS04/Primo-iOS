@@ -40,6 +40,9 @@ class PlaceViewController: UITableViewController{
     var statusGuideNeayBy: Bool = false
     var statusDrawTable:Bool = false
     
+    var newCard: [PrimoCard] = []
+
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
@@ -54,10 +57,7 @@ class PlaceViewController: UITableViewController{
         //Check Stroe DB
         _ = StoreDB.instance.CheckVertionStoreDB()
         
-        
-        //Hide top spat for Table View
-        self.tableView.contentInset = UIEdgeInsets.zero
-        self.automaticallyAdjustsScrollViewInsets = false
+    
         
 
         self.navigationController?.navigationBar.isTranslucent = false
@@ -101,6 +101,7 @@ class PlaceViewController: UITableViewController{
             // MARK: Pull and Refresh
             
             // MARK: Get Location
+            locManager.stopUpdatingLocation()
             locManager.delegate = self
             locManager.desiredAccuracy = kCLLocationAccuracyBest
             locManager.requestWhenInUseAuthorization()
@@ -225,6 +226,7 @@ extension PlaceViewController: UISearchResultsUpdating, UISearchBarDelegate
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         searchController.dimsBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.placeholder = "ค้นหาร้านค้า, ร้านอาหาร, สถานที่"
         definesPresentationContext = true
         self.tableView.tableHeaderView = searchController.searchBar
@@ -252,16 +254,13 @@ extension PlaceViewController: UISearchResultsUpdating, UISearchBarDelegate
             isClickSh = true
 //            CallWS(searchkey: searchText)
             GetLocation(searchkey: searchText);
+            
         }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchText = ""
         isClickSh = true
-        
-        //Hide top spat for Table View
-        self.tableView.contentInset = UIEdgeInsets.zero
-        self.automaticallyAdjustsScrollViewInsets = false
 
         if (self.isRefreshing) {
             self.refreshControl?.endRefreshing()
@@ -296,7 +295,8 @@ extension PlaceViewController: CLLocationManagerDelegate
             print("Update Location and call service")
             statusRun = true
             LoadingOverlay.shared.hideOverlayViewGPS()
-            CallWS(searchkey: KeySH)
+//            CallWS(searchkey: KeySH)
+            checkDataVertion(searchkey: KeySH)
         }
     }
 }
@@ -304,15 +304,14 @@ extension PlaceViewController: CLLocationManagerDelegate
 extension PlaceViewController
 {
 
-    func CallWS(searchkey: String = "")
+    func CallWS(searchkey: String = "" , onCreate: Bool = false)
     {
             
             let mSearchkey:String = searchkey
             var distance : Float = 0
-            
-            
-            LoadingOverlay.shared.showOverlay(view: self.view)
-            
+        
+//             LoadingOverlay.shared.showOverlay(view: self.view)
+       
             
             distance = getDistance()
             
@@ -321,10 +320,7 @@ extension PlaceViewController
                 let getResult = StoreDB.instance.getNewStores()
                 
                 if(getResult.isEmpty){
-                    CheckReachabilityStatus()
-                    if(!isDisableInternet){
-                        callNearbyService(searchkey: mSearchkey)
-                    }
+                    callNearbyService(searchkey: mSearchkey)
                 }else{
                         self.nearByPlace.removeAll()
                         self.filteredPlace.removeAll()
@@ -357,6 +353,7 @@ extension PlaceViewController
                         
                         self.filteredPlace = self.nearByPlace
                         self.tableView.reloadData()
+                        print("get DB and Add data fot Table success")
                         if ( self.isRefreshing) {
                             self.refreshControl?.endRefreshing()
                             self.isRefreshing = false
@@ -371,9 +368,11 @@ extension PlaceViewController
                 if(!isDisableInternet){
                    callNearbyService(searchkey: mSearchkey)
                 }
+                self.tableView.reloadData()
             }
             isClickSh = false
             locManager.stopUpdatingLocation()
+        
     }
     
     
@@ -395,7 +394,7 @@ extension PlaceViewController
                 switch response.result {
                 case .success(let value):
                     let json = JSON(value)
-                    print("call service success")
+                    print("call Nerby service success")
                     self.CreatePlace(json)
                     LoadingOverlay.shared.hideOverlayView()
                 case .failure(let error):
@@ -410,6 +409,133 @@ extension PlaceViewController
                 }
         }
     }
+    
+    
+    
+    
+    
+    func checkDataVertion(searchkey: String = ""){
+        
+        LoadingOverlay.shared.showOverlay(view: self.view)
+
+        let dataVersion: Double = DataVersionNumber.double(forKey: KEYDataVersion)
+        
+        let url = Service.DataVersion.url
+        let user = Service_User
+        let pass = Service_Password
+        CheckReachabilityStatus()
+        if(!isDisableInternet){
+            Alamofire.request(url)
+                .authenticate(user: user, password: pass)
+                .responseJSON { response in
+                    switch response.result {
+                    case .success(let value):
+                        let json = JSON(value)
+                        for (_, subJson):(String, JSON) in json{
+                            
+                            if(subJson["name"].stringValue == "Card"){
+                                let version = subJson["version"].doubleValue
+                                
+                                if(version != dataVersion){
+                                    self.checkVersionCard(searchkey:searchkey)
+                                    DataVersionNumber.set(version,forKey: KEYDataVersion)
+                                }else{
+                                    self.CallWS(searchkey: searchkey )
+                                }
+                            }
+                            
+                            
+                        }
+                        print("Call DataVersion Service success")
+                    case .failure(let error):
+                        print(error)
+                        LoadingOverlay.shared.hideOverlayView()
+                        PrimoAlert().Error()
+                    }
+            }
+        }
+    }
+    
+    
+    
+    func checkVersionCard(searchkey: String = "" ){
+        let Mycard: String = CheckMyCard()
+        
+        self.newCard.removeAll()
+        self.newCard = CardDB.instance.getCards()
+        
+        
+        
+        let url = URL(string: Service.CardByIdList.url)!
+        var request = URLRequest(url: url)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("Basic YW5vbnltb3VzOnNwb3Rvbi1wcmltbw==", forHTTPHeaderField: "authorization")
+        request.httpMethod = "POST"
+        let postString = Mycard
+        request.httpBody = postString.data(using: .utf8)
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                
+                // check for fundamental networking error
+                print("error=\(String(describing: error))")
+                LoadingOverlay.shared.hideOverlayView()
+                PrimoAlert().Error()
+                return
+            }
+            
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
+                // check for http errors
+                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                print("response = \(String(describing: response))")
+                LoadingOverlay.shared.hideOverlayView()
+                PrimoAlert().Error()
+                
+            }
+            
+            
+            if(!data.isEmpty){
+                DispatchQueue.main.async() { () -> Void in
+                    let json = JSON(data)
+                    for (_, subJson):(String, JSON) in json["data"] {
+                        
+                        for item in self.newCard {
+                            
+                            let mId = subJson["id"].int64
+                            
+                            if(item.cardId == mId){
+                                let nameTH = subJson["name"].stringValue
+                                let nameEN = subJson["nameEng"].stringValue
+                                let imageUrl = subJson["imgUrl"].stringValue
+                                
+                                let newMyCard = PrimoCard(id: item.id,
+                                                          cardId: item.cardId,
+                                                          type: item.type.rawValue,
+                                                          nameEN: nameEN,
+                                                          nameTH: nameTH,
+                                                          imgUrl: imageUrl,
+                                                          point: item.point,
+                                                          pointToUse: item.pointToUse)
+                                
+                                _ = CardDB.instance.updateCard(cId: mId!, newCard: newMyCard)
+                            }
+                        }
+                        
+                        
+                    }
+                    print("Call CardbyList Service success : not nil")
+                    self.CallWS(searchkey: searchkey )
+                }
+                
+            }else{
+                print("Call CardbyList Service success : nil")
+                self.CallWS(searchkey: searchkey )
+            }
+            
+        }
+        task.resume()
+    }
+    
+    
     
     func getDistance() -> Float{
         
@@ -519,7 +645,7 @@ extension PlaceViewController
     }
 
     
-    func GetLocation(searchkey: String = ""){
+    func GetLocation(searchkey: String = "" , onCreate: Bool = false){
 
         if(FirstRunStep.bool(forKey: KEYFIRSTRUN)){
                     if(!isDisableInternet){
@@ -537,7 +663,8 @@ extension PlaceViewController
                             self.refreshControl?.addTarget(self, action: #selector(HandleRefresh(_:)), for: UIControlEvents.valueChanged)
                         }
                         if(mLocation != nil || stautsDisablePermission || mLocation != nil){
-                            CallWS(searchkey: searchkey)
+//                            CallWS(searchkey: searchkey , onCreate :onCreate)
+                            checkDataVertion(searchkey: searchkey )
                         }else{
                             LoadingOverlay.shared.showDialogLoopGPS(view: self.view, action: self.isCancelLoopGPS)
                         }
@@ -562,7 +689,8 @@ extension PlaceViewController
     
     //LoopGPS
     func isCancelLoopGPS(isClick: Bool ) {
-        CallWS()
+//        CallWS()
+        checkDataVertion()
     }
     
     func acceptCondition(isClick: Bool ) {
@@ -630,6 +758,24 @@ extension PlaceViewController
             statusDrawTable = true
         }
     
+    
+    func CheckMyCard() -> String{
+        var result: String = ""
+        self.newCard = CardDB.instance.getCards()
+        
+        for item in self.newCard{
+            result = "\(result)\(item.cardId)\(",")"
+            
+        }
+        
+        if(result.length > 0){
+            let index = result.index(result.startIndex, offsetBy: result.length-1)
+            result = result.substring(to: index)
+        }
+        result = "\("[") \(result) \("]")"
+        return result
+        
+    }
     
     func CheckAppVersion(){
             let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "Walkthrough") as! Walkthrough

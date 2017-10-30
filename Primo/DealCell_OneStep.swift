@@ -87,7 +87,7 @@ class DealCell_OneStep: UITableViewCell {
         if let subview = self.viewWithTag(105) as? UILabel {
             subview.lineBreakMode = .byWordWrapping
             subview.numberOfLines = 0
-            subview.text = deal.title
+            subview.text = "โปรโมชั่นบัตรเดียว"
         }
         
         // deal value

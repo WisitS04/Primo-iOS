@@ -56,7 +56,7 @@ class PrimoAlert {
                 buttonTitle:btn,
                 action: action)
         }else{
-            btn = "ส่ง"
+            btn = " ส่ง "
             _ = SweetAlert().showAlert(title,
                                        subTitle: desc,
                                        style: AlertStyle.none,

@@ -14,6 +14,8 @@ enum Service: String {
     case Card = "Card"
     case CardNetwork = "CardNetwork"
     case Company = "Company"
+    case DataVersion = "DataVersions"
+    case CardByIdList = "CardByIdList"
     
     
     var url: String {
@@ -70,6 +72,8 @@ var KEYGuideDeals: String = "KEYDEALS"
 var StatusGuideDeals = UserDefaults.standard
 
 
+var KEYDataVersion: String = "KEYDataVersion"
+var DataVersionNumber = UserDefaults.standard
 
 
 /////////////////////

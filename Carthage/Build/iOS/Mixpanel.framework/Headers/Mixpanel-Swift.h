@@ -134,7 +134,6 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if defined(__has_feature) && __has_feature(modules)
 @import Foundation;
 @import UIKit;
-@import UserNotifications;
 #endif
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
@@ -156,10 +155,6 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @end
 
 
-@interface UIResponder (SWIFT_EXTENSION(Mixpanel))
-@end
-
-
 @interface UIView (SWIFT_EXTENSION(Mixpanel))
 @end
 
@@ -169,10 +164,6 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 
 @interface UIViewController (SWIFT_EXTENSION(Mixpanel))
-@end
-
-
-@interface UNUserNotificationCenter (SWIFT_EXTENSION(Mixpanel))
 @end
 
 #pragma clang diagnostic pop

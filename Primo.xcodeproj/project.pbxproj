@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9A04857B1F6A75AF0075513F /* DialogGuideTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04857A1F6A75AF0075513F /* DialogGuideTop.swift */; };
 		9A04857D1F6A75EC0075513F /* DialogGuideBottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04857C1F6A75EC0075513F /* DialogGuideBottom.swift */; };
+		9A07E3CC1F9F2AAC0003B50F /* NewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A07E3CB1F9F2AAC0003B50F /* NewCard.swift */; };
 		9A0FCF351ED6E135001FA250 /* Segmentio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0FCF331ED6E119001FA250 /* Segmentio.framework */; };
 		9A0FCF361ED6E135001FA250 /* Segmentio.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0FCF331ED6E119001FA250 /* Segmentio.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9A0FCF381ED6E3BF001FA250 /* SegmentedControllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0FCF371ED6E3BF001FA250 /* SegmentedControllViewController.swift */; };
@@ -27,6 +28,7 @@
 		9A234EFD1E7A71AE0086FE1F /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A234EFC1E7A71AE0086FE1F /* Card.swift */; };
 		9A23C7FB1EAE3EA2001B0193 /* CollapsibleTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A23C7FA1EAE3EA2001B0193 /* CollapsibleTableViewHeader.swift */; };
 		9A264DD11E641F710014362E /* Bank.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A264DD01E641F710014362E /* Bank.swift */; };
+		9A28E0221FA2ECC500D083B3 /* NotificationDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A28E0211FA2ECC500D083B3 /* NotificationDialog.swift */; };
 		9A2C9F5A1F5FD16200BEF0DD /* MyCard_TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2C9F591F5FD16200BEF0DD /* MyCard_TableView.swift */; };
 		9A2C9F5C1F5FE10700BEF0DD /* MyCard_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2C9F5B1F5FE10700BEF0DD /* MyCard_ViewController.swift */; };
 		9A2C9F5E1F5FE21100BEF0DD /* MyCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2C9F5D1F5FE21100BEF0DD /* MyCardCell.swift */; };
@@ -133,6 +135,7 @@
 /* Begin PBXFileReference section */
 		9A04857A1F6A75AF0075513F /* DialogGuideTop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DialogGuideTop.swift; path = Page/DealDetail/DialogGuideTop.swift; sourceTree = "<group>"; };
 		9A04857C1F6A75EC0075513F /* DialogGuideBottom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DialogGuideBottom.swift; path = Page/DealDetail/DialogGuideBottom.swift; sourceTree = "<group>"; };
+		9A07E3CB1F9F2AAC0003B50F /* NewCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewCard.swift; path = CustomView/NewCard.swift; sourceTree = "<group>"; };
 		9A0FCF331ED6E119001FA250 /* Segmentio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Segmentio.framework; path = Carthage/Build/iOS/Segmentio.framework; sourceTree = "<group>"; };
 		9A0FCF371ED6E3BF001FA250 /* SegmentedControllViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegmentedControllViewController.swift; path = Tests/SegmentedControllViewController.swift; sourceTree = "<group>"; };
 		9A12958B1F5E85B4009C7115 /* GuideForDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideForDetail.swift; sourceTree = "<group>"; };
@@ -149,6 +152,7 @@
 		9A234EFC1E7A71AE0086FE1F /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		9A23C7FA1EAE3EA2001B0193 /* CollapsibleTableViewHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollapsibleTableViewHeader.swift; path = CustomView/CollapsibleTableViewHeader.swift; sourceTree = "<group>"; };
 		9A264DD01E641F710014362E /* Bank.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bank.swift; sourceTree = "<group>"; };
+		9A28E0211FA2ECC500D083B3 /* NotificationDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationDialog.swift; path = Page/DealDetail/NotificationDialog.swift; sourceTree = "<group>"; };
 		9A2C9F591F5FD16200BEF0DD /* MyCard_TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyCard_TableView.swift; path = Page/MyCard/MyCard_TableView.swift; sourceTree = "<group>"; };
 		9A2C9F5B1F5FE10700BEF0DD /* MyCard_ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MyCard_ViewController.swift; path = Page/MyCard/MyCard_ViewController.swift; sourceTree = "<group>"; };
 		9A2C9F5D1F5FE21100BEF0DD /* MyCardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyCardCell.swift; sourceTree = "<group>"; };
@@ -305,6 +309,7 @@
 				9AABF4441F5420DF007933F7 /* BankDebit.swift */,
 				9AFE3E881F737E1D00B2D120 /* StoreAddColumn.swift */,
 				9AC991F71F78E7F20049BBC5 /* RestaurantPrice.swift */,
+				9A07E3CB1F9F2AAC0003B50F /* NewCard.swift */,
 			);
 			name = "Class Variable";
 			sourceTree = "<group>";
@@ -361,6 +366,7 @@
 				9A46FBB61F67D2AF008CDD80 /* Button_custom.swift */,
 				9A04857A1F6A75AF0075513F /* DialogGuideTop.swift */,
 				9A04857C1F6A75EC0075513F /* DialogGuideBottom.swift */,
+				9A28E0211FA2ECC500D083B3 /* NotificationDialog.swift */,
 			);
 			name = Deal;
 			sourceTree = "<group>";
@@ -594,7 +600,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		9A29E1901EF976DE003FF438 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -609,7 +615,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
@@ -685,12 +691,14 @@
 				9A58C46C1E8E6A0700509825 /* DealCell_TwoStep.swift in Sources */,
 				9A4677831E3F4ED100B23CB6 /* CustomButton.swift in Sources */,
 				9A35A4EC1EC9AA20002BA45D /* PageMenuViewController.swift in Sources */,
+				9A07E3CC1F9F2AAC0003B50F /* NewCard.swift in Sources */,
 				9A0FCF381ED6E3BF001FA250 /* SegmentedControllViewController.swift in Sources */,
 				9A58C46E1E8E6A1A00509825 /* DealCell_ThreeStep.swift in Sources */,
 				9A7D1E101ED31B7A00ED9556 /* FSPageViewTransformer.swift in Sources */,
 				9A2276D21E2D1DC20065A23D /* MyCardViewController.swift in Sources */,
 				9ABE92701ED1CC0D00D13CFB /* CardResultTableCell.swift in Sources */,
 				9A2C9F5C1F5FE10700BEF0DD /* MyCard_ViewController.swift in Sources */,
+				9A28E0221FA2ECC500D083B3 /* NotificationDialog.swift in Sources */,
 				9A5DDA051EE96AA900219D92 /* PrimoAlert.swift in Sources */,
 				9A1FFDB31F027B0600971BF9 /* NoConnectionView.swift in Sources */,
 				9A39B4261F308290005DF046 /* GuideForAddCard.swift in Sources */,

@@ -42,6 +42,8 @@ class DealTableVC: UITableViewController
                         "คุ้มที่สุดสำหรับคุณ",
                         "ทางเลือกอื่น"]
     
+    var statusStartCallService: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -57,6 +59,10 @@ class DealTableVC: UITableViewController
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return dealItems[section].count
+        
+        if(dealBuffer.count <= 0 && statusStartCallService){
+            NotificationDialog.shared.Show(mTable: self.tableView)
+        }
         return dealBuffer.count
     }
     
@@ -314,6 +320,7 @@ extension DealTableVC
     
     
     func OnCallDealsPromotionServiceSuccess(isError: Bool = false) {
+        self.statusStartCallService = true
         if (isGotDealsWithoutInstallment && isGotDealsWithInstallment) {
             FilterDeal()
             LoadingOverlay.shared.hideOverlayView()
@@ -448,30 +455,12 @@ extension DealTableVC
                 result = true
 
             }
-            
-            
-//            if (isUsePoint && isInstallment && point && installment) {
-//                // Use point and Installment
-//                result = true
-//            } else if (isUsePoint && !isInstallment && point && !installment) {
-//                // Use point only
-//                result = true
-//            } else if (!isUsePoint && isInstallment && !point && installment) {
-//                // Installment only
-//                result = true
-//            } else if (!isUsePoint && !isInstallment && !point && !installment) {
-//                // Not use point and Not installment
-//                result = true
-//            }
         }
         
         return result
     }
     
     func FilterDealForDisplay(_ deals: [Deal]) {
-//        dealItems.removeAll()
-//        dealItems = [[],[],[]]
-//        filteredDeals.removeAll()
         dealBuffer.removeAll()
         var TitleDeal: String!
         

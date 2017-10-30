@@ -18,7 +18,6 @@ class AddCardController: UIViewController
     var btn_back: UIButton!
     var request: Alamofire.Request?
     @IBOutlet weak var bankCollection: BankListCollectionView!
-    @IBOutlet weak var done_btn: GreenButton!
     @IBOutlet var viewMain: UIView!
 
     
@@ -42,7 +41,6 @@ class AddCardController: UIViewController
         self.automaticallyAdjustsScrollViewInsets = false
         
 //        setUpBack()
-//        checkCardList()
         AddSegmentioView()
         SetUpSegmentioView()
         
@@ -103,15 +101,6 @@ extension AddCardController{
     }
     
     
-    func checkCardList(){
-        
-        if(CardDB.instance.getCards().isEmpty){
-            done_btn.isHidden = true
-          }else{
-            done_btn.isHidden = false
-        }
-    }
-    
     func AddSegmentioView() {
 //        let statusBarHeight = UIApplication.shared.statusBarFrame.height
 //        let navigationBarHeight = self.navigationController?.navigationBar.bounds.height ?? 0
@@ -154,17 +143,17 @@ extension AddCardController{
             let segmentioStates = SegmentioStates(
                 defaultState: SegmentioState(
                     backgroundColor: .clear,
-                    titleFont: UIFont.systemFont(ofSize: UIFont.smallSystemFontSize),
+                    titleFont: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize),
                     titleTextColor: .white
                 ),
                 selectedState: SegmentioState(
                     backgroundColor: .clear,
-                    titleFont: UIFont.systemFont(ofSize: UIFont.smallSystemFontSize),
+                    titleFont: UIFont.boldSystemFont(ofSize: UIFont.smallSystemFontSize),
                     titleTextColor: .white
                 ),
                 highlightedState: SegmentioState(
                     backgroundColor: .clear,
-                    titleFont: UIFont.systemFont(ofSize: UIFont.smallSystemFontSize),
+                    titleFont: UIFont.boldSystemFont(ofSize: UIFont.smallSystemFontSize),
                     titleTextColor: .white
                 )
             )

@@ -1,4 +1,5 @@
 import UIKit
+import Mixpanel
 
 class MyCard_TableView: UITableView{
     var myCards: [PrimoCard] = []
@@ -32,54 +33,6 @@ class MyCard_TableView: UITableView{
     }
     
     
-//    func setCard(){
-//        
-//        myCards.removeAll()
-//        myCardItemsBuffer[0].removeAll()
-//        myCardItemsBuffer[1].removeAll()
-//        myCardItemsBuffer[2].removeAll()
-//        
-//        if(!sectionTitle.isEmpty){
-//           var count: Int = 0
-//           count = sectionTitle.count
-//        
-//            for i in 0 ..< count {
-//                sectionTitle[i].removeAll()
-//                        
-//             }
-//        }
-//        
-//        
-//        myCards = CardDB.instance.getCards()
-//        for item in myCards {
-//            
-//            if(item.type == .creditCard){
-//                myCardItemsBuffer[0].append(item)
-//            }else if(item.type == .debitCard){
-//                myCardItemsBuffer[1].append(item)
-//            }else if(item.type == .memberCard){
-//                myCardItemsBuffer[2].append(item)
-//            }
-//            
-//        }
-//
-//        
-//        
-//        if(!myCardItemsBuffer[0].isEmpty){
-//                     sectionTitle.append("บัตรเครดิต")
-//        }
-//        
-//        if(!myCardItemsBuffer[1].isEmpty){
-//                    sectionTitle.append("บัตรเดบิต")
-//        }
-//        
-//        if(!myCardItemsBuffer[2].isEmpty){
-//                    sectionTitle.append("บัตรสมาชิก")
-//         }
-//        
-//        
-//
-//    }
     
     func FilterCard() {
         
@@ -164,6 +117,7 @@ extension MyCard_TableView {
              _ = CardDB.instance.updateCard(cId: id, newCard: item)
             }
         }
+        EventMixpanalSending(ID: Int(id) , mPoint: value ,EventName: "A_MyCard_EditPts")
         UpdateMyCards()
     }
     
@@ -171,10 +125,25 @@ extension MyCard_TableView {
         if (CardDB.instance.deleteCard(cId: Int64(id))) {
             UpdateMyCards()
         }
+        EventMixpanalSending(ID: Int(id) , mPoint: 0 ,EventName: "A_MyCard_EraseCard")
     }
     
 
+    func EventMixpanalSending(ID: Int , mPoint: Int ,EventName : String = ""){
+        let projectToken: String = "1a4f60bd37af4cea7b199830b6bec468"
+        let uuid = UIDevice.current.identifierForVendor!.uuidString
+    
+        Mixpanel.initialize(token: projectToken)
+        Mixpanel.mainInstance().track(event: EventName,
+                                      properties: ["CardID" : ID,
+                                                   "Pts" : mPoint])
+        Mixpanel.mainInstance().identify(distinctId: uuid)
+
+
+    }
 }
+
+
 
 extension MyCard_TableView: UITableViewDataSource, UITableViewDelegate{
     

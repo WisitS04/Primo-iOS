@@ -29,7 +29,7 @@ class DetailViewController: UIViewController
     let dropDown = DropDown()
     var selectedPlace: Place!
     var departmentList: [String] = ["ทุกแผนก"]
-    var RestaurantList: [String] = ["โปรดเลือกวิธีคำนวณ","จำนวนคน","ยอดใช้จ่ายโดยประมาณ"]
+    var RestaurantList: [String] = ["จำนวนคน","ยอดใช้จ่ายโดยประมาณ"]
 //    var departmentListId = [Int]()
     
     var DepAndRestaurant = [RestaurantPrice]()
@@ -41,6 +41,8 @@ class DetailViewController: UIViewController
     var statusGuideDetail: Bool = false
     var statusGuideDetailNotDep: Bool = false
     var TypeRestaurantPrice: Int? = 0
+    
+    var priceDialog :Float? = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,10 +155,35 @@ class DetailViewController: UIViewController
                             self.TypeRestaurantPrice = 0
                         }
                         
-                        self.priceButton.setTitle(field.text?.DecimalFormat(withComma: true), for: .normal)
+                        do {
+                            if(self.selectTypeRestaurant == 1){
+                                let total = String(describing: (field.text?.DecimalFormat(withComma: true))! + " คน")
+                                self.priceButton.setTitle(total , for: .normal)
+                                
+                            }else {
+                                let total = String(describing: (field.text?.DecimalFormat(withComma: true))! + " บาท")
+                                self.priceButton.setTitle(total , for: .normal)
+                            }
+                        } catch {
+                            if(self.selectTypeRestaurant == 1){
+                                self.priceButton.setTitle("0 คน", for: .normal)
+                                
+                            }else {
+                                self.priceButton.setTitle("0.00 บาท", for: .normal)
+                            }
+                        }
+                        
+                        self.priceDialog = (field.text?.floatValueWithoutComma)!
+                        
                         self.UpdateDiscountedPrice()
                     } else {
-                        self.priceButton.setTitle("0.00", for: .normal)
+                        if(self.selectTypeRestaurant == 1){
+                            self.priceButton.setTitle("0 คน", for: .normal)
+                            
+                        }else {
+                            self.priceButton.setTitle("0.00 บาท", for: .normal)
+                        }
+                        
                     }
                 }
                 
@@ -187,6 +214,7 @@ class DetailViewController: UIViewController
             let confirmAction = UIAlertAction(title: "ตกลง", style: .default) { (_) in
                 if let field = alertController.textFields?[0] {
                     self.priceButton.setTitle(field.text?.DecimalFormat(withComma: true), for: .normal)
+                    self.priceDialog = (field.text?.floatValueWithoutComma)!
                     self.UpdateDiscountedPrice()
                 } else {
                     self.priceButton.setTitle("0.00", for: .normal)
@@ -375,20 +403,20 @@ extension DetailViewController
         // Action triggered on selection
         dropDown.selectionAction = { [unowned self] (index: Int, item: String) in
             self.departmentButton.setTitle(item, for: .normal)
-            self.selectTypeRestaurant = index
+            self.selectTypeRestaurant = index + 1
             
-            if(index == 0){
+            if(self.selectTypeRestaurant == 0){
                 self.priceButton.setTitleColor(UIColor.gray, for: .normal)
             }else{
                 self.priceButton.setTitleColor(UIColor.black, for: .normal)
             }
             
-            if(index == 2){
+            if(self.selectTypeRestaurant == 2){
                self.lable_description.isHidden = false
                self.lable_description.text = "* ราคานี้ไม่รวมเครื่องดื่มทุกประเภท"
-               self.priceButton.setTitle("0.00", for: .normal)
+               self.priceButton.setTitle("0.00 บาท", for: .normal)
             }else{
-                self.priceButton.setTitle("0", for: .normal)
+                self.priceButton.setTitle("0 คน", for: .normal)
                 self.lable_description.isHidden = true
             }
             
@@ -499,7 +527,7 @@ extension DetailViewController
     }
     
     func UpdateDiscountedPrice() {
-        let price:Float = self.priceButton.currentTitle!.floatValueWithoutComma
+        let price:Float = priceDialog!
 //        let percentDis:Float = self.percentDiscountButton.currentTitle!.floatValueWithoutComma
         let percentDis:Float = self.currentPercentDiscount
         let newPrice:Float = price * (1 - (percentDis / 100.0))

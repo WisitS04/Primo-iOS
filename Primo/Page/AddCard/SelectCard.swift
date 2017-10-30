@@ -87,7 +87,7 @@ extension SelectCard{
          myLabel.frame = CGRect(x: 0, y: 30, width: 350, height: 30)
          myLabel.layer.position = CGPoint(x: self.view.bounds.width/2, y: 100)
          myLabel.textColor = HexStringToUIColor(hex: PrimoColor.Smoke.rawValue)
-         myLabel.text = "  ประเภท"
+         myLabel.text = "  เลือกบัตร"
         self.cardResultTable.tableHeaderView = myLabel
     }
     

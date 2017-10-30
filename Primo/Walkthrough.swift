@@ -53,7 +53,7 @@ extension Walkthrough{
     //
     func AddFSPage() {
 
-        let viewSize = view_page.bounds
+        let viewSize = UIScreen.main.bounds
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
         let navigationBarHeight = self.navigationController?.navigationBar.bounds.height ?? 0.0
 
@@ -73,10 +73,12 @@ extension Walkthrough{
             self.pagerView.dataSource = self
             self.pagerView.delegate = self
             self.pagerView.register(FSPagerViewCell.self, forCellWithReuseIdentifier: "cell")
-            self.pagerView.itemSize = CGSize(width: viewSize.width-50, height: viewSize.height-100)
+            self.pagerView.itemSize = CGSize(width: viewSize.width, height: viewSize.height-100)
+//            self.pagerView.itemSize = CGSize(width: viewSize.width-50, height: viewSize.height-100)
             
             self.pagerView.collectionView.allowsSelection = false
-            self.pagerView.interitemSpacing = 60
+//            self.pagerView.interitemSpacing = 60
+            self.pagerView.interitemSpacing = 0
             self.view.addSubview(self.pagerView)
         }
         func AddFSPageControl() {
