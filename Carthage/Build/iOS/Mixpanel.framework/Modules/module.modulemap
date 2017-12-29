@@ -7,4 +7,5 @@ framework module Mixpanel {
 
 module Mixpanel.Swift {
     header "Mixpanel-Swift.h"
+    requires objc
 }

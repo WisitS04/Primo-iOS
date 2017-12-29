@@ -7,4 +7,5 @@ framework module DropDown {
 
 module DropDown.Swift {
     header "DropDown-Swift.h"
+    requires objc
 }

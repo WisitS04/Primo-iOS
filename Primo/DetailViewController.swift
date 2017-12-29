@@ -38,8 +38,8 @@ class DetailViewController: UIViewController
     var dateSelected: String = ""
     var depSelect: Int = 0
     var selectTypeRestaurant: Int = 0
-    var statusGuideDetail: Bool = false
-    var statusGuideDetailNotDep: Bool = false
+    var versionGuideDetail: Double = 0.00
+    var versionGuideDetailNotDep: Double = 0.00
     var TypeRestaurantPrice: Int? = 0
     
     var priceDialog :Float? = 0
@@ -49,8 +49,8 @@ class DetailViewController: UIViewController
 
         lable_description.isHidden = true
       
-         statusGuideDetail  = StatusGuideDetail.bool(forKey: KEYGuideDetail)
-         statusGuideDetailNotDep = StatusGuideDetailNotDep.bool(forKey: KEYGuideNotDepDetail)
+         versionGuideDetail  = VersionGuideDetail.double(forKey: KEYGuideDetail)
+         versionGuideDetailNotDep = VersionGuideDetailNotDep.double(forKey: KEYGuideNotDepDetail)
         
 //         GuideForDetail.shared.Show(view: self.view, navigationController: self.navigationController!)
         
@@ -105,7 +105,8 @@ class DetailViewController: UIViewController
 
     // MARK: Button Action
     @IBAction func OnDateButtonClicked(_ sender: Any) {
-        DatePickerDialog().show(title: "DatePicker", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .date) { (date) -> Void in
+
+        DatePickerDialog().show("DatePicker", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .date) { (date) -> Void in
 //            let txt = "\(String(describing: date))"
 //            let chars = txt.characters
 //            if let paren = chars.index(of: "(") {
@@ -126,6 +127,7 @@ class DetailViewController: UIViewController
                 
                 let dateFormatterPrint = DateFormatter()
                 dateFormatterPrint.dateFormat = "dd-MM-yyyy"
+                dateFormatterPrint.locale = Locale.init(identifier: "en_US")
                 self.dateButton.setTitle(dateFormatterPrint.string(from: dt), for: .normal)
             }
         }
@@ -289,7 +291,7 @@ extension DetailViewController: UITextFieldDelegate
 extension DetailViewController
 {
     func InitDateBtn(_ btn: UIButton) {
-        let locale = Locale(identifier: "th_TH")
+        let locale = Locale(identifier: "en_US")
         
         let formatter = DateFormatter()
         formatter.dateFormat = "dd-MM-yyyy"
@@ -321,11 +323,11 @@ extension DetailViewController
                     }
                     
                     if(departmentCount > 0){
-                        if(!self.statusGuideDetail){
+                        if(cerrentVersin != self.versionGuideDetail){
                             GuideForDetail.shared.Show(view: self.view, navigationController: self.navigationController! , MydepartmentCount :departmentCount)
                         }
                     }else{
-                        if(!self.statusGuideDetailNotDep){
+                        if(cerrentVersin != self.versionGuideDetailNotDep){
                             GuideForDetail.shared.Show(view: self.view, navigationController: self.navigationController! , MydepartmentCount :departmentCount)
                         }
                     }

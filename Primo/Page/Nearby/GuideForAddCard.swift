@@ -41,7 +41,12 @@ class GuideForAddCard
         
         imageViewBG.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height)
         imageViewBG.contentMode = .scaleAspectFit
-        imageViewBG.image = UIImage(named: "guide_add_card")
+        if(viewSize.height >= 812 && viewSize.width >= 375){
+            //is iPhone X
+            imageViewBG.image = UIImage(named: "guide_add_card_x")
+        }else{
+            imageViewBG.image = UIImage(named: "guide_add_card")
+        }
         mainView.addSubview(imageViewBG)
         
 //        dialogViewBG.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height)
@@ -89,7 +94,7 @@ class GuideForAddCard
     
     @objc func sendActionData(_ sender: Any)  {
             Hide()
-            StatusGuideAddCard.set(true,forKey: KEYGuideAddCard)
+            VersionGuideAddCard.set(cerrentVersin,forKey: KEYGuideAddCard)
     }
     
     

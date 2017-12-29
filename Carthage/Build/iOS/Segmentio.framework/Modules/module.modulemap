@@ -7,4 +7,5 @@ framework module Segmentio {
 
 module Segmentio.Swift {
     header "Segmentio-Swift.h"
+    requires objc
 }

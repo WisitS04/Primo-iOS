@@ -9,7 +9,9 @@ class PlaceViewController: UITableViewController{
     // MARK: - Properties
     @IBOutlet weak var menuButton: UIBarButtonItem!
     
-    let searchController = UISearchController(searchResultsController: nil)
+    
+   
+    var searchController = UISearchController(searchResultsController: nil)
     
     let locManager = CLLocationManager()
     
@@ -37,10 +39,16 @@ class PlaceViewController: UITableViewController{
     var projectToken: String = "1a4f60bd37af4cea7b199830b6bec468"
     
     var version: Double = 0.0
-    var statusGuideNeayBy: Bool = false
+    var versionNearby: Double = 0.0
     var statusDrawTable:Bool = false
     
     var newCard: [PrimoCard] = []
+
+//    var mySearchBar: UISearchBar!
+    var mySearchBar =  UISearchBar()
+    
+    var statusmySearchBar: Bool = false
+    
 
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,6 +62,10 @@ class PlaceViewController: UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+//          self.tableView.register(locationCell.self, forCellReuseIdentifier: "NearByCell")
+//        self.tableView.register(UINib(nibName: "NearByCell", bundle: nil), forCellReuseIdentifier: "NearByCell")
+        
         //Check Stroe DB
         _ = StoreDB.instance.CheckVertionStoreDB()
         
@@ -63,19 +75,25 @@ class PlaceViewController: UITableViewController{
         self.navigationController?.navigationBar.isTranslucent = false
         statusDrawTable = false
         version = VersionNumber.double(forKey: KEYAppVersion)
-        statusGuideNeayBy  = StatusGuideNeayBy.bool(forKey: KEYGuideNeayBy)
+        versionNearby  = VersionGuideNearby.double(forKey: KEYGuideNeayBy)
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.setHidesBackButton(true, animated:true);
         
-        if(cerrentVersin != version){
+        
+//      if(cerrentVersin != version){
+        if(1 != 1){
             CheckAppVersion()
         }else{
             
-            if(!statusGuideNeayBy){
-                GuideForNearby.shared.Show(view: self.view, navigationController: self.navigationController!, storyboard: self.storyboard! ,statusDrawTable: statusDrawTable)
-                
-            }
+//            if(cerrentVersin != versionNearby){
+//                GuideForNearby.shared.Show(view: self.view, navigationController: self.navigationController!, storyboard: self.storyboard! ,statusDrawTable: statusDrawTable)
+//
+//            }
+            
+            
+            
+            
 
             let uuid = UIDevice.current.identifierForVendor!.uuidString
             
@@ -105,6 +123,7 @@ class PlaceViewController: UITableViewController{
             locManager.delegate = self
             locManager.desiredAccuracy = kCLLocationAccuracyBest
             locManager.requestWhenInUseAuthorization()
+
             
             self.refreshControl?.addTarget(self, action: #selector(HandleRefresh(_:)),for: UIControlEvents.valueChanged)
             
@@ -121,21 +140,38 @@ class PlaceViewController: UITableViewController{
         backItem.title = ""
         navigationItem.backBarButtonItem = backItem // This will show in the next view controller being pushed
         
+//        self.searchController.searchBar.endEditing(true)
+//        self.searchController.isActive = false
+        
         if(segue.identifier == "ShowPlaceDetail")
         {
             if let indexPath = tableView.indexPathForSelectedRow
             {
-//                self.searchController.searchBar.endEditing(true)
-//                self.searchController.isActive = false
+              
                 
                 let detailView = segue.destination as! DetailViewController
                 
                 var place: Place
-                if searchController.isActive && searchController.searchBar.text != "" {
-                    place = filteredPlace[indexPath.row]
+//              if searchController.isActive && searchController.searchBar.text != "" {
+                if  mySearchBar.text != "" {
+                   place = filteredPlace[indexPath.row]
+                    
+//                    nearByPlace.removeAll()
+//                    for item in filteredPlace {
+//                        nearByPlace.append(item)
+//                    }
+//                    self.tableView.reloadData()
+//                    place = nearByPlace[indexPath.row]
+  
                 } else {
                     place = nearByPlace[indexPath.row]
                 }
+
+//                searchController.searchBar.removeFromSuperview()
+//                searchController = UISearchController(searchResultsController: nil)
+//                SetupSearchBar()
+           
+ 
                 detailView.selectedPlace = place
                 
                 let uuid = UIDevice.current.identifierForVendor!.uuidString
@@ -147,15 +183,26 @@ class PlaceViewController: UITableViewController{
                 Mixpanel.mainInstance().identify(distinctId: uuid)
                 
                 
+//                self.searchController.definesPresentationContext = true
+//                self.searchController.searchBar.endEditing(true)
+//                self.searchController.dimsBackgroundDuringPresentation = true
+                
+//                self.searchController.searchBar.endEditing(true)
+//                self.searchController.isActive = false
 //                self.revealViewController().setFrontViewPosition(.left, animated: true)
             }
         }
     }
     
+
+    
+    
     // MARK: - Destructor
     deinit {
         self.searchController.view.removeFromSuperview()
     }
+    
+  
     
     // MARK: - Table View
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -163,31 +210,43 @@ class PlaceViewController: UITableViewController{
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchController.isActive && searchController.searchBar.text != "" {
+        
+
+        if  mySearchBar.text != ""{
             return filteredPlace.count
         }
         return nearByPlace.count
     }
     
+    
+//    @IBOutlet weak var imge_Logo: UIImageView!
+//    @IBOutlet weak var txt_nameTH: UILabel!
+//    @IBOutlet weak var txt_nameENG: UILabel!
+//    @IBOutlet weak var txt_distance: UILabel!
+    
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NearByCell", for: indexPath as IndexPath)
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NearByCell", for: indexPath)
+
         
         let place: Place
         
-        if searchController.isActive && searchController.searchBar.text != "" {
+        if  mySearchBar.text != ""  {
             place = filteredPlace[indexPath.row]
         } else {
             place = nearByPlace[indexPath.row]
         }
         
+
         if let nameTH = cell.viewWithTag(101) as? UILabel {
             nameTH.text = place.nameTH
         }
-        
+
         if let nameEN = cell.viewWithTag(102) as? UILabel {
             nameEN.text = place.nameEN
         }
-        
+
         if let distance = cell.viewWithTag(103) as? UILabel {
             if (place.distance >= 1000) {
                 distance.text = place.distance.ToStringWithKilo() + " km"
@@ -198,13 +257,13 @@ class PlaceViewController: UITableViewController{
                     NSNumber(value: place.distance)) ?? "0") + " m"
             }
         }
-        
+
         if let logoImg = cell.viewWithTag(104) as? UIImageView {
             logoImg.sd_setImage(with: URL(string: place.imageUrl),
                                 placeholderImage: UIImage(named: "place_error"))
             logoImg.sd_setShowActivityIndicatorView(true)
             logoImg.sd_setIndicatorStyle(.whiteLarge)
-            
+
         }
         return cell
     }
@@ -218,19 +277,52 @@ class PlaceViewController: UITableViewController{
    
 }
 
+
+ 
 // MARK: Search Bar
 extension PlaceViewController: UISearchResultsUpdating, UISearchBarDelegate
 {
+    
+ 
+    func setUpSearchBar(){
+        
+       
+//        mySearchBar = UISearchBar()
+        mySearchBar.delegate = self
+        mySearchBar.frame = CGRect(x: 0, y: 0, width:  self.tableView.contentSize.width , height: 50)
+//        mySearchBar.layer.position = CGPoint(x: self.view.bounds.width/2, y: 100)
+        mySearchBar.layer.masksToBounds = false
+        mySearchBar.showsCancelButton = false
+        mySearchBar.showsBookmarkButton = false
+        mySearchBar.searchBarStyle = UISearchBarStyle.default
+        mySearchBar.placeholder = "ค้นหาร้านค้า, ร้านอาหาร, สถานที่"
+        mySearchBar.showsSearchResultsButton = false
+        self.tableView.tableHeaderView = mySearchBar
+        
+    }
+    
+    
     func SetupSearchBar()
     {
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchBar.placeholder = "ค้นหาร้านค้า, ร้านอาหาร, สถานที่"
-        definesPresentationContext = true
-        self.tableView.tableHeaderView = searchController.searchBar
+//        searchController.searchResultsUpdater = self
+//        searchController.searchBar.delegate = self
+//        searchController.dimsBackgroundDuringPresentation = false
+//        searchController.hidesNavigationBarDuringPresentation = false
+//        searchController.searchBar.placeholder = "ค้นหาร้านค้า, ร้านอาหาร, สถานที่"
+//        definesPresentationContext = true
+//        self.tableView.tableHeaderView = searchController.searchBar
+        
+        setUpSearchBar()
+        print("")
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if(!mySearchBar.showsCancelButton) {
+             mySearchBar.showsCancelButton = true
+        }
+        filterContentForSearchText(searchText:searchText)
+    }
+    
     
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearchText(searchText: searchController.searchBar.text!)
@@ -251,6 +343,7 @@ extension PlaceViewController: UISearchResultsUpdating, UISearchBarDelegate
         
         if !(searchBar.text?.isEmpty)! {
             searchText = searchBar.text!
+            self.view.endEditing(true)
             isClickSh = true
 //            CallWS(searchkey: searchText)
             GetLocation(searchkey: searchText);
@@ -259,14 +352,16 @@ extension PlaceViewController: UISearchResultsUpdating, UISearchBarDelegate
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        mySearchBar.showsCancelButton = false
+        self.view.endEditing(true)
         searchText = ""
         isClickSh = true
 
+        print("")
         if (self.isRefreshing) {
             self.refreshControl?.endRefreshing()
             self.isRefreshing = false
         }
-        
         GetLocation();
 //        CallWS()
     }
@@ -275,6 +370,8 @@ extension PlaceViewController: UISearchResultsUpdating, UISearchBarDelegate
 
 extension PlaceViewController: CLLocationManagerDelegate
 {
+    
+    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if (status == CLAuthorizationStatus.authorizedWhenInUse
             || status == CLAuthorizationStatus.authorizedAlways) {
@@ -385,7 +482,7 @@ extension PlaceViewController
         let parameters: Parameters = ["lat": nLocationlat,
                                       "long": nLocationLong,
                                       "page": 1,
-                                      "pageSize": 15,
+                                      "pageSize": 25,
                                       "search": searchkey]
 
         Alamofire.request(url, parameters: parameters)
@@ -633,12 +730,16 @@ extension PlaceViewController
                 self.filteredPlace.removeAll()
                 self.tableView.reloadData()
                 if(statusDialogInternet != true){
-                  NoConnectionView.shared.Show(view: self.view,  action: self.reTryInternet)
+                    //New time : Edit Comment
+//                  mySearchBar.isHidden = true
+//                  NoConnectionView.shared.Show(view: self.view,  action: self.reTryInternet)
                 }
             
                 statusOpenDialogIN = true
 //            }
-            isDisableInternet = true
+             //New time : Edit Comment
+            isDisableInternet = false
+//            isDisableInternet = true
         }else{
             isDisableInternet = false
         }
@@ -683,6 +784,9 @@ extension PlaceViewController
     func reTryInternet(ClickBtn: Bool){
         if(ClickBtn){
             CheckReachabilityStatus(statusDialogInternet: true)
+             if(!isDisableInternet){
+                 mySearchBar.isHidden = false
+            }
             GetLocation()
         }
     }
@@ -777,10 +881,15 @@ extension PlaceViewController
         
     }
     
+    
+    
     func CheckAppVersion(){
             let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "Walkthrough") as! Walkthrough
             self.navigationController?.pushViewController(secondViewController, animated: true)
 
     }
+    
+    
+    
     
 }

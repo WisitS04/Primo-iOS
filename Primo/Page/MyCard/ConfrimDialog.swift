@@ -30,7 +30,7 @@ class ConfrimDialog
     public func Show(id : Int64, mTable: UITableView) {
         let viewSize = UIScreen.main.bounds
         mID = id
-        mTableView = mTable as! MyCard_TableView
+        mTableView = mTable as? MyCard_TableView
         mainView.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height)
         mainView.backgroundColor = HexStringToUIColor(hex: "#FFFFFF00")
         mainView.contentMode = UIViewContentMode.scaleAspectFill

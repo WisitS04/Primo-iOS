@@ -70,7 +70,7 @@ class NotificationDialog
         textContent.textAlignment = .center
         textContent.font = textContent.font.withSize(15)
         textContent.numberOfLines = 0
-        textContent.text = "บัตรที่คุณมี \nหรือเงื่อนไขที่เลือกไม่มีโปรโมชั่น"
+        textContent.text = "บัตรที่คุณมี \nหรือเงื่อนไขที่คุณเลือกไม่มีโปรโมชั่น"
         dialogView.addSubview(textContent)
         
         

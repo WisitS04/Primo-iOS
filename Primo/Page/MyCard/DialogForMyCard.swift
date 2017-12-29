@@ -29,7 +29,7 @@ class DialogForMyCard
     
     public func Show(mPoint :Int ,id : Int64, mTable: UITableView) {
         let viewSize = UIScreen.main.bounds
-        mTableView = mTable as! MyCard_TableView
+        mTableView = mTable as? MyCard_TableView
         mID = id
         mainView.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height)
         mainView.backgroundColor = HexStringToUIColor(hex: "#FFFFFF00")

@@ -46,7 +46,12 @@ class DialogGuideTop
         
         imageViewBG.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height)
         imageViewBG.contentMode = .scaleAspectFit
-        imageViewBG.image = UIImage(named: "bg_guide_deals_top")
+        if(viewSize.height >= 812 && viewSize.width >= 375){
+            //is iPhone X
+            imageViewBG.image = UIImage(named: "bg_guide_deals_top_x")
+        }else{
+            imageViewBG.image = UIImage(named: "bg_guide_deals_top")
+        }
         mainView.addSubview(imageViewBG)
         
         

@@ -40,8 +40,13 @@ class DialogGuideBottom
         mainView.alpha = 1
         
         imageViewBG.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height)
-        imageViewBG.contentMode = .scaleAspectFit
-        imageViewBG.image = UIImage(named: "bg_guide_deals_bottom")
+        imageViewBG.contentMode = .scaleAspectFill
+        if(viewSize.height >= 812 && viewSize.width >= 375){
+            //is iPhone X
+            imageViewBG.image = UIImage(named: "bg_guide_deals_bottom_x")
+        }else{
+            imageViewBG.image = UIImage(named: "bg_guide_deals_bottom")
+        }
         mainView.addSubview(imageViewBG)
         
         
@@ -86,7 +91,7 @@ class DialogGuideBottom
     
     @objc func sendActionData(_ sender: Any)  {
         Hide()
-        StatusGuideDeals.set(true,forKey: KEYGuideDeals)
+        VersionGuideDeals.set(cerrentVersin,forKey: KEYGuideDeals)
     }
     
     

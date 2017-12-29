@@ -56,22 +56,25 @@ var BankSelectIndex: IndexPath =  IndexPath(item: -1, section: -1)
 ///////////////////
 
 var KEYGuideNeayBy: String = "KEYNEAYBY"
-var StatusGuideNeayBy = UserDefaults.standard
+var VersionGuideNearby = UserDefaults.standard
 
 var KEYGuideAddCard: String = "KEYADDCARD"
-var StatusGuideAddCard = UserDefaults.standard
+var VersionGuideAddCard = UserDefaults.standard
 
 var KEYGuideDetail: String = "KEYDETAIL"
-var StatusGuideDetail = UserDefaults.standard
+var VersionGuideDetail = UserDefaults.standard
 
 var KEYGuideNotDepDetail: String = "KEYDETAILNotDep"
-var StatusGuideDetailNotDep = UserDefaults.standard
+var VersionGuideDetailNotDep = UserDefaults.standard
 
 
 var KEYGuideDeals: String = "KEYDEALS"
-var StatusGuideDeals = UserDefaults.standard
+var VersionGuideDeals = UserDefaults.standard
 
 
+//////////////////////////
+///Data Version Service///
+//////////////////////////
 var KEYDataVersion: String = "KEYDataVersion"
 var DataVersionNumber = UserDefaults.standard
 
@@ -79,12 +82,14 @@ var DataVersionNumber = UserDefaults.standard
 /////////////////////
 ///KEY APP Version///
 /////////////////////
+var cerrentVersin: Double = 11.2 //version show guide app is 1.1.2
+
+
+/////////////////////////////////
+///KEY APP Version Walkthrough///
+/////////////////////////////////
 var KEYAppVersion: String = "KEYAPPVERSION"
 var VersionNumber = UserDefaults.standard
-var cerrentVersin: Double = 10.3
-
-
-
 
 
 

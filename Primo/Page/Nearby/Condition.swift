@@ -29,7 +29,7 @@ class Conidion
     
     
     public func Show(view: UIView,  action: ((Bool) -> Void)?) {
-        let viewSize = UIScreen.main.bounds
+        _ = UIScreen.main.bounds
         statusCheck = false
     
         mainView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)

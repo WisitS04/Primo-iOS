@@ -46,7 +46,13 @@ class GuideForNearby
         
         imageView.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height)
         imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(named: "guide_nearby")
+        if(viewSize.height >= 812 && viewSize.width >= 375){
+            //is iPhone X
+             imageView.image = UIImage(named: "guide_nearby_x")
+        }else{
+             imageView.image = UIImage(named: "guide_nearby")
+        }
+       
         mainView.addSubview(imageView)
         
         dialogViewBG.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height)
@@ -94,7 +100,9 @@ class GuideForNearby
             let secondViewController = myStotybord?.instantiateViewController(withIdentifier: "AddCardController") as! AddCardController
             myNavigationController?.pushViewController(secondViewController, animated: true)
             
-            StatusGuideNeayBy.set(true,forKey: KEYGuideNeayBy)
+
+
+            VersionGuideNearby.set(cerrentVersin,forKey: KEYGuideNeayBy)
         }
     }
     

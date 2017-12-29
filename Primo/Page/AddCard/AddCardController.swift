@@ -79,6 +79,14 @@ class AddCardController: UIViewController
     
     func OnBankSelected(id: Int, mCardType: Int) {
         bankID = id
+        if(mCardType == 1){
+            trackEventSelectBank(EventName: "i_BanksSel_Credit",id: id)
+        }else if(mCardType == 2){
+            trackEventSelectBank(EventName: "i_BanksSel_Debit",id: id)
+        }else{
+            trackEventSelectBank(EventName: "i_BanksSel_Member",id: id)
+        }
+        
         let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "SelectCard") as! SelectCard
         secondViewController.BankID = bankID
         secondViewController.CardType = mCardType
@@ -88,6 +96,17 @@ class AddCardController: UIViewController
    
     func finishCallService(){
          GuideForAddCard.shared.Show(view: self.view, navigationController: self.navigationController!)
+    }
+    
+    
+    func trackEventSelectBank(EventName : String ,id : Int){
+        let uuid = UIDevice.current.identifierForVendor!.uuidString
+        Mixpanel.initialize(token: projectToken)
+        Mixpanel.mainInstance().track(event: EventName,
+                                      properties: ["StoreID" : id])
+        Mixpanel.mainInstance().identify(distinctId: uuid)
+        
+        
     }
     
 
@@ -143,17 +162,20 @@ extension AddCardController{
             let segmentioStates = SegmentioStates(
                 defaultState: SegmentioState(
                     backgroundColor: .clear,
-                    titleFont: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize),
+                    titleFont: UIFont.systemFont(ofSize: UIFont.systemFontSize),
+//                    titleFont: UIFont.boldSystemFont(ofSize: UIFont.systemFontSize),
                     titleTextColor: .white
                 ),
                 selectedState: SegmentioState(
                     backgroundColor: .clear,
-                    titleFont: UIFont.boldSystemFont(ofSize: UIFont.smallSystemFontSize),
+                    titleFont: UIFont.systemFont(ofSize: UIFont.systemFontSize),
+//                    titleFont: UIFont.boldSystemFont(ofSize: UIFont.smallSystemFontSize),
                     titleTextColor: .white
                 ),
                 highlightedState: SegmentioState(
                     backgroundColor: .clear,
-                    titleFont: UIFont.boldSystemFont(ofSize: UIFont.smallSystemFontSize),
+                    titleFont: UIFont.systemFont(ofSize: UIFont.systemFontSize),
+//                    titleFont: UIFont.boldSystemFont(ofSize: UIFont.smallSystemFontSize),
                     titleTextColor: .white
                 )
             )

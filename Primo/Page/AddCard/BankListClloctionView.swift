@@ -13,7 +13,9 @@ class BankListCollectionView: UICollectionView
     var debiteBankList: [Bank] = []
     var companyList: [Bank] = []
     var typeSelect : Int = 1
-    var statusGuideAddCard: Bool = false
+    var versionGuideAddCard: Double = 0.00
+
+    var isDisableInternet:Bool = false
     
     func SetUp(viewController: AddCardController) {
         self.viewController = viewController
@@ -66,38 +68,43 @@ extension BankListCollectionView
     
     
     func CallCrediteBank(){
-        LoadingOverlay.shared.showOverlay(view: self.superview!)
-        
-        let url = Service.Banks.url
-        let user = Service_User
-        let pass = Service_Password
-        let cardType: Int = 1
-        let param: Parameters = [ "cardType": cardType ]
-        
-        Alamofire.request(url, parameters: param)
-
-            .authenticate(user: user, password: pass)
-            .responseJSON { response in
-                switch response.result {
-                case .success(let value):
-                    let json = JSON(value)
-//                    self.bankList.removeAll()
-                    self.crediteBankList.removeAll()
-                    for (_, subJson):(String, JSON) in json["data"]
-                    {
-                        let bank = Bank(json: subJson, mCardType: 1)
-//                        self.bankList.append(bank)
-                        self.crediteBankList.append(bank)
-                        //print("Add bank \(bank.abbreviationTH!) \nURL: \(bank.logoUrl!)")
+        CheckReachabilityStatus()
+        if(!isDisableInternet){
+            
+            LoadingOverlay.shared.showOverlay(view: self.superview!)
+            
+            let url = Service.Banks.url
+            let user = Service_User
+            let pass = Service_Password
+            let cardType: Int = 1
+            let param: Parameters = [ "cardType": cardType ]
+            
+            Alamofire.request(url, parameters: param)
+                
+                .authenticate(user: user, password: pass)
+                .responseJSON { response in
+                    switch response.result {
+                    case .success(let value):
+                        let json = JSON(value)
+                        //                    self.bankList.removeAll()
+                        self.crediteBankList.removeAll()
+                        for (_, subJson):(String, JSON) in json["data"]
+                        {
+                            let bank = Bank(json: subJson, mCardType: 1)
+                            //                        self.bankList.append(bank)
+                            self.crediteBankList.append(bank)
+                            //print("Add bank \(bank.abbreviationTH!) \nURL: \(bank.logoUrl!)")
+                        }
+                        print("Call Banks credite service success")
+                        self.CallDebitBank()
+                    case .failure(let error):
+                        print(error)
+                        LoadingOverlay.shared.hideOverlayView()
+                        PrimoAlert().Error()
                     }
-                     print("Call Banks credite service success")
-                     self.CallDebitBank()
-                case .failure(let error):
-                    print(error)
-                    LoadingOverlay.shared.hideOverlayView()
-                    PrimoAlert().Error()
-                }
+            }
         }
+
     }
     
     func CallDebitBank(){
@@ -203,8 +210,8 @@ extension BankListCollectionView
                     self.reloadData()
                     print("Call Company service success")
                     LoadingOverlay.shared.hideOverlayView()
-                    self.statusGuideAddCard = StatusGuideAddCard.bool(forKey: KEYGuideAddCard)
-                    if(!self.statusGuideAddCard){
+                    self.versionGuideAddCard = VersionGuideAddCard.double(forKey: KEYGuideAddCard)
+                    if(cerrentVersin != self.versionGuideAddCard){
                         self.viewController!.finishCallService()
                     }
                 case .failure(let error):
@@ -223,8 +230,35 @@ extension BankListCollectionView
         }
     
     }
+    
+    
+    func CheckReachabilityStatus(statusDialogInternet: Bool? = false) {
+        guard let status = Network.reachability?.status else { return }
+        
+        if (status == .unreachable) {
+     
+            if(statusDialogInternet != true){
+                NoConnectionView.shared.Show(view: self.superview!,  action: reTryInternet)
+            }
+            isDisableInternet = true
+        }else{
+            isDisableInternet = false
+        }
+    }
+    
+    func reTryInternet(ClickBtn: Bool){
+        if(ClickBtn){
+            CheckReachabilityStatus(statusDialogInternet: true)
+            if(!isDisableInternet){
+                NoConnectionView.shared.Hide()
+                CallCrediteBank()
+            }
+        }
+    }
+    
 
 }
+
 
 
 

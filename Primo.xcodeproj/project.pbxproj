@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		33BB4609061F68916BF52ABD /* Pods_Primo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29D0A77E498F82133529E0F /* Pods_Primo.framework */; };
 		9A04857B1F6A75AF0075513F /* DialogGuideTop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04857A1F6A75AF0075513F /* DialogGuideTop.swift */; };
 		9A04857D1F6A75EC0075513F /* DialogGuideBottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04857C1F6A75EC0075513F /* DialogGuideBottom.swift */; };
 		9A07E3CC1F9F2AAC0003B50F /* NewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A07E3CB1F9F2AAC0003B50F /* NewCard.swift */; };
@@ -109,12 +110,31 @@
 		9AF9FD911F0DF85400DD665D /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF9FD901F0DF85400DD665D /* Store.swift */; };
 		9AF9FD931F0E343900DD665D /* LoadingOverlayGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF9FD921F0E343900DD665D /* LoadingOverlayGPS.swift */; };
 		9AFE3E891F737E1D00B2D120 /* StoreAddColumn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFE3E881F737E1D00B2D120 /* StoreAddColumn.swift */; };
+		B80A1B501FF4A28500BE09D8 /* SearchTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80A1B4F1FF4A28500BE09D8 /* SearchTableView.swift */; };
+		B80A1B521FF4AA0200BE09D8 /* SearchDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80A1B511FF4AA0200BE09D8 /* SearchDB.swift */; };
+		B80A1B551FF4B6C500BE09D8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80A1B541FF4B6C500BE09D8 /* ProfileViewController.swift */; };
+		B80A1B571FF4E11E00BE09D8 /* SystemMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80A1B561FF4E11E00BE09D8 /* SystemMemberViewController.swift */; };
+		B80A1B591FF5075400BE09D8 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80A1B581FF5075400BE09D8 /* SignInViewController.swift */; };
+		B8297CC81FF0AC2900969BBC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8297CC71FF0AC2900969BBC /* TabBarController.swift */; };
+		B852E9EA1FF1019800C1D5D5 /* locationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B852E9E91FF1019800C1D5D5 /* locationCell.swift */; };
+		B89FEE431FEBB43800E1A120 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89FEE421FEBB43800E1A120 /* RegisterViewController.swift */; };
+		B8C3A2851FF5F8A000831696 /* RegisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C3A2841FF5F8A000831696 /* RegisViewController.swift */; };
+		B8C3A28B1FF627EE00831696 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B8C3A28A1FF627EE00831696 /* GoogleService-Info.plist */; };
+		B8EF07FC1FECCD8400977094 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8EF07FB1FECCD8400977094 /* FBSDKCoreKit.framework */; };
+		B8EF07FE1FECCD9000977094 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8EF07FD1FECCD9000977094 /* FBSDKLoginKit.framework */; };
+		B8EFE1C61FF234CC00647D0F /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EFE1C51FF234CC00647D0F /* SearchViewController.swift */; };
+		B8EFE1C81FF2355B00647D0F /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EFE1C71FF2355B00647D0F /* SearchCell.swift */; };
+		B8EFE1CB1FF2360B00647D0F /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EFE1CA1FF2360B00647D0F /* NotificationViewController.swift */; };
+		B8EFE1CD1FF2364800647D0F /* NotificationTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EFE1CC1FF2364800647D0F /* NotificationTableView.swift */; };
+		B8EFE1CF1FF236AD00647D0F /* NotificationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EFE1CE1FF236AD00647D0F /* NotificationTableCell.swift */; };
+		B8EFE1D11FF23F2600647D0F /* NotificationDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EFE1D01FF23F2600647D0F /* NotificationDB.swift */; };
+		B8EFE1D31FF2527200647D0F /* notificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8EFE1D21FF2527200647D0F /* notificationModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		9A1DF5B71E1D117400A87327 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
@@ -133,6 +153,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		51853D547EB007C99F4114D8 /* Pods-Primo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Primo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Primo/Pods-Primo.debug.xcconfig"; sourceTree = "<group>"; };
+		5EC1F334DD1BCFB985FF69EA /* Pods-Primo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Primo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Primo/Pods-Primo.release.xcconfig"; sourceTree = "<group>"; };
 		9A04857A1F6A75AF0075513F /* DialogGuideTop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DialogGuideTop.swift; path = Page/DealDetail/DialogGuideTop.swift; sourceTree = "<group>"; };
 		9A04857C1F6A75EC0075513F /* DialogGuideBottom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DialogGuideBottom.swift; path = Page/DealDetail/DialogGuideBottom.swift; sourceTree = "<group>"; };
 		9A07E3CB1F9F2AAC0003B50F /* NewCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewCard.swift; path = CustomView/NewCard.swift; sourceTree = "<group>"; };
@@ -231,6 +253,27 @@
 		9AF9FD901F0DF85400DD665D /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Store.swift; path = CustomView/Store.swift; sourceTree = "<group>"; };
 		9AF9FD921F0E343900DD665D /* LoadingOverlayGPS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoadingOverlayGPS.swift; path = Lib/SweetAlert/LoadingOverlayGPS.swift; sourceTree = "<group>"; };
 		9AFE3E881F737E1D00B2D120 /* StoreAddColumn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreAddColumn.swift; sourceTree = "<group>"; };
+		B80A1B4F1FF4A28500BE09D8 /* SearchTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchTableView.swift; path = Page/Search/SearchTableView.swift; sourceTree = "<group>"; };
+		B80A1B511FF4AA0200BE09D8 /* SearchDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchDB.swift; path = Models/SearchDB.swift; sourceTree = "<group>"; };
+		B80A1B541FF4B6C500BE09D8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = Page/Profile/ProfileViewController.swift; sourceTree = "<group>"; };
+		B80A1B561FF4E11E00BE09D8 /* SystemMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SystemMemberViewController.swift; path = Primo/Page/Register/SystemMemberViewController.swift; sourceTree = SOURCE_ROOT; };
+		B80A1B581FF5075400BE09D8 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignInViewController.swift; path = Primo/Page/Register/SignInViewController.swift; sourceTree = SOURCE_ROOT; };
+		B8297CC71FF0AC2900969BBC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TabBarController.swift; path = Page/NavigationBar/TabBarController.swift; sourceTree = "<group>"; };
+		B84AC6E31FDA5DA400FAEAB0 /* Primo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Primo.entitlements; sourceTree = "<group>"; };
+		B852E9E91FF1019800C1D5D5 /* locationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = locationCell.swift; path = CustomView/locationCell.swift; sourceTree = "<group>"; };
+		B89FEE421FEBB43800E1A120 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegisterViewController.swift; path = Primo/Page/Register/RegisterViewController.swift; sourceTree = SOURCE_ROOT; };
+		B8C3A2841FF5F8A000831696 /* RegisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RegisViewController.swift; path = Primo/Page/Register/RegisViewController.swift; sourceTree = SOURCE_ROOT; };
+		B8C3A28A1FF627EE00831696 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B8EF07FB1FECCD8400977094 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		B8EF07FD1FECCD9000977094 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		B8EFE1C51FF234CC00647D0F /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchViewController.swift; path = Page/Search/SearchViewController.swift; sourceTree = "<group>"; };
+		B8EFE1C71FF2355B00647D0F /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchCell.swift; path = Page/Search/SearchCell.swift; sourceTree = "<group>"; };
+		B8EFE1CA1FF2360B00647D0F /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotificationViewController.swift; path = Page/Notification/NotificationViewController.swift; sourceTree = "<group>"; };
+		B8EFE1CC1FF2364800647D0F /* NotificationTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotificationTableView.swift; path = Page/Notification/NotificationTableView.swift; sourceTree = "<group>"; };
+		B8EFE1CE1FF236AD00647D0F /* NotificationTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotificationTableCell.swift; path = Page/Notification/NotificationTableCell.swift; sourceTree = "<group>"; };
+		B8EFE1D01FF23F2600647D0F /* NotificationDB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NotificationDB.swift; path = Models/NotificationDB.swift; sourceTree = "<group>"; };
+		B8EFE1D21FF2527200647D0F /* notificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = notificationModel.swift; path = CustomView/notificationModel.swift; sourceTree = "<group>"; };
+		F29D0A77E498F82133529E0F /* Pods_Primo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Primo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,19 +283,31 @@
 			files = (
 				9A5127841E79535600A6B70C /* SQLite.framework in Frameworks */,
 				9A2EF9751F5D25DA0096AAE2 /* Mixpanel.framework in Frameworks */,
+				B8EF07FE1FECCD9000977094 /* FBSDKLoginKit.framework in Frameworks */,
 				9A722D6C1E6812CD0077F92A /* CoreLocation.framework in Frameworks */,
+				B8EF07FC1FECCD8400977094 /* FBSDKCoreKit.framework in Frameworks */,
 				9A0FCF351ED6E135001FA250 /* Segmentio.framework in Frameworks */,
 				9A722D691E66C2B70077F92A /* SDWebImage.framework in Frameworks */,
 				9A1DF5B51E1D117400A87327 /* DatePickerDialog.framework in Frameworks */,
 				9AA6AC641E3B8DDA00B3B635 /* Alamofire.framework in Frameworks */,
 				9AA6AC661E3B8DDA00B3B635 /* SwiftyJSON.framework in Frameworks */,
 				9A4677851E3F601A00B23CB6 /* DropDown.framework in Frameworks */,
+				33BB4609061F68916BF52ABD /* Pods_Primo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5AB360CFCF5861643A548E65 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				51853D547EB007C99F4114D8 /* Pods-Primo.debug.xcconfig */,
+				5EC1F334DD1BCFB985FF69EA /* Pods-Primo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		9A06A6551EE7EA0000ACD7D6 /* AddMemberCard */ = {
 			isa = PBXGroup;
 			children = (
@@ -284,6 +339,8 @@
 		9A1DF5AD1E1D0B1400A87327 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B8EF07FD1FECCD9000977094 /* FBSDKLoginKit.framework */,
+				B8EF07FB1FECCD8400977094 /* FBSDKCoreKit.framework */,
 				9A2EF9731F5D25C40096AAE2 /* Mixpanel.framework */,
 				9A0FCF331ED6E119001FA250 /* Segmentio.framework */,
 				9A5127821E79534700A6B70C /* SQLite.framework */,
@@ -293,6 +350,7 @@
 				9AA6AC621E3B8DDA00B3B635 /* Alamofire.framework */,
 				9AA6AC631E3B8DDA00B3B635 /* SwiftyJSON.framework */,
 				9A1DF5AE1E1D0B1500A87327 /* DatePickerDialog.framework */,
+				F29D0A77E498F82133529E0F /* Pods_Primo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -310,6 +368,7 @@
 				9AFE3E881F737E1D00B2D120 /* StoreAddColumn.swift */,
 				9AC991F71F78E7F20049BBC5 /* RestaurantPrice.swift */,
 				9A07E3CB1F9F2AAC0003B50F /* NewCard.swift */,
+				B8EFE1D21FF2527200647D0F /* notificationModel.swift */,
 			);
 			name = "Class Variable";
 			sourceTree = "<group>";
@@ -323,6 +382,8 @@
 				9A5DDA041EE96AA900219D92 /* PrimoAlert.swift */,
 				9AD018111EF9277900C6E20F /* Reachability.swift */,
 				9AF9FD8E1F0DEFB100DD665D /* StoreDB.swift */,
+				B8EFE1D01FF23F2600647D0F /* NotificationDB.swift */,
+				B80A1B511FF4AA0200BE09D8 /* SearchDB.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -342,6 +403,7 @@
 				9A23C7FA1EAE3EA2001B0193 /* CollapsibleTableViewHeader.swift */,
 				9A370C3F1EB84A73000613A7 /* ImageCollectionViewCell.swift */,
 				9AF28E681EE5488800F74FF8 /* PrimoNavigationController.swift */,
+				B852E9E91FF1019800C1D5D5 /* locationCell.swift */,
 			);
 			name = CustomView;
 			sourceTree = "<group>";
@@ -429,6 +491,11 @@
 		9A722D701E6828600077F92A /* Page */ = {
 			isa = PBXGroup;
 			children = (
+				B80A1B531FF4B6A000BE09D8 /* Profile */,
+				B8EFE1C91FF235D600647D0F /* Notification */,
+				B8EFE1C41FF234AA00647D0F /* Search */,
+				B8297CC61FF0ABC300969BBC /* NavigationBar */,
+				B89FEE411FEBB3A200E1A120 /* Register */,
 				9A355DD91F592C3800502C72 /* AppGuide */,
 				9A06A6561EE801D000ACD7D6 /* Nearby */,
 				9A06A6571EE8020900ACD7D6 /* Detail */,
@@ -494,6 +561,7 @@
 				9AF7DD681E0A932E00B66822 /* Primo */,
 				9AF7DD671E0A932E00B66822 /* Products */,
 				9A1DF5AD1E1D0B1400A87327 /* Frameworks */,
+				5AB360CFCF5861643A548E65 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -508,6 +576,8 @@
 		9AF7DD681E0A932E00B66822 /* Primo */ = {
 			isa = PBXGroup;
 			children = (
+				B8C3A28A1FF627EE00831696 /* GoogleService-Info.plist */,
+				B84AC6E31FDA5DA400FAEAB0 /* Primo.entitlements */,
 				9AF28E661EE5432A00F74FF8 /* Assets.xcassets */,
 				9AF7DD691E0A932E00B66822 /* AppDelegate.swift */,
 				9AF7DD6D1E0A932E00B66822 /* Main.storyboard */,
@@ -526,6 +596,53 @@
 			path = Primo;
 			sourceTree = "<group>";
 		};
+		B80A1B531FF4B6A000BE09D8 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				B80A1B541FF4B6C500BE09D8 /* ProfileViewController.swift */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
+		B8297CC61FF0ABC300969BBC /* NavigationBar */ = {
+			isa = PBXGroup;
+			children = (
+				B8297CC71FF0AC2900969BBC /* TabBarController.swift */,
+			);
+			name = NavigationBar;
+			sourceTree = "<group>";
+		};
+		B89FEE411FEBB3A200E1A120 /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				B89FEE421FEBB43800E1A120 /* RegisterViewController.swift */,
+				B80A1B561FF4E11E00BE09D8 /* SystemMemberViewController.swift */,
+				B80A1B581FF5075400BE09D8 /* SignInViewController.swift */,
+				B8C3A2841FF5F8A000831696 /* RegisViewController.swift */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
+		B8EFE1C41FF234AA00647D0F /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				B8EFE1C51FF234CC00647D0F /* SearchViewController.swift */,
+				B80A1B4F1FF4A28500BE09D8 /* SearchTableView.swift */,
+				B8EFE1C71FF2355B00647D0F /* SearchCell.swift */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
+		B8EFE1C91FF235D600647D0F /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				B8EFE1CA1FF2360B00647D0F /* NotificationViewController.swift */,
+				B8EFE1CC1FF2364800647D0F /* NotificationTableView.swift */,
+				B8EFE1CE1FF236AD00647D0F /* NotificationTableCell.swift */,
+			);
+			name = Notification;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -533,11 +650,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9AF7DD781E0A932E00B66822 /* Build configuration list for PBXNativeTarget "Primo" */;
 			buildPhases = (
+				4D5B7B40F61E01755A2FB785 /* [CP] Check Pods Manifest.lock */,
 				9AF7DD621E0A932E00B66822 /* Sources */,
 				9AF7DD631E0A932E00B66822 /* Frameworks */,
 				9AF7DD641E0A932E00B66822 /* Resources */,
 				9A1DF5B71E1D117400A87327 /* Embed Frameworks */,
 				9A29E1901EF976DE003FF438 /* ShellScript */,
+				E5C4E036537B6F2C83B7A289 /* [CP] Embed Pods Frameworks */,
+				CEABC43B11090F5B61D3781F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -555,7 +675,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "Primo World Co., Ltd.";
 				TargetAttributes = {
 					9AF7DD651E0A932E00B66822 = {
@@ -563,6 +683,17 @@
 						DevelopmentTeam = 77J626KSUX;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -590,6 +721,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9AF7DD741E0A932E00B66822 /* LaunchScreen.storyboard in Resources */,
+				B8C3A28B1FF627EE00831696 /* GoogleService-Info.plist in Resources */,
 				9AF28E671EE5432A00F74FF8 /* Assets.xcassets in Resources */,
 				9AF7DD6F1E0A932E00B66822 /* Main.storyboard in Resources */,
 			);
@@ -598,6 +730,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4D5B7B40F61E01755A2FB785 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Primo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9A29E1901EF976DE003FF438 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -619,6 +769,50 @@
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
+		CEABC43B11090F5B61D3781F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Primo/Pods-Primo-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Primo/Pods-Primo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E5C4E036537B6F2C83B7A289 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Primo/Pods-Primo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Primo/Pods-Primo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -626,8 +820,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8EFE1D11FF23F2600647D0F /* NotificationDB.swift in Sources */,
 				9A4677811E3F2C5100B23CB6 /* GlobalHelper.swift in Sources */,
 				9A12958C1F5E85B4009C7115 /* GuideForDetail.swift in Sources */,
+				B8C3A2851FF5F8A000831696 /* RegisViewController.swift in Sources */,
 				9A2276D41E2D1EBB0065A23D /* MyCardTableView.swift in Sources */,
 				9ABE926C1ED1C81F00D13CFB /* CardResultTableView.swift in Sources */,
 				9AA99D791E370C1800F5B475 /* CenterCellCollectionViewFlowLayout.swift in Sources */,
@@ -637,7 +833,9 @@
 				9A7D1E0A1ED31B7A00ED9556 /* FSPageControl.swift in Sources */,
 				9AD933391F555D8600409938 /* selectCardCell.swift in Sources */,
 				9A86477C1E5DD33B00E3BEE9 /* DealViewController.swift in Sources */,
+				B852E9EA1FF1019800C1D5D5 /* locationCell.swift in Sources */,
 				9AD018101EF926CB00C6E20F /* CheckInternetVC.swift in Sources */,
+				B80A1B501FF4A28500BE09D8 /* SearchTableView.swift in Sources */,
 				9AC991F81F78E7F20049BBC5 /* RestaurantPrice.swift in Sources */,
 				9A96CCBA1F53D6E40040BA52 /* AddCardController.swift in Sources */,
 				9A370C401EB84A74000613A7 /* ImageCollectionViewCell.swift in Sources */,
@@ -658,7 +856,9 @@
 				9AF28E6B1EE572FB00F74FF8 /* ContactViewController.swift in Sources */,
 				9A69A0641E60374800601DAC /* DealTableVC.swift in Sources */,
 				9A7D1E0E1ED31B7A00ED9556 /* FSPagerViewLayoutAttributes.swift in Sources */,
+				B8EFE1CD1FF2364800647D0F /* NotificationTableView.swift in Sources */,
 				9A46FBB51F67AA36008CDD80 /* DialogEditePoint.swift in Sources */,
+				B8EFE1CB1FF2360B00647D0F /* NotificationViewController.swift in Sources */,
 				9A2276CC1E2CCB350065A23D /* PreferredTableVC.swift in Sources */,
 				9A30F37A1EE7067C0002B275 /* SweetAlertViewController.swift in Sources */,
 				9A86477A1E5C2CD600E3BEE9 /* Deal.swift in Sources */,
@@ -667,9 +867,13 @@
 				9A4CB9221ECDB2EE00FFB9D1 /* BankCollectionView.swift in Sources */,
 				9A84E7C01E2644140063E750 /* SWRevealViewController.m in Sources */,
 				9A7D1E0F1ED31B7A00ED9556 /* FSPageViewLayout.swift in Sources */,
+				B80A1B571FF4E11E00BE09D8 /* SystemMemberViewController.swift in Sources */,
+				B80A1B591FF5075400BE09D8 /* SignInViewController.swift in Sources */,
 				9A7D1E0C1ED31B7A00ED9556 /* FSPagerView.swift in Sources */,
+				B80A1B551FF4B6C500BE09D8 /* ProfileViewController.swift in Sources */,
 				9AF7DD6A1E0A932E00B66822 /* AppDelegate.swift in Sources */,
 				9A04857D1F6A75EC0075513F /* DialogGuideBottom.swift in Sources */,
+				B8EFE1C61FF234CC00647D0F /* SearchViewController.swift in Sources */,
 				9AEC34381EFD116500DBAFA8 /* LandingPageVC.swift in Sources */,
 				9A39B4241F303FE4005DF046 /* Condition.swift in Sources */,
 				9A30F3751EE6AA090002B275 /* MyCardTableCell.swift in Sources */,
@@ -679,18 +883,22 @@
 				9A177DB31EDD62A500F9DDC4 /* AddMemberCardViewController.swift in Sources */,
 				9AF9FD911F0DF85400DD665D /* Store.swift in Sources */,
 				9AF7DD821E1118DF00B66822 /* GlobalData.swift in Sources */,
+				B89FEE431FEBB43800E1A120 /* RegisterViewController.swift in Sources */,
 				9A234EFD1E7A71AE0086FE1F /* Card.swift in Sources */,
 				9A7D1E0D1ED31B7A00ED9556 /* FSPagerViewCell.swift in Sources */,
 				9A2C9F601F60218C00BEF0DD /* DialogForMyCard.swift in Sources */,
 				9A1DF5B11E1D0BDE00A87327 /* DetailViewController.swift in Sources */,
 				9AF28E691EE5488800F74FF8 /* PrimoNavigationController.swift in Sources */,
+				B80A1B521FF4AA0200BE09D8 /* SearchDB.swift in Sources */,
 				9AD018121EF9277900C6E20F /* Reachability.swift in Sources */,
 				9A23C7FB1EAE3EA2001B0193 /* CollapsibleTableViewHeader.swift in Sources */,
 				9AD9333B1F55622400409938 /* CardTableView.swift in Sources */,
 				9A17418E1EB358C700272EB8 /* DealDetailTableViewCell.swift in Sources */,
 				9A58C46C1E8E6A0700509825 /* DealCell_TwoStep.swift in Sources */,
 				9A4677831E3F4ED100B23CB6 /* CustomButton.swift in Sources */,
+				B8EFE1C81FF2355B00647D0F /* SearchCell.swift in Sources */,
 				9A35A4EC1EC9AA20002BA45D /* PageMenuViewController.swift in Sources */,
+				B8EFE1D31FF2527200647D0F /* notificationModel.swift in Sources */,
 				9A07E3CC1F9F2AAC0003B50F /* NewCard.swift in Sources */,
 				9A0FCF381ED6E3BF001FA250 /* SegmentedControllViewController.swift in Sources */,
 				9A58C46E1E8E6A1A00509825 /* DealCell_ThreeStep.swift in Sources */,
@@ -703,9 +911,11 @@
 				9A1FFDB31F027B0600971BF9 /* NoConnectionView.swift in Sources */,
 				9A39B4261F308290005DF046 /* GuideForAddCard.swift in Sources */,
 				9A2C9F5A1F5FD16200BEF0DD /* MyCard_TableView.swift in Sources */,
+				B8EFE1CF1FF236AD00647D0F /* NotificationTableCell.swift in Sources */,
 				9A2C9F5E1F5FE21100BEF0DD /* MyCardCell.swift in Sources */,
 				9A2ED4D21E9E25700060D816 /* DealDetailViewController.swift in Sources */,
 				9AABF4451F5420DF007933F7 /* BankDebit.swift in Sources */,
+				B8297CC81FF0AC2900969BBC /* TabBarController.swift in Sources */,
 				9AE46EDD1E703B0100475C3A /* LoadingOverlay.swift in Sources */,
 				9AABF4431F541A32007933F7 /* Company.swift in Sources */,
 			);
@@ -742,7 +952,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -750,7 +962,12 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -794,7 +1011,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -802,7 +1021,12 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -832,14 +1056,18 @@
 		};
 		9AF7DD791E0A932E00B66822 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 51853D547EB007C99F4114D8 /* Pods-Primo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Primo/Primo.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 77J626KSUX;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
+					/Users/spoton/Desktop/Prapas/ChocoLee/FacebookSDK,
 				);
 				INFOPLIST_FILE = Primo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -856,14 +1084,18 @@
 		};
 		9AF7DD7A1E0A932E00B66822 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5EC1F334DD1BCFB985FF69EA /* Pods-Primo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Primo/Primo.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 77J626KSUX;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)",
+					/Users/spoton/Desktop/Prapas/ChocoLee/FacebookSDK,
 				);
 				INFOPLIST_FILE = Primo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

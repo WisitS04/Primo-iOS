@@ -57,10 +57,22 @@ class GuideForDetail
         
         imageViewBG.frame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height)
         imageViewBG.contentMode = .scaleAspectFit
+        
+        
         if(MydepartmentCount > 0){
-           imageViewBG.image = UIImage(named: "guide_detail_dep")
+            if(viewSize.height >= 812 && viewSize.width >= 375){
+                //is iPhone X
+                imageViewBG.image = UIImage(named: "guide_detail_dep_x")
+            }else{
+                imageViewBG.image = UIImage(named: "guide_detail_dep")
+            }
         }else{
-           imageViewBG.image = UIImage(named: "guide_detail_not_dep")
+            if(viewSize.height >= 812 && viewSize.width >= 375){
+                //is iPhone X
+                imageViewBG.image = UIImage(named: "guide_detail_not_dep_x")
+            }else{
+                imageViewBG.image = UIImage(named: "guide_detail_not_dep")
+            }
         }
         mainView.addSubview(imageViewBG)
 
@@ -149,9 +161,9 @@ class GuideForDetail
     @objc func sendActionData(_ sender: Any)  {
         Hide()
         if(devCount > 0){
-            StatusGuideDetail.set(true,forKey: KEYGuideDetail)
+            VersionGuideDetail.set(cerrentVersin,forKey: KEYGuideDetail)
         }else{
-            StatusGuideDetailNotDep.set(true,forKey: KEYGuideNotDepDetail)
+            VersionGuideDetailNotDep.set(cerrentVersin,forKey: KEYGuideNotDepDetail)
         }
         
 

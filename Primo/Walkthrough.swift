@@ -15,14 +15,16 @@ class Walkthrough: UIViewController
 {
  var pagerView: FSPagerView!
  var pageControl: FSPageControl!
- @IBOutlet weak var view_page: UIView!
+
     
-    var numberOfPage: Int = 4
+ var numberOfPage: Int = 4
  var buttonLink = UIButton()
+var ViewPage = UIView()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,11 +46,24 @@ extension Walkthrough{
     
     func setBG(){
 
-        let imageName = "bg_walkthrough"
-        let image = UIImage(named: imageName)
-        let imageView = UIImageView(image: image!)
-        imageView.contentMode = .scaleAspectFill
-        view_page.addSubview(imageView)
+        
+        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
+        backgroundImage.image = UIImage(named: "bg_walkthrough")
+        self.view.insertSubview(backgroundImage, at: 0)
+        
+//        let imageName = "bg_walkthrough"
+//        let image = UIImage(named: imageName)
+//        let imageView = UIImageView(image: image!)
+//        imageView.contentMode = .scaleAspectFill
+////        view_page.addSubview(imageView)
+//
+//        let viewSize = UIScreen.main.bounds
+//        ViewPage.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height)
+//        ViewPage.center = view.center
+////        ViewPage.backgroundColor = UIColor.blue
+//        ViewPage.alpha = 1
+//        ViewPage.addSubview(imageView)
+        
     }
     //
     func AddFSPage() {
@@ -126,7 +141,7 @@ extension Walkthrough{
     @objc func sendActionData(_ sender: Any)  {
         
          VersionNumber.set(cerrentVersin,forKey: KEYAppVersion)
-        
+
         let secondViewController = self.storyboard?.instantiateViewController(withIdentifier: "PlaceViewController") as! PlaceViewController
         self.navigationController?.pushViewController(secondViewController, animated: true)
 

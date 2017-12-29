@@ -256,8 +256,31 @@ extension DealViewController
         for buffer in myCardListBuffer{
             if(buffer.cardId == card.cardId){
                 buffer.pointToUse = card.pointToUse
+                
+                
+                if(buffer.type == .creditCard || buffer.type == .debitCard){
+                    let uuid = UIDevice.current.identifierForVendor!.uuidString
+                    Mixpanel.initialize(token: projectToken)
+                    Mixpanel.mainInstance().track(event: "i_DealSel_CreditCardPtsEdit_Confirm",
+                                                  properties: ["CardID" : Int(card.cardId) ,
+                                                               "point" : card.pointToUse!])
+                    Mixpanel.mainInstance().identify(distinctId: uuid)
+
+                }else{
+                    let uuid = UIDevice.current.identifierForVendor!.uuidString
+                    Mixpanel.initialize(token: projectToken)
+                    Mixpanel.mainInstance().track(event: "i_DealSel_MemberPtsEdit_Confirm",
+                                                  properties: ["CardID" : Int(card.cardId) ,
+                                                               "point" : card.pointToUse!])
+                    Mixpanel.mainInstance().identify(distinctId: uuid)
+
+                }
+                
+                
             }
         }
+        
+        
         dealTableView.UpdateData(usePoint: btn_point,
                                  installment: btn_installment,
                                  Peyment: btn_full_peyment,
@@ -265,6 +288,8 @@ extension DealViewController
                                  callWS: true,
                                  editePoint: true,
                                  mCard: myCardListBuffer)
+        
+
     }
     
     //Benz Comment

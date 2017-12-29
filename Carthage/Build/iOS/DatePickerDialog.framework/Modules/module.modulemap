@@ -1,3 +1,4 @@
 framework module DatePickerDialog {
     header "DatePickerDialog-Swift.h"
+    requires objc
 }

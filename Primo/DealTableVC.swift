@@ -285,8 +285,8 @@ extension DealTableVC
                     self.isGotDealsWithInstallment = true
                     self.OnCallDealsPromotionServiceSuccess()
                     print("Call DealsPromotion service installment -> success")
-                    let statusGuideDeals  = StatusGuideDeals.bool(forKey: KEYGuideDeals)
-                    if(!statusGuideDeals){
+                    let versionGuideDeals  = VersionGuideDeals.double(forKey: KEYGuideDeals)
+                    if(cerrentVersin != versionGuideDeals){
                         DialogGuideTop.shared.Show(view: (self.controllrtDeals?.view)!, navigationController: self.navigationController!)
                     }
                 case .failure(let error):
