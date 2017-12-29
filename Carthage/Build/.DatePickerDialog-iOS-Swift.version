@@ -1,0 +1,9 @@
+{
+  "commitish" : "2.0",
+  "iOS" : [
+    {
+      "name" : "DatePickerDialog",
+      "hash" : "c9c9c5e2456823d765e826e7ae69c4f1f0cc149bc909841227b3baccf086022c"
+    }
+  ]
+}

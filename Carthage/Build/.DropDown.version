@@ -1,0 +1,9 @@
+{
+  "commitish" : "v2.0.2",
+  "iOS" : [
+    {
+      "name" : "DropDown",
+      "hash" : "644fc457e5f07a57825d0eae8785a674d7309c6cbaa68e94a7ebed185e3fd3d7"
+    }
+  ]
+}

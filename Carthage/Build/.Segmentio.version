@@ -1,0 +1,9 @@
+{
+  "commitish" : "2.1.2",
+  "iOS" : [
+    {
+      "name" : "Segmentio",
+      "hash" : "186200dafb19ef8ec4bed7f7f11a125ed2a59f636d6dc5a2c47395a897273825"
+    }
+  ]
+}

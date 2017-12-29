@@ -1,7 +1,8 @@
 github "squimer/DatePickerDialog-iOS-Swift"
 github "SwiftyJSON/SwiftyJSON"
-github "Alamofire/Alamofire" ~> 4.3
+github "Alamofire/Alamofire"
 github "AssistoLab/DropDown"
 github "rs/SDWebImage"
-github "stephencelis/SQLite.swift" ~> 0.11.2
-github "Yalantis/Segmentio" ~> 2.1
+github "stephencelis/SQLite.swift"
+github "Yalantis/Segmentio"
+github "mixpanel/mixpanel-swift"
